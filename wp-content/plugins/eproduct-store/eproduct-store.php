@@ -1,4 +1,11 @@
 <?php
+/**
+ * Plugin Name: eProduct Store
+ * Description: Custom digital products storefront with products, cart, checkout and Stripe/PayPal/Razorpay payment server.
+ * Version: 1.0.0
+ * Author: eProduct
+ */
+
 defined('ABSPATH') || exit;
 
 define('EPRODUCT_PATH', plugin_dir_path(__FILE__));

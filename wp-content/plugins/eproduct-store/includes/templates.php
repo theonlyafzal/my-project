@@ -54,7 +54,10 @@ function eproduct_create_pages() {
                 'post_status' => 'publish',
                 'post_type' => 'page',
             ));
-            if ($key === 'home') update_option('page_on_front', $id), update_option('show_on_front', 'page');
+            if ($key === 'home') {
+            update_option('page_on_front', $id);
+            update_option('show_on_front', 'page');
+        }
         }
     }
 }
