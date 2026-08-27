@@ -1,0 +1,11 @@
+{
+    "name": "eproduct/eproduct-store",
+    "description": "Custom digital products store with Stripe, PayPal and Razorpay payment server.",
+    "require": {
+        "stripe/stripe-php": "^13.0",
+        "razorpay/razorpay": "^2.0"
+    },
+    "config": {
+        "optimize-autoloader": true
+    }
+}
