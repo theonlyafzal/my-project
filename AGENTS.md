@@ -29,6 +29,7 @@ When delegating to a model/subagent, route by domain:
 - **Orders DB:** custom table `{prefix}eproduct_orders` created on activation via `dbDelta` in `includes/orders.php`.
 - **Settings / secrets:** Stripe, PayPal, Razorpay keys and the FB Pixel ID are stored as **WordPress options** (admin page "eProduct" → `includes/settings.php`), not in files.
 - **Privacy / ads:** `includes/privacy.php` injects the Meta (FB) Pixel only after consent; a cookie banner sets `eproduct_consent=granted`. GDPR/EU consent must stay before running FB ads — route to Nemotron 3.5 Lightning.
+- **Storefront UI/UX:** the storefront is styled entirely by the plugin's own `assets/css/style.css` (enqueued on `wp_enqueue_scripts`, plus Google Font "Inter"). The active theme (`twentytwentyone`) only wraps the output. Do **not** add storefront styling to the theme — edit `style.css` and the shortcode/template markup in `includes/templates.php` / `templates/*.php` instead. Home = hero + feature cards + featured products + CTA; products grid uses `.ep-card`; product detail uses `.ep-single__grid`.
 
 ## Gotchas an agent will otherwise miss
 - **Never commit `wp-config.php`** — git-ignored; it holds the DB password and exists only on the server.

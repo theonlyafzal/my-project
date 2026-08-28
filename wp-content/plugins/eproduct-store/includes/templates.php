@@ -26,11 +26,28 @@ function eproduct_cart_items() {
 }
 
 function eproduct_enqueue_assets() {
+    wp_enqueue_style('eproduct-fonts', 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap', array(), null);
     wp_enqueue_style('eproduct-style', EPRODUCT_URL . 'assets/css/style.css', array(), EPRODUCT_VERSION);
     wp_enqueue_script('eproduct-store', EPRODUCT_URL . 'assets/js/store.js', array('jquery'), EPRODUCT_VERSION, true);
     wp_localize_script('eproduct-store', 'EP', array('ajax' => admin_url('admin-ajax.php')));
 }
 add_action('wp_enqueue_scripts', 'eproduct_enqueue_assets');
+
+function eproduct_icon($name) {
+    $icons = array(
+        'bolt'   => '<path d="M13 2L4.5 13.5H11l-1 8.5 8.5-11.5H12l1-8.5z"/>',
+        'shield' => '<path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6l7-3z"/>',
+        'spark'  => '<path d="M12 2l2.2 6.3L20 10l-5.8 1.7L12 18l-2.2-6.3L4 10l5.8-1.7L12 2z"/>',
+        'globe'  => '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/>',
+        'search' => '<circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/>',
+    );
+    $p = isset($icons[$name]) ? $icons[$name] : '';
+    return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' . $p . '</svg>';
+}
+
+function eproduct_feature($icon, $title, $text) {
+    return '<div class="ep-feature"><div class="ep-feature__icon">' . eproduct_icon($icon) . '</div><h3>' . esc_html($title) . '</h3><p>' . esc_html($text) . '</p></div>';
+}
 
 function eproduct_create_pages() {
     $pages = array(
@@ -63,18 +80,63 @@ function eproduct_create_pages() {
 }
 
 function eproduct_home_shortcode() {
-    ob_start();
     $company = get_option('eproduct_company_name', 'eProduct');
+    ob_start();
     ?>
-    <section class="ep-hero">
-        <h1>Welcome to <?php echo esc_html($company); ?></h1>
-        <p>Your trusted marketplace for premium digital products. Instant download, secure checkout, global payments.</p>
-        <p>
-            <a class="ep-btn" href="<?php echo esc_url(home_url('/products/')); ?>">Browse Products</a>
-            <a class="ep-btn ep-btn-alt" href="<?php echo esc_url(home_url('/register/')); ?>">Create Account</a>
-            <a class="ep-btn ep-btn-alt" href="<?php echo esc_url(home_url('/login/')); ?>">Log In</a>
-        </p>
-    </section>
+    <div class="eproduct">
+        <section class="ep-hero">
+            <h1>Premium digital products, delivered instantly.</h1>
+            <p>Welcome to <?php echo esc_html($company); ?> — your trusted marketplace for templates, eBooks, software and creative assets. Secure global checkout, instant download.</p>
+            <div class="ep-hero__actions">
+                <a class="ep-btn" href="<?php echo esc_url(home_url('/products/')); ?>">Browse Products</a>
+                <a class="ep-btn ep-btn--ghost" href="<?php echo esc_url(home_url('/register/')); ?>">Create Free Account</a>
+            </div>
+            <div class="ep-hero__badges">
+                <span><?php echo eproduct_icon('bolt'); ?> Instant download</span>
+                <span><?php echo eproduct_icon('shield'); ?> Secure payments</span>
+                <span><?php echo eproduct_icon('globe'); ?> 150+ countries</span>
+            </div>
+        </section>
+
+        <section class="ep-section">
+            <div class="ep-section__head">
+                <h2>Why shop with us</h2>
+                <p>Everything you need to create, build and grow — without the friction.</p>
+            </div>
+            <div class="ep-features">
+                <?php echo eproduct_feature('bolt', 'Instant Delivery', 'Get your files the moment payment clears — no waiting, no shipping.'); ?>
+                <?php echo eproduct_feature('shield', 'Secure Checkout', 'Pay with Stripe, PayPal or Razorpay. Your data stays protected.'); ?>
+                <?php echo eproduct_feature('spark', 'Hand-picked Quality', 'Every product is reviewed to meet a high standard of quality.'); ?>
+                <?php echo eproduct_feature('globe', 'Global Access', 'Available in 150+ countries with localized pricing.'); ?>
+            </div>
+        </section>
+
+        <section class="ep-section">
+            <div class="ep-section__head">
+                <h2>Featured products</h2>
+                <p>Start with some of our most popular digital downloads.</p>
+            </div>
+            <div class="ep-grid">
+                <?php
+                $feat = new WP_Query(array('post_type' => 'eproduct', 'posts_per_page' => 4, 'post_status' => 'publish', 'meta_query' => array(array('key' => '_thumbnail_id', 'compare' => 'EXISTS'))));
+                if (!$feat->have_posts()) {
+                    $feat = new WP_Query(array('post_type' => 'eproduct', 'posts_per_page' => 4, 'post_status' => 'publish'));
+                }
+                while ($feat->have_posts()) { $feat->the_post(); echo eproduct_product_item_html($feat->post); }
+                wp_reset_postdata();
+                ?>
+            </div>
+            <div style="text-align:center;margin-top:34px">
+                <a class="ep-btn ep-btn--dark" href="<?php echo esc_url(home_url('/products/')); ?>">View all products</a>
+            </div>
+        </section>
+
+        <section class="ep-cta">
+            <h2>Join thousands of creators</h2>
+            <p>Create a free account and start downloading in minutes.</p>
+            <a class="ep-btn" href="<?php echo esc_url(home_url('/register/')); ?>">Get started free</a>
+        </section>
+    </div>
     <?php
     return ob_get_clean();
 }
@@ -83,15 +145,28 @@ add_shortcode('eproduct_home', 'eproduct_home_shortcode');
 function eproduct_product_item_html($post) {
     $price = get_post_meta($post->ID, '_eproduct_price', true);
     $img = get_the_post_thumbnail_url($post->ID, 'medium');
+    $cats = wp_get_post_terms($post->ID, 'eproduct_category', array('fields' => 'names'));
+    $excerpt = $post->post_excerpt ? $post->post_excerpt : wp_trim_words(strip_shortcodes(wp_strip_all_tags($post->post_content)), 14);
+    $initial = preg_match('/./u', $post->post_title, $m) ? $m[0] : '★';
     ob_start();
     ?>
     <div class="ep-card">
-        <a href="<?php echo get_permalink($post->ID); ?>">
-            <?php if ($img): ?><img src="<?php echo esc_url($img); ?>" alt="<?php echo esc_attr($post->post_title); ?>"><?php endif; ?>
-            <h3><?php echo esc_html($post->post_title); ?></h3>
+        <a class="ep-card__media" href="<?php echo get_permalink($post->ID); ?>">
+            <?php if ($img): ?>
+                <img src="<?php echo esc_url($img); ?>" alt="<?php echo esc_attr($post->post_title); ?>" loading="lazy">
+            <?php else: ?>
+                <span class="ep-card__placeholder"><?php echo esc_html($initial); ?></span>
+            <?php endif; ?>
+            <?php if (!empty($cats)): ?><span class="ep-card__tag"><?php echo esc_html($cats[0]); ?></span><?php endif; ?>
         </a>
-        <p class="ep-price"><?php echo esc_html($price ? '$' . number_format($price, 2) : 'Free'); ?></p>
-        <a class="ep-btn" href="<?php echo esc_url(home_url('/product/' . $post->post_name . '/?add_to_cart=' . $post->ID)); ?>">Buy Now</a>
+        <div class="ep-card__body">
+            <h3 class="ep-card__title"><a href="<?php echo get_permalink($post->ID); ?>"><?php echo esc_html($post->post_title); ?></a></h3>
+            <p class="ep-card__excerpt"><?php echo esc_html($excerpt); ?></p>
+            <div class="ep-card__foot">
+                <span class="ep-price<?php echo $price ? '' : ' ep-price--free'; ?>"><?php echo $price ? '$' . number_format($price, 2) : 'Free'; ?></span>
+                <a class="ep-btn ep-btn--sm" href="<?php echo esc_url(home_url('/product/' . $post->post_name . '/?add_to_cart=' . $post->ID)); ?>">Buy Now</a>
+            </div>
+        </div>
     </div>
     <?php
     return ob_get_clean();
@@ -101,23 +176,32 @@ function eproduct_products_shortcode() {
     ob_start();
     $cats = get_terms(array('taxonomy' => 'eproduct_category', 'hide_empty' => false));
     ?>
-    <div class="ep-products">
-        <div class="ep-filters">
-            <input type="text" id="ep-search" placeholder="Search products...">
-            <div class="ep-cats">
-                <button class="ep-cat active" data-cat="">All</button>
-                <?php foreach ($cats as $c): ?>
-                    <button class="ep-cat" data-cat="<?php echo esc_attr($c->slug); ?>"><?php echo esc_html($c->name); ?></button>
-                <?php endforeach; ?>
+    <div class="eproduct">
+        <section class="ep-section" style="margin-top:30px">
+            <div class="ep-section__head">
+                <h2>Our Products</h2>
+                <p>Browse our curated collection of premium digital products.</p>
             </div>
-        </div>
-        <div id="ep-grid" class="ep-grid">
-            <?php
-            $q = new WP_Query(array('post_type' => 'eproduct', 'posts_per_page' => -1, 'post_status' => 'publish'));
-            while ($q->have_posts()) { $q->the_post(); echo eproduct_product_item_html($q->post); }
-            wp_reset_postdata();
-            ?>
-        </div>
+            <div class="ep-toolbar">
+                <div class="ep-search">
+                    <?php echo eproduct_icon('search'); ?>
+                    <input type="text" id="ep-search" placeholder="Search products...">
+                </div>
+                <div class="ep-cats">
+                    <button class="ep-cat active" data-cat="">All</button>
+                    <?php foreach ($cats as $c): ?>
+                        <button class="ep-cat" data-cat="<?php echo esc_attr($c->slug); ?>"><?php echo esc_html($c->name); ?></button>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+            <div id="ep-grid" class="ep-grid">
+                <?php
+                $q = new WP_Query(array('post_type' => 'eproduct', 'posts_per_page' => -1, 'post_status' => 'publish'));
+                while ($q->have_posts()) { $q->the_post(); echo eproduct_product_item_html($q->post); }
+                wp_reset_postdata();
+                ?>
+            </div>
+        </section>
     </div>
     <?php
     return ob_get_clean();
