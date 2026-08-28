@@ -109,6 +109,7 @@ function eproduct_home_shortcode() {
                 <?php echo eproduct_feature('spark', 'Hand-picked Quality', 'Every product is reviewed to meet a high standard of quality.'); ?>
                 <?php echo eproduct_feature('globe', 'Global Access', 'Available in 150+ countries with localized pricing.'); ?>
             </div>
+<?php echo '<script>document.addEventListener("DOMContentLoaded",function(){var f=document.querySelectorAll(".ep-feature");f.forEach(function(el,i){el.classList.add("ep-reveal");el.style.transitionDelay=(i*80)+"ms";});if(window.epRevealObserve)window.epRevealObserve(document);});</script>'; ?>
         </section>
 
         <section class="ep-section">
@@ -150,7 +151,7 @@ function eproduct_product_item_html($post) {
     $initial = preg_match('/./u', $post->post_title, $m) ? $m[0] : '★';
     ob_start();
     ?>
-    <div class="ep-card">
+    <div class="ep-card ep-reveal">
         <a class="ep-card__media" href="<?php echo get_permalink($post->ID); ?>">
             <?php if ($img): ?>
                 <img src="<?php echo esc_url($img); ?>" alt="<?php echo esc_attr($post->post_title); ?>" loading="lazy">
@@ -282,10 +283,16 @@ add_shortcode('eproduct_account', 'eproduct_account_shortcode');
 
 function eproduct_template_include($template) {
     if (is_singular('eproduct')) {
-        return EPRODUCT_PATH . 'templates/single-eproduct.php';
+        return EPRODUCT_PATH . 'templates/full-single.php';
     }
     if (is_post_type_archive('eproduct') || is_tax('eproduct_category')) {
-        return EPRODUCT_PATH . 'templates/archive-eproduct.php';
+        return EPRODUCT_PATH . 'templates/full-archive.php';
+    }
+    if (is_page()) {
+        $post = get_post();
+        if ($post && preg_match('/eproduct_(home|products|about|privacy|login|register|checkout|account)/', $post->post_content)) {
+            return EPRODUCT_PATH . 'templates/full-page.php';
+        }
     }
     return $template;
 }

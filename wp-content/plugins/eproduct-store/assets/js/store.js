@@ -4,6 +4,7 @@ jQuery(function ($) {
         var s = $('#ep-search').val();
         $.post(EP.ajax, { action: 'eproduct_filter', cat: cat, search: s }, function (html) {
             $('#ep-grid').html(html);
+            if (window.epRevealObserve) window.epRevealObserve(document.getElementById('ep-grid'));
         });
     }
     $('#ep-search').on('input', function () {
