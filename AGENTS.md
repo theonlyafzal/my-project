@@ -2,9 +2,9 @@
 
 ## What this repo is
 WordPress site for **eproduct**, a store selling digital products (live at eproduct.org).
-- Stack: WordPress (PHP) + **Easy Digital Downloads (EDD)** for the store + **Mayosis** theme (digital marketplace UI) + **Elementor** for page building.
-- There is **no build step, bundler, or test runner**. Work is PHP / theme / template edits committed directly.
-- Database: MySQL `eproduct` (user `eproduct`, host `127.0.0.1:3306`). Credentials live only in `wp-config.php` on the server.
+- **The real storefront is a custom plugin: `wp-content/plugins/eproduct-store/`** — it provides the product CPT, pages, cart, checkout, and payment server.
+- EDD, Elementor, and the Mayosis theme are present in the repo but are **not** the active storefront. Do **not** assume store logic lives in them; extend `eproduct-store` instead.
+- **No bundler, test runner, or linter.** Work is PHP / template edits committed directly. Exception: **Stripe & Razorpay payment gateways require `composer install`** in `wp-content/plugins/eproduct-store/` (SDKs load from `vendor/`). PayPal uses raw curl and needs no SDK.
 
 ## Model routing (pick the model by task domain)
 When delegating to a model/subagent, route by domain:
@@ -19,17 +19,34 @@ When delegating to a model/subagent, route by domain:
 - **Live server:** `169.58.90.8`, SSH/SFTP user `eproduct` (port 22), doc root `/home/eproduct/htdocs/eproduct.org`.
 - Deploy by syncing repo content into the live doc root. The live doc root is not itself a git checkout.
 
+## Architecture (verified from code)
+- **Products:** custom post type `eproduct` (`includes/cpt-products.php`) with taxonomy `eproduct_category` and meta `_eproduct_price`, `_eproduct_file`.
+- **Pages:** auto-created on plugin activation via `eproduct_create_pages()` in `includes/templates.php` — each is a WordPress Page whose content is a shortcode (`[eproduct_home]`, `[eproduct_products]`, `[eproduct_about]`, `[eproduct_login]`, `[eproduct_register]`, `[eproduct_checkout]`, `[eproduct_account]`, `[eproduct_privacy]`).
+- **Product detail pages auto-build:** adding a product (a new `eproduct` post) automatically gets its own URL (`/product/<slug>/`) rendered by `templates/single-eproduct.php` via the `eproduct_template_include` filter. The products archive/category filter is `templates/archive-eproduct.php`. **No separate "page generator" is needed** — it is built-in CPT behavior.
+- **Products grid filter/search:** `[eproduct_products]` renders cards + category buttons + search box; filtering is AJAX `wp_ajax_eproduct_filter` (`includes/ajax.php`).
+- **Cart:** PHP `$_SESSION`-based (`session_start()` on `init` in `includes/templates.php`), not a WooCommerce/EDD cart.
+- **Payments:** standalone script `includes/payments/payment-server.php` (bootstraps `wp-load.php` itself, not a WP REST route). Actions: `?action=create|return|webhook`. Gateways Stripe / PayPal / Razorpay are classes under `includes/payments/` selected by `eproduct_gateway_instance()`. **Stripe & Razorpay need their SDKs present (`composer install` in the plugin dir); otherwise they return an "SDK not installed" error.**
+- **Orders DB:** custom table `{prefix}eproduct_orders` created on activation via `dbDelta` in `includes/orders.php`.
+- **Settings / secrets:** Stripe, PayPal, Razorpay keys and the FB Pixel ID are stored as **WordPress options** (admin page "eProduct" → `includes/settings.php`), not in files.
+- **Privacy / ads:** `includes/privacy.php` injects the Meta (FB) Pixel only after consent; a cookie banner sets `eproduct_consent=granted`. GDPR/EU consent must stay before running FB ads — route to Nemotron 3.5 Lightning.
+
 ## Gotchas an agent will otherwise miss
-- **Never commit `wp-config.php`** — it is git-ignored and holds the DB password; it exists only on the server.
-- **Per-product pages already exist** via EDD (every product/"download" gets its own page automatically). Do **not** build a custom "auto page generator" — extend EDD/Mayosis templates. The requested auto-building behavior is EDD's built-in function.
-- **Products page (cards, category filter, search):** largely provided by the Mayosis theme + EDD. Extend those, don't rebuild from scratch.
-- **Payments:** EDD handles checkout. Stripe & PayPal are EDD gateway add-ons (Stripe is a separate EDD Stripe add-on; PayPal is in core). **Razorpay requires an additional gateway plugin** — verify availability before promising it.
-- **Privacy / Meta (Facebook) ads:** a compliant **Privacy Policy + cookie consent** (for the FB Pixel) is required *before* running social ads, especially for EU users. Route this to the security/safety model (Nemotron 3.5 Lightning).
-- **DB snapshot is static:** `database/eproduct.sql.gz` is a one-time dump, not live data. Refresh with `mysqldump -u eproduct -p eproduct | gzip > database/eproduct.sql.gz` on the server when needed.
+- **Never commit `wp-config.php`** — git-ignored; it holds the DB password and exists only on the server.
+- **API keys & Pixel ID live in WP options**, not in code or repo — configure them in the eProduct admin settings, don't hardcode.
+- **The payment server is a raw PHP script, not a REST API** — it requires `wp-load.php` relative to its own path and redirects by `home_url()`. Editing its require paths will break it.
+- **Cart breaks without sessions** — `eproduct_start_session()` runs only on the frontend `init`; don't disable PHP sessions.
+- **Per-product pages already auto-exist** (CPT + `single-eproduct.php`). Do **not** build a custom page generator.
+- **DB snapshot `database/eproduct.sql.gz` is a static one-time dump**, not live data. Refresh with `mysqldump -u eproduct -p eproduct | gzip > database/eproduct.sql.gz` on the server when needed.
 - **No secrets in repo:** SFTP password, DB password, and GitHub token are not stored here — do not add them.
 
 ## Where to look
-- Store logic: `wp-content/plugins/easy-digital-downloads/`
-- Theme / marketplace UI: `wp-content/themes/mayosis/`
-- Page builder: `wp-content/plugins/elementor/`
-- Custom code / child theme: prefer a child theme or MU plugin over editing core/plugin files.
+- Custom store logic (the real app): `wp-content/plugins/eproduct-store/`
+  - Storefront/templates/shortcodes: `includes/templates.php`
+  - Products CPT + meta box: `includes/cpt-products.php`
+  - Orders table + queries: `includes/orders.php`
+  - Payments: `includes/payments/` (`payment-server.php`, `PaymentGateway.php`, `StripeGateway.php`, `PayPalGateway.php`, `RazorpayGateway.php`)
+  - Privacy + FB pixel + consent: `includes/privacy.php`
+  - Product templates: `templates/single-eproduct.php`, `templates/archive-eproduct.php`
+- Page builder (not used for storefront): `wp-content/plugins/elementor/`
+- Theme: `wp-content/themes/mayosis/`
+- Prefer editing the `eproduct-store` plugin over core/plugin/theme files.
