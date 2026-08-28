@@ -31,7 +31,8 @@ function eproduct_enqueue_assets() {
     wp_enqueue_script('eproduct-store', EPRODUCT_URL . 'assets/js/store.js', array('jquery'), EPRODUCT_VERSION, true);
     wp_localize_script('eproduct-store', 'EP', array('ajax' => admin_url('admin-ajax.php')));
 }
-add_action('wp_enqueue_scripts', 'eproduct_enqueue_assets');
+// Front-end assets are enqueued by the active theme (Rev Digital Products).
+// add_action('wp_enqueue_scripts', 'eproduct_enqueue_assets');
 
 function eproduct_icon($name) {
     $icons = array(
@@ -282,18 +283,6 @@ function eproduct_account_shortcode() {
 add_shortcode('eproduct_account', 'eproduct_account_shortcode');
 
 function eproduct_template_include($template) {
-    if (is_singular('eproduct')) {
-        return EPRODUCT_PATH . 'templates/full-single.php';
-    }
-    if (is_post_type_archive('eproduct') || is_tax('eproduct_category')) {
-        return EPRODUCT_PATH . 'templates/full-archive.php';
-    }
-    if (is_page()) {
-        $post = get_post();
-        if ($post && preg_match('/eproduct_(home|products|about|privacy|login|register|checkout|account)/', $post->post_content)) {
-            return EPRODUCT_PATH . 'templates/full-page.php';
-        }
-    }
     return $template;
 }
 add_filter('template_include', 'eproduct_template_include');
