@@ -3,7 +3,7 @@
 ## What this repo is
 WordPress site for **eproduct**, a store selling digital products (live at eproduct.org).
 - **The real storefront is a custom plugin: `wp-content/plugins/eproduct-store/`** — it provides the product CPT, pages, cart, checkout, and payment server.
-- EDD, Elementor, and the Mayosis theme are present in the repo but are **not** the active storefront. Do **not** assume store logic lives in them; extend `eproduct-store` instead.
+- Mayosis theme and Elementor were removed from the repo and live site. The **active theme is a default WordPress theme (`twentytwentyfour`)** that only wraps the plugin's shortcode/template output. EDD is also present but **not** the active storefront. Do **not** assume store logic lives in them; extend `eproduct-store` instead.
 - **No bundler, test runner, or linter.** Work is PHP / template edits committed directly. Exception: **Stripe & Razorpay payment gateways require `composer install`** in `wp-content/plugins/eproduct-store/` (SDKs load from `vendor/`). PayPal uses raw curl and needs no SDK.
 
 ## Model routing (pick the model by task domain)
@@ -47,6 +47,6 @@ When delegating to a model/subagent, route by domain:
   - Payments: `includes/payments/` (`payment-server.php`, `PaymentGateway.php`, `StripeGateway.php`, `PayPalGateway.php`, `RazorpayGateway.php`)
   - Privacy + FB pixel + consent: `includes/privacy.php`
   - Product templates: `templates/single-eproduct.php`, `templates/archive-eproduct.php`
-- Page builder (not used for storefront): `wp-content/plugins/elementor/`
-- Theme: `wp-content/themes/mayosis/`
+- Page builder: Elementor **removed** from the repo and live site (it was not used for the storefront).
+- Theme: `wp-content/themes/twentytwentyfour/` (default WP theme; only wraps plugin output — do not add store logic here).
 - Prefer editing the `eproduct-store` plugin over core/plugin/theme files.
