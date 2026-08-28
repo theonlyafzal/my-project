@@ -7,6 +7,10 @@ require_once __DIR__ . '/StripeGateway.php';
 require_once __DIR__ . '/PayPalGateway.php';
 require_once __DIR__ . '/RazorpayGateway.php';
 
+if (file_exists(__DIR__ . '/../vendor/autoload.php')) {
+    require_once __DIR__ . '/../vendor/autoload.php';
+}
+
 define('EPRODUCT_URL', plugin_dir_url(__FILE__));
 
 $action = isset($_GET['action']) ? $_GET['action'] : (isset($_POST['action']) ? $_POST['action'] : '');
