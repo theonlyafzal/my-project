@@ -252,8 +252,38 @@ html.js .ep-reveal.is-visible { opacity: 1; transform: none; }
 .ep-auth__submit { margin-top: 6px; justify-self: start; }
 .ep-auth__alt { margin-top: 18px; font-size: 14px; display: inline-block; }
 .ep-auth__note { color: var(--ep-muted); font-size: 14px; margin: 16px 0 0; }
+/* ---------- Auth modal ---------- */
+.ep-modal { position: fixed; inset: 0; z-index: 200; display: none; }
+.ep-modal.is-open { display: block; }
+.ep-modal__overlay { position: absolute; inset: 0; background: rgba(15,23,42,.55); backdrop-filter: blur(4px); }
+.ep-modal__dialog {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+  width: min(920px, 94vw); max-height: 92vh; overflow: auto;
+  background: var(--ep-surface); border-radius: 28px; box-shadow: var(--ep-shadow-lg);
+  display: grid; grid-template-columns: 1fr 1fr;
+}
+.ep-modal__close {
+  position: absolute; top: 14px; right: 16px; z-index: 3;
+  width: 36px; height: 36px; border: 0; border-radius: 50%; cursor: pointer;
+  background: rgba(255,255,255,.85); color: var(--ep-ink); font-size: 22px; line-height: 1;
+}
+.ep-modal__body { padding: 44px 42px; display: flex; flex-direction: column; justify-content: center; }
+.ep-modal__tabs { display: flex; gap: 8px; margin-bottom: 22px; }
+.ep-tab { flex: 1; padding: 11px; border: 1px solid var(--ep-border); background: #fff; border-radius: 999px; font-weight: 600; font-size: 14px; color: var(--ep-text); cursor: pointer; transition: all .18s ease; }
+.ep-tab.active { background: var(--ep-gradient); color: #fff; border-color: transparent; }
+.ep-auth__msg { margin-top: 14px; font-size: 14px; border-radius: 10px; padding: 10px 12px; }
+.ep-auth__msg.is-ok { background: #ecfdf5; color: #047857; }
+.ep-auth__msg.is-err { background: #fef2f2; color: #b91c1c; }
+.ep-auth__msg.is-info { background: #eef2ff; color: var(--ep-primary); }
+
 @media (max-width: 760px) {
   .ep-auth { grid-template-columns: 1fr; margin: 24px auto; }
   .ep-auth__aside { display: none; }
   .ep-auth__card { padding: 40px 26px; }
+  .ep-modal__dialog { grid-template-columns: 1fr; }
+  .ep-modal__aside { display: none; }
+  .ep-modal__body { padding: 40px 24px; }
 }
+
+/* Lock background scroll when modal open */
+body.ep-modal-open { overflow: hidden; }

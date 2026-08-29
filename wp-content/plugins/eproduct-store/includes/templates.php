@@ -90,7 +90,7 @@ function eproduct_home_shortcode() {
             <p>Welcome to <?php echo esc_html($company); ?> — your trusted marketplace for templates, eBooks, software and creative assets. Secure global checkout, instant download.</p>
             <div class="ep-hero__actions">
                 <a class="ep-btn" href="<?php echo esc_url(home_url('/products/')); ?>">Browse Products</a>
-                <a class="ep-btn ep-btn--ghost" href="<?php echo esc_url(home_url('/register/')); ?>">Create Free Account</a>
+                <a class="ep-btn ep-btn--ghost" href="<?php echo esc_url(home_url('/register/')); ?>" data-ep-auth data-tab="register">Create Free Account</a>
             </div>
             <div class="ep-hero__badges">
                 <span><?php echo eproduct_icon('bolt'); ?> Instant download</span>
@@ -136,7 +136,7 @@ function eproduct_home_shortcode() {
         <section class="ep-cta">
             <h2>Join thousands of creators</h2>
             <p>Create a free account and start downloading in minutes.</p>
-            <a class="ep-btn" href="<?php echo esc_url(home_url('/register/')); ?>">Get started free</a>
+            <a class="ep-btn" href="<?php echo esc_url(home_url('/register/')); ?>" data-ep-auth data-tab="register">Get started free</a>
         </section>
     </div>
     <?php
@@ -334,6 +334,45 @@ function eproduct_account_shortcode() {
     return ob_get_clean();
 }
 add_shortcode('eproduct_account', 'eproduct_account_shortcode');
+
+/* ---------- AJAX auth (modal login / register) ---------- */
+add_action('wp_ajax_nopriv_eproduct_login', 'eproduct_ajax_login');
+add_action('wp_ajax_eproduct_login', 'eproduct_ajax_login');
+add_action('wp_ajax_nopriv_eproduct_register', 'eproduct_ajax_register');
+add_action('wp_ajax_eproduct_register', 'eproduct_ajax_register');
+
+function eproduct_ajax_login() {
+    if (empty($_POST['nonce']) || !wp_verify_nonce($_POST['nonce'], 'eproduct_auth')) {
+        wp_send_json_error('Security check failed.');
+    }
+    $user = wp_signon(array(
+        'user_login'    => sanitize_text_field($_POST['log']),
+        'user_password' => $_POST['pwd'],
+        'remember'      => !empty($_POST['remember']),
+    ), false);
+    if (is_wp_error($user)) {
+        wp_send_json_error($user->get_error_message());
+    }
+    wp_set_current_user($user->ID);
+    wp_set_auth_cookie($user->ID);
+    wp_send_json_success(array('redirect' => home_url('/account/')));
+}
+
+function eproduct_ajax_register() {
+    if (empty($_POST['nonce']) || !wp_verify_nonce($_POST['nonce'], 'eproduct_auth')) {
+        wp_send_json_error('Security check failed.');
+    }
+    $user_login = sanitize_user($_POST['user_login']);
+    $user_email = sanitize_email($_POST['user_email']);
+    if (empty($user_login) || empty($user_email)) {
+        wp_send_json_error('Please fill in all fields.');
+    }
+    $result = register_new_user($user_login, $user_email);
+    if (is_wp_error($result)) {
+        wp_send_json_error($result->get_error_message());
+    }
+    wp_send_json_success(array('message' => 'Registration successful! Check your email for your password.'));
+}
 
 function eproduct_template_include($template) {
     return $template;
