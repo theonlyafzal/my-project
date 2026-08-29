@@ -204,6 +204,134 @@ function eproduct_privacy_policy_shortcode() {
 }
 add_shortcode('eproduct_privacy', 'eproduct_privacy_policy_shortcode');
 
+function eproduct_terms_shortcode() {
+    $company = get_option('eproduct_company_name', 'eProduct');
+    $email = get_option('eproduct_contact_email', '');
+    if (!$email) $email = 'privacy@eproduct.org';
+    $site = home_url('/');
+    ob_start();
+    ?>
+    <section class="eproduct-policy">
+        <h1>Terms &amp; Conditions</h1>
+        <p class="ep-policy-updated"><strong>Last Updated:</strong> 29 August 2026</p>
+
+        <p>These Terms &amp; Conditions ("Terms") govern your access to and use of <?php echo esc_html($company); ?> ("we", "us", "our") and our website at <?php echo esc_url($site); ?> (the "Site"), including any digital products you purchase. By accessing or using the Site, you agree to these Terms and our <a href="<?php echo esc_url(home_url('/privacy/')); ?>">Privacy Policy</a>. If you do not agree, do not use the Site.</p>
+
+        <h2>1. Acceptance of Terms</h2>
+        <p>By accessing or using the Site, you agree to be bound by these Terms. Users who do not agree should not use the Site. We may update these Terms from time to time; your continued use after changes are posted constitutes acceptance of the updated Terms.</p>
+
+        <h2>2. Eligibility</h2>
+        <p>Users must meet the minimum legal age required to enter into a purchase agreement in their jurisdiction. You are responsible for providing accurate and complete information when creating an account or placing an order.</p>
+
+        <h2>3. Digital Products</h2>
+        <p>The products sold on the Site are <strong>digital goods</strong>. They may include templates, themes, plugins, software, graphics, documents, ebooks, courses, and similar files. <strong>No physical product is shipped</strong> unless specifically stated on the product page. You should review each product's description, features, compatibility, and requirements before purchasing.</p>
+
+        <h2>4. Product Delivery</h2>
+        <p>Digital products are delivered electronically. Download links may be provided through email and/or your customer account. Download availability may be subject to technical or security limitations. You are responsible for providing a valid email address; we are not responsible for delivery failures caused by incorrect contact details.</p>
+
+        <h2>5. User Account</h2>
+        <p>If the Site offers accounts: you are responsible for maintaining the security of your account and password; you must not share your login credentials; you are responsible for all activity conducted through your account; and we may suspend accounts involved in abuse, fraud, or violations of these Terms.</p>
+
+        <h2>6. Pricing &amp; Taxes</h2>
+        <p>Product prices are displayed on the Site and may change without prior notice. Applicable taxes may be added depending on your location. Where legally permitted, we may correct pricing errors before or after an order is placed.</p>
+
+        <h2>7. Payments</h2>
+        <p>Payments are processed through authorized payment providers (such as Stripe, PayPal, and Razorpay). You must provide accurate billing information. Orders may be rejected or cancelled where we suspect fraud or unauthorized transactions. Because payments are handled by third-party processors, we do not necessarily store complete card details on our servers.</p>
+
+        <h2>8. License &amp; Permitted Use</h2>
+        <p>On purchase you receive a license to use the product, subject to the specific license stated on the product page. Unless an extended license is indicated:</p>
+        <ul>
+            <li>The license is <strong>non-exclusive</strong> and, unless stated, <strong>non-transferable</strong>.</li>
+            <li>One purchase generally permits use on the number of websites, devices, or projects specified on the product page (by default, one).</li>
+            <li>You may modify the product for your own use.</li>
+            <li>You may use the product in commercial projects you create, but you may not resell or redistribute the product itself.</li>
+            <li>An extended or multi-use license may be available where indicated at checkout.</li>
+        </ul>
+
+        <h2>9. Prohibited Uses</h2>
+        <p>Customers may not, in general:</p>
+        <ul>
+            <li>Resell the original digital product.</li>
+            <li>Redistribute or publicly share downloaded files.</li>
+            <li>Upload products to file-sharing or torrent websites.</li>
+            <li>Give away products as standalone downloads.</li>
+            <li>Claim another person's work as their own.</li>
+            <li>Circumvent license restrictions or access controls.</li>
+            <li>Use the Site for fraudulent or unlawful activities.</li>
+        </ul>
+
+        <h2>10. Intellectual Property</h2>
+        <p>The Site's content and our original digital products are protected by applicable intellectual-property laws. Purchasing a product does not transfer ownership or copyright to you. You receive only the rights granted under the applicable product license.</p>
+
+        <h2>11. Updates &amp; Product Support</h2>
+        <p>Where applicable, the product page states whether updates are included and for how long, and whether support is included. Support, if provided, covers installation, configuration, and product defects, and does not include custom coding or modifications. Support is provided via email and is limited to the scope described on the product page.</p>
+
+        <h2>12. Compatibility</h2>
+        <p>Supported browsers, operating systems, software versions, and other requirements are provided on each product page. Compatibility can change when third-party platforms release updates. We are not necessarily responsible for compatibility problems caused by third-party software or future updates.</p>
+
+        <h2>13. Refund &amp; Cancellation Policy</h2>
+        <p>Because our products are digital and delivered immediately, they are generally <strong>non-refundable</strong> once downloaded or accessed, except where required by law. Where refunds are permitted, requests should be submitted by contacting <?php echo esc_html($email); ?>; eligibility depends on the circumstances and applicable consumer law. Approved refunds are processed to the original payment method where possible.</p>
+
+        <h2>14. Chargebacks &amp; Payment Disputes</h2>
+        <p>Customers should contact support to resolve billing problems before filing a chargeback. Fraudulent or abusive chargebacks may result in account or license restrictions where legally permitted. Legitimate consumer rights remain unaffected.</p>
+
+        <h2>15. Promotions &amp; Discount Codes</h2>
+        <p>Coupon codes, promotional pricing, and limited-time offers are subject to their stated eligibility, expiration, and one-time-use limits. Unless explicitly stated, discounts cannot be combined.</p>
+
+        <h2>16. User-Generated Content</h2>
+        <p>If you can upload reviews, comments, images, or other content: content must be lawful, non-abusive, and non-infringing; we may moderate or remove content that violates these guidelines; and we may display submitted reviews or content publicly on the Site.</p>
+
+        <h2>17. Reviews &amp; Ratings</h2>
+        <p>Users should provide honest reviews. Fake or manipulated reviews may be removed, and we may moderate reviews that violate our guidelines.</p>
+
+        <h2>18. Website Availability</h2>
+        <p>We aim to keep the Site available but cannot guarantee uninterrupted availability. Maintenance, technical problems, security incidents, or third-party failures may temporarily affect access.</p>
+
+        <h2>19. Third-Party Services</h2>
+        <p>Our products and Site may depend on third-party services that have their own terms and policies. We do not control third-party platforms, and changes to them may affect product functionality.</p>
+
+        <h2>20. Disclaimer &amp; Warranties</h2>
+        <p>To the extent permitted by law, products are provided "as is". We do not warrant uninterrupted, error-free, or secure operation, or suitability for a particular purpose, beyond any guarantees that cannot be excluded under applicable consumer law.</p>
+
+        <h2>21. Limitation of Liability</h2>
+        <p>Where legally permitted, we are not liable for loss of data, business interruption, indirect or consequential losses, problems caused by third-party services, or misuse of purchased products. Consumer-protection laws may limit how far liability can be excluded.</p>
+
+        <h2>22. Indemnification</h2>
+        <p>To the extent permitted by law, you agree to indemnify us against claims or losses resulting from your misuse of the Site, violation of these Terms, infringement of third-party rights, or unlawful activities, subject to applicable law.</p>
+
+        <h2>23. Account Suspension &amp; Termination</h2>
+        <p>We may suspend an account, revoke a license where legally permitted, restrict downloads, or terminate access to investigate or act on suspected fraud, abuse, or violations of these Terms. After termination, you retain access to products you legitimately purchased where the license was not revoked for cause, though we may disable further download access.</p>
+
+        <h2>24. Copyright &amp; DMCA / IP Complaints</h2>
+        <p>To report copyright or trademark infringement, unauthorized distribution, or stolen/copied products, contact <?php echo esc_html($email); ?>. We will review and act on valid complaints in accordance with applicable law.</p>
+
+        <h2>25. Governing Law &amp; Dispute Resolution</h2>
+        <p>These Terms are governed by the laws of India, without prejudice to mandatory consumer protections in your country of residence. Disputes should first be resolved through good-faith communication; failing that, they are subject to the courts located in India. Nothing in this section overrides a consumer's mandatory rights in their place of residence.</p>
+
+        <h2>26. Privacy</h2>
+        <p>Your personal information is handled according to our <a href="<?php echo esc_url(home_url('/privacy/')); ?>">Privacy Policy</a>, which is incorporated by reference.</p>
+
+        <h2>27. Force Majeure</h2>
+        <p>We are not liable for failure or delay caused by events outside reasonable control, including major infrastructure failures, natural disasters, internet outages, government actions, and large-scale service disruptions.</p>
+
+        <h2>28. Severability</h2>
+        <p>If any provision is found invalid or unenforceable, the remaining provisions will continue to apply to the extent permitted by law.</p>
+
+        <h2>29. Entire Agreement</h2>
+        <p>These Terms, together with referenced policies (including the Privacy Policy), constitute the agreement governing use of the Site, subject to applicable law.</p>
+
+        <h2>30. Contact Information</h2>
+        <ul>
+            <li><strong>Business:</strong> <?php echo esc_html($company); ?></li>
+            <li><strong>Support email:</strong> <?php echo esc_html($email); ?></li>
+            <li><strong>Legal / contact address:</strong> provided upon request; we will share our registered business address where legally required.</li>
+        </ul>
+    </section>
+    <?php
+    return ob_get_clean();
+}
+add_shortcode('eproduct_terms', 'eproduct_terms_shortcode');
+
 function eproduct_fb_pixel_inject() {
     $pixel = get_option('eproduct_fb_pixel');
     if (!$pixel) return;

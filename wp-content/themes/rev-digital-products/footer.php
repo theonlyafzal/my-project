@@ -27,6 +27,7 @@ $ep_year = date('Y');
             <h4>Company</h4>
             <a href="<?php echo esc_url(home_url('/about/')); ?>">About</a>
             <a href="<?php echo esc_url(home_url('/privacy/')); ?>">Privacy Policy</a>
+            <a href="<?php echo esc_url(home_url('/terms/')); ?>">Terms &amp; Conditions</a>
           </div>
         </div>
       </div>

@@ -56,10 +56,11 @@ function eproduct_create_pages() {
         'products' => array('Products', '[eproduct_products]'),
         'about' => array('About Us', '[eproduct_about]'),
         'privacy' => array('Privacy Policy', '[eproduct_privacy]'),
+        'terms' => array('Terms & Conditions', '[eproduct_terms]'),
         'checkout' => array('Checkout', '[eproduct_checkout]'),
         'account' => array('My Account', '[eproduct_account]'),
     );
-    $slug_map = array('home' => '', 'products' => 'products', 'about' => 'about', 'privacy' => 'privacy', 'checkout' => 'checkout', 'account' => 'account');
+    $slug_map = array('home' => '', 'products' => 'products', 'about' => 'about', 'privacy' => 'privacy', 'terms' => 'terms', 'checkout' => 'checkout', 'account' => 'account');
     foreach ($pages as $key => $p) {
         $slug = $slug_map[$key];
         if (!get_page_by_path($slug ? $slug : 'home')) {
