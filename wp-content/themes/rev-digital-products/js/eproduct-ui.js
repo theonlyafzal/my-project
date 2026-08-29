@@ -29,18 +29,27 @@
       burger.addEventListener('click', function () { nav.classList.toggle('is-open'); });
     }
 
-    // Scroll reveal
-    var reveals = doc.querySelectorAll('.ep-reveal');
-    if ('IntersectionObserver' in window) {
-      var io = new IntersectionObserver(function (entries) {
-        forEach(entries, function (e) {
-          if (e.isIntersecting) { e.target.classList.add('is-visible'); io.unobserve(e.target); }
-        });
-      }, { threshold: 0.12 });
-      forEach(reveals, function (el) { io.observe(el); });
-    } else {
-      forEach(reveals, function (el) { el.classList.add('is-visible'); });
+    // Scroll reveal (reusable so AJAX-loaded content is also revealed)
+    var epRevealObserver = null;
+    function epRevealObserve(root) {
+      var scope = root || doc;
+      var reveals = scope.querySelectorAll('.ep-reveal:not(.is-visible)');
+      if (!reveals.length) return;
+      if (!('IntersectionObserver' in window)) {
+        forEach(reveals, function (el) { el.classList.add('is-visible'); });
+        return;
+      }
+      if (!epRevealObserver) {
+        epRevealObserver = new IntersectionObserver(function (entries) {
+          forEach(entries, function (e) {
+            if (e.isIntersecting) { e.target.classList.add('is-visible'); epRevealObserver.unobserve(e.target); }
+          });
+        }, { threshold: 0.12 });
+      }
+      forEach(reveals, function (el) { epRevealObserver.observe(el); });
     }
+    window.epRevealObserve = epRevealObserve;
+    epRevealObserve(doc);
 
     // ---------- Auth modals (separate login / register) ----------
     var MODALS = ['epLoginModal', 'epRegisterModal'];
