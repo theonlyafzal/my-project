@@ -218,3 +218,42 @@ html.js .ep-reveal.is-visible { opacity: 1; transform: none; }
   .ep-burger { display: flex; }
   .ep-footer__inner { grid-template-columns: 1fr; }
 }
+
+/* ---------- Auth (login / register) ---------- */
+.ep-auth {
+  max-width: 940px; margin: 48px auto; display: grid; grid-template-columns: 1fr 1fr;
+  border-radius: 28px; overflow: hidden; box-shadow: var(--ep-shadow-lg); background: var(--ep-surface);
+}
+.ep-auth__aside {
+  position: relative; padding: 50px 42px; color: #fff; display: flex; flex-direction: column;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6 55%, #ec4899);
+}
+.ep-auth__aside::before, .ep-auth__aside::after { content: ""; position: absolute; border-radius: 50%; background: rgba(255,255,255,.14); filter: blur(8px); }
+.ep-auth__aside::before { width: 230px; height: 230px; top: -90px; right: -70px; }
+.ep-auth__aside::after { width: 180px; height: 180px; bottom: -80px; left: -50px; background: rgba(236,72,153,.35); }
+.ep-auth__brand { display: inline-flex; align-items: center; gap: 10px; font-weight: 800; font-size: 19px; margin-bottom: 26px; }
+.ep-auth__brand .ep-brand__name { color: #fff; -webkit-text-fill-color: #fff; }
+.ep-auth__aside h2 { font-size: 30px; margin: 0 0 12px; letter-spacing: -.02em; position: relative; z-index: 1; }
+.ep-auth__aside p { color: rgba(255,255,255,.92); margin: 0 0 22px; font-size: 16px; position: relative; z-index: 1; }
+.ep-auth__points { list-style: none; padding: 0; margin: auto 0 0; display: grid; gap: 12px; position: relative; z-index: 1; }
+.ep-auth__points li { position: relative; padding-left: 30px; font-size: 15px; color: rgba(255,255,255,.95); }
+.ep-auth__points li::before { content: "\2713"; position: absolute; left: 0; top: 1px; width: 20px; height: 20px; border-radius: 50%; background: rgba(255,255,255,.22); display: grid; place-items: center; font-size: 12px; }
+.ep-auth__card { padding: 50px 42px; display: flex; flex-direction: column; justify-content: center; }
+.ep-auth__title { font-size: 28px; color: var(--ep-ink); margin: 0 0 6px; }
+.ep-auth__sub { color: var(--ep-muted); margin: 0 0 26px; font-size: 15px; }
+.ep-auth__sub a, .ep-auth__alt { color: var(--ep-primary); text-decoration: none; font-weight: 600; }
+.ep-auth__form { display: grid; gap: 14px; }
+.ep-auth__form label { font-size: 14px; font-weight: 600; color: var(--ep-ink); }
+.ep-auth__form input[type="text"], .ep-auth__form input[type="email"], .ep-auth__form input[type="password"] {
+  width: 100%; padding: 13px 15px; border: 1px solid var(--ep-border); border-radius: 12px;
+  font-size: 15px; color: var(--ep-ink); outline: none; transition: border-color .2s, box-shadow .2s;
+}
+.ep-auth__form input:focus { border-color: var(--ep-primary); box-shadow: 0 0 0 4px rgba(99,102,241,.15); }
+.ep-auth__submit { margin-top: 6px; justify-self: start; }
+.ep-auth__alt { margin-top: 18px; font-size: 14px; display: inline-block; }
+.ep-auth__note { color: var(--ep-muted); font-size: 14px; margin: 16px 0 0; }
+@media (max-width: 760px) {
+  .ep-auth { grid-template-columns: 1fr; margin: 24px auto; }
+  .ep-auth__aside { display: none; }
+  .ep-auth__card { padding: 40px 26px; }
+}
