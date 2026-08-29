@@ -21,7 +21,7 @@ When delegating to a model/subagent, route by domain:
 
 ## Architecture (verified from code)
 - **Products:** custom post type `eproduct` (`includes/cpt-products.php`) with taxonomy `eproduct_category` and meta `_eproduct_price`, `_eproduct_file`.
-- **Pages:** auto-created on plugin activation via `eproduct_create_pages()` in `includes/templates.php` — each is a WordPress Page whose content is a shortcode (`[eproduct_home]`, `[eproduct_products]`, `[eproduct_about]`, `[eproduct_login]`, `[eproduct_register]`, `[eproduct_checkout]`, `[eproduct_account]`, `[eproduct_privacy]`).
+- **Pages:** auto-created on plugin activation via `eproduct_create_pages()` in `includes/templates.php` — each is a WordPress Page whose content is a shortcode (`[eproduct_home]`, `[eproduct_products]`, `[eproduct_about]`, `[eproduct_checkout]`, `[eproduct_account]`, `[eproduct_privacy]`). Login/Register have **no** pages — they are modal overlays triggered from the nav.
 - **Product detail pages auto-build:** adding a product (a new `eproduct` post) automatically gets its own URL (`/product/<slug>/`) rendered by `templates/single-eproduct.php` via the `eproduct_template_include` filter. The products archive/category filter is `templates/archive-eproduct.php`. **No separate "page generator" is needed** — it is built-in CPT behavior.
 - **Products grid filter/search:** `[eproduct_products]` renders cards + category buttons + search box; filtering is AJAX `wp_ajax_eproduct_filter` (`includes/ajax.php`).
 - **Cart:** PHP `$_SESSION`-based (`session_start()` on `init` in `includes/templates.php`), not a WooCommerce/EDD cart.

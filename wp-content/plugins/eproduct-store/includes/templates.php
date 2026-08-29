@@ -56,12 +56,10 @@ function eproduct_create_pages() {
         'products' => array('Products', '[eproduct_products]'),
         'about' => array('About Us', '[eproduct_about]'),
         'privacy' => array('Privacy Policy', '[eproduct_privacy]'),
-        'login' => array('Log In', '[eproduct_login]'),
-        'register' => array('Register', '[eproduct_register]'),
         'checkout' => array('Checkout', '[eproduct_checkout]'),
         'account' => array('My Account', '[eproduct_account]'),
     );
-    $slug_map = array('home' => '', 'products' => 'products', 'about' => 'about', 'privacy' => 'privacy', 'login' => 'login', 'register' => 'register', 'checkout' => 'checkout', 'account' => 'account');
+    $slug_map = array('home' => '', 'products' => 'products', 'about' => 'about', 'privacy' => 'privacy', 'checkout' => 'checkout', 'account' => 'account');
     foreach ($pages as $key => $p) {
         $slug = $slug_map[$key];
         if (!get_page_by_path($slug ? $slug : 'home')) {
@@ -216,81 +214,11 @@ function eproduct_about_shortcode() {
 }
 add_shortcode('eproduct_about', 'eproduct_about_shortcode');
 
-function eproduct_login_shortcode() {
-    if (is_user_logged_in()) return '<p>You are logged in. <a href="' . esc_url(home_url('/account/')) . '">My Account</a></p>';
-    $company = get_option('eproduct_company_name', 'eProduct');
-    ob_start();
-    ?>
-    <div class="ep-auth ep-reveal">
-      <div class="ep-auth__aside">
-        <div class="ep-auth__brand"><span class="ep-brand__mark">&#9670;</span> <span class="ep-brand__name"><?php echo esc_html($company); ?></span></div>
-        <h2>Welcome back</h2>
-        <p>Log in to access your digital products, downloads, and order history.</p>
-        <ul class="ep-auth__points">
-          <li>Instant access to everything you buy</li>
-          <li>Re-download purchases anytime, anywhere</li>
-          <li>Secure checkout with Stripe, PayPal &amp; Razorpay</li>
-        </ul>
-      </div>
-      <div class="ep-auth__card">
-        <h1 class="ep-auth__title">Log in</h1>
-        <p class="ep-auth__sub">New here? <a href="<?php echo esc_url(home_url('/register/')); ?>">Create an account</a></p>
-        <form class="ep-auth__form" method="post" action="<?php echo esc_url(site_url('wp-login.php', 'login_post')); ?>">
-          <label for="ep-log">Username or email</label>
-          <input id="ep-log" type="text" name="log" required autocomplete="username">
-          <label for="ep-pwd">Password</label>
-          <input id="ep-pwd" type="password" name="pwd" required autocomplete="current-password">
-          <input type="hidden" name="redirect_to" value="<?php echo esc_url(home_url('/account/')); ?>">
-          <button class="ep-btn ep-auth__submit" type="submit">Log In</button>
-        </form>
-        <a class="ep-auth__alt" href="<?php echo esc_url(wp_lostpassword_url()); ?>">Forgot your password?</a>
-      </div>
-    </div>
-    <?php
-    return ob_get_clean();
-}
-add_shortcode('eproduct_login', 'eproduct_login_shortcode');
-
-function eproduct_register_shortcode() {
-    if (is_user_logged_in()) return '<p>You are already registered. <a href="' . esc_url(home_url('/account/')) . '">My Account</a></p>';
-    $company = get_option('eproduct_company_name', 'eProduct');
-    ob_start();
-    ?>
-    <div class="ep-auth ep-reveal">
-      <div class="ep-auth__aside">
-        <div class="ep-auth__brand"><span class="ep-brand__mark">&#9670;</span> <span class="ep-brand__name"><?php echo esc_html($company); ?></span></div>
-        <h2>Join <?php echo esc_html($company); ?></h2>
-        <p>Create your free account to start buying digital products and downloading them instantly.</p>
-        <ul class="ep-auth__points">
-          <li>Unlock the full product catalog</li>
-          <li>Track orders and downloads in one place</li>
-          <li>No credit card needed to sign up</li>
-        </ul>
-      </div>
-      <div class="ep-auth__card">
-        <h1 class="ep-auth__title">Create your account</h1>
-        <p class="ep-auth__sub">Already have an account? <a href="<?php echo esc_url(home_url('/login/')); ?>">Log in</a></p>
-        <?php if (get_option('users_can_register')): ?>
-        <form class="ep-auth__form" method="post" action="<?php echo esc_url(site_url('wp-login.php?action=register', 'login_post')); ?>">
-          <label for="ep-user">Username</label>
-          <input id="ep-user" type="text" name="user_login" required autocomplete="username">
-          <label for="ep-email">Email</label>
-          <input id="ep-email" type="email" name="user_email" required autocomplete="email">
-          <button class="ep-btn ep-auth__submit" type="submit">Create Account</button>
-        </form>
-        <p class="ep-auth__note">We'll email you a link to set your password.</p>
-        <?php else: ?>
-        <p class="ep-auth__note">Registration is currently closed. Please contact support to request an account.</p>
-        <?php endif; ?>
-      </div>
-    </div>
-    <?php
-    return ob_get_clean();
-}
-add_shortcode('eproduct_register', 'eproduct_register_shortcode');
+// Login / Register are modal-only now (see eproduct_ajax_login / eproduct_ajax_register).
+// No dedicated [eproduct_login] / [eproduct_register] pages or shortcodes.
 
 function eproduct_checkout_shortcode() {
-    if (!is_user_logged_in()) return '<p>Please <a href="' . esc_url(home_url('/login/')) . '">log in</a> to checkout.</p>';
+    if (!is_user_logged_in()) return '<p>Please <a href="#" data-ep-auth data-tab="login">log in</a> to checkout.</p>';
     $cart = eproduct_cart_items();
     if (empty($cart)) return '<p>Your cart is empty. <a href="' . esc_url(home_url('/products/')) . '">Browse products</a></p>';
     $total = 0;
@@ -321,7 +249,7 @@ function eproduct_checkout_shortcode() {
 add_shortcode('eproduct_checkout', 'eproduct_checkout_shortcode');
 
 function eproduct_account_shortcode() {
-    if (!is_user_logged_in()) return '<p>Please <a href="' . esc_url(home_url('/login/')) . '">log in</a>.</p>';
+    if (!is_user_logged_in()) return '<p>Please <a href="#" data-ep-auth data-tab="login">log in</a>.</p>';
     global $wpdb;
     $uid = get_current_user_id();
     $orders = $wpdb->get_results($wpdb->prepare("SELECT * FROM {$wpdb->prefix}eproduct_orders WHERE user_id=%d ORDER BY created_at DESC", $uid));
