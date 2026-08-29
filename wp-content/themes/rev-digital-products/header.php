@@ -35,8 +35,8 @@
           <?php if (is_user_logged_in()): ?>
             <a class="ep-nav__link" href="<?php echo esc_url(home_url('/account/')); ?>">My Account</a>
           <?php else: ?>
-            <a class="ep-nav__link" href="<?php echo esc_url(home_url('/login/')); ?>" data-ep-auth data-tab="login">Log In</a>
-            <a class="ep-btn ep-btn--sm" href="<?php echo esc_url(home_url('/register/')); ?>" data-ep-auth data-tab="register">Get Started</a>
+            <a class="ep-nav__link" href="#" data-ep-auth data-tab="login">Log In</a>
+            <a class="ep-btn ep-btn--sm" href="#" data-ep-auth data-tab="register">Get Started</a>
           <?php endif; ?>
         </nav>
         <button class="ep-burger" id="epBurger" aria-label="Toggle menu"><span></span><span></span><span></span></button>

@@ -88,7 +88,7 @@ function eproduct_home_shortcode() {
             <p>Welcome to <?php echo esc_html($company); ?> — your trusted marketplace for templates, eBooks, software and creative assets. Secure global checkout, instant download.</p>
             <div class="ep-hero__actions">
                 <a class="ep-btn" href="<?php echo esc_url(home_url('/products/')); ?>">Browse Products</a>
-                <a class="ep-btn ep-btn--ghost" href="<?php echo esc_url(home_url('/register/')); ?>" data-ep-auth data-tab="register">Create Free Account</a>
+                <a class="ep-btn ep-btn--ghost" href="#" data-ep-auth data-tab="register">Create Free Account</a>
             </div>
             <div class="ep-hero__badges">
                 <span><?php echo eproduct_icon('bolt'); ?> Instant download</span>
@@ -134,7 +134,7 @@ function eproduct_home_shortcode() {
         <section class="ep-cta">
             <h2>Join thousands of creators</h2>
             <p>Create a free account and start downloading in minutes.</p>
-            <a class="ep-btn" href="<?php echo esc_url(home_url('/register/')); ?>" data-ep-auth data-tab="register">Get started free</a>
+            <a class="ep-btn" href="#" data-ep-auth data-tab="register">Get started free</a>
         </section>
     </div>
     <?php
