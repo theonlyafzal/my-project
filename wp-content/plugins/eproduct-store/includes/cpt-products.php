@@ -28,11 +28,12 @@ function eproduct_register_category_tax() {
         'public' => true,
         'hierarchical' => true,
         'rewrite' => array('slug' => 'product-category'),
-        'show_in_rest' => true,
+        'show_in_rest' => false,
     ));
 }
 
 function eproduct_product_meta_box() {
+    remove_meta_box('eproduct_categorydiv', 'eproduct', 'side');
     add_meta_box('eproduct_meta', 'Product Details', 'eproduct_product_meta_cb', 'eproduct', 'normal', 'high');
 }
 
@@ -54,6 +55,22 @@ function eproduct_product_meta_cb($post) {
     echo '<button type="button" class="button" id="ep-cover-btn">Set cover image</button> ';
     if ($thumb_id) echo '<button type="button" class="button" id="ep-cover-rm">Remove image</button>';
     echo '</div></p>';
+    // Category selector
+    $ep_cats = get_terms(array('taxonomy' => 'eproduct_category', 'hide_empty' => false));
+    $ep_assigned = wp_get_post_terms($post->ID, 'eproduct_category', array('fields' => 'ids'));
+    if (is_wp_error($ep_assigned)) $ep_assigned = array();
+    echo '<p><label><strong>Product Category</strong></label><br>';
+    if (!empty($ep_cats) && !is_wp_error($ep_cats)) {
+        echo '<div id="ep-cat-list" style="display:flex;flex-wrap:wrap;gap:10px 18px;margin:6px 0">';
+        foreach ($ep_cats as $c) {
+            $chk = in_array((int)$c->term_id, $ep_assigned, true) ? 'checked' : '';
+            echo '<label style="display:inline-flex;align-items:center;gap:6px;font-weight:400"><input type="checkbox" name="eproduct_category[]" value="' . esc_attr($c->term_id) . '" ' . $chk . '> ' . esc_html($c->name) . '</label>';
+        }
+        echo '</div>';
+    } else {
+        echo '<span style="color:#888">No categories yet. Add one below.</span>';
+    }
+    echo '<input type="text" name="eproduct_new_category" placeholder="Or add a new category…" style="width:240px;margin-top:8px"></p>';
 }
 
 function eproduct_product_meta_save($post_id) {
@@ -71,6 +88,27 @@ function eproduct_product_meta_save($post_id) {
         if ($tid > 0) set_post_thumbnail($post_id, $tid);
         else delete_post_thumbnail($post_id);
     }
+    // Save product categories
+    $ep_ids = array();
+    if (isset($_POST['eproduct_category'])) {
+        foreach ((array)$_POST['eproduct_category'] as $id) {
+            $id = intval($id);
+            if ($id > 0) $ep_ids[] = $id;
+        }
+    }
+    if (!empty($_POST['eproduct_new_category'])) {
+        $ep_new = trim(sanitize_text_field($_POST['eproduct_new_category']));
+        if ($ep_new !== '') {
+            $ep_term = get_term_by('name', $ep_new, 'eproduct_category');
+            if (!$ep_term) {
+                $ep_ins = wp_insert_term($ep_new, 'eproduct_category');
+                if (!is_wp_error($ep_ins)) $ep_term = get_term($ep_ins['term_id'], 'eproduct_category');
+            }
+            if (!empty($ep_term) && !is_wp_error($ep_term)) $ep_ids[] = (int)$ep_term->term_id;
+        }
+    }
+    $ep_ids = array_values(array_unique($ep_ids));
+    wp_set_object_terms($post_id, $ep_ids, 'eproduct_category', false);
 }
 
 function eproduct_admin_media($hook) {
