@@ -20,7 +20,7 @@ When delegating to a model/subagent, route by domain:
 - Deploy by syncing repo content into the live doc root. The live doc root is not itself a git checkout.
 
 ## Architecture (verified from code)
-- **Products:** custom post type `eproduct` (`includes/cpt-products.php`) with taxonomy `eproduct_category` and meta `_eproduct_price`, `_eproduct_file`.
+- **Products:** custom post type `eproduct` (`includes/cpt-products.php`) with taxonomy `eproduct_category` and meta `_eproduct_price`, `_eproduct_file`. The product cover image is the WordPress **featured image** — set via the "Product Cover Image" uploader in the Product Details meta box (saves `_thumbnail_id`); product cards (`eproduct_product_item_html()`) and `single-eproduct.php` render it at the top.
 - **Pages:** auto-created on plugin activation via `eproduct_create_pages()` in `includes/templates.php` — each is a WordPress Page whose content is a shortcode (`[eproduct_home]`, `[eproduct_products]`, `[eproduct_about]`, `[eproduct_checkout]`, `[eproduct_account]`, `[eproduct_privacy]`). Login/Register have **no** pages — they are modal overlays triggered from the nav.
 - **Product detail pages auto-build:** adding a product (a new `eproduct` post) automatically gets its own URL (`/product/<slug>/`) rendered by `templates/single-eproduct.php` via the `eproduct_template_include` filter. The products archive/category filter is `templates/archive-eproduct.php`. **No separate "page generator" is needed** — it is built-in CPT behavior.
 - **Products grid filter/search:** `[eproduct_products]` renders cards + category buttons + search box; filtering is AJAX `wp_ajax_eproduct_filter` (`includes/ajax.php`).

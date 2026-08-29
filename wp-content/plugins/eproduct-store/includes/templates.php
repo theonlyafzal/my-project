@@ -152,15 +152,16 @@ function eproduct_product_item_html($post) {
     ?>
     <div class="ep-card ep-reveal">
         <a class="ep-card__media" href="<?php echo get_permalink($post->ID); ?>">
+            <span class="ep-card__scrim"></span>
             <?php if ($img): ?>
                 <img src="<?php echo esc_url($img); ?>" alt="<?php echo esc_attr($post->post_title); ?>" loading="lazy">
             <?php else: ?>
                 <span class="ep-card__placeholder"><?php echo esc_html($initial); ?></span>
             <?php endif; ?>
             <?php if (!empty($cats)): ?><span class="ep-card__tag"><?php echo esc_html($cats[0]); ?></span><?php endif; ?>
+            <span class="ep-card__name"><?php echo esc_html($post->post_title); ?></span>
         </a>
         <div class="ep-card__body">
-            <h3 class="ep-card__title"><a href="<?php echo get_permalink($post->ID); ?>"><?php echo esc_html($post->post_title); ?></a></h3>
             <p class="ep-card__excerpt"><?php echo esc_html($excerpt); ?></p>
             <div class="ep-card__foot">
                 <span class="ep-price<?php echo $price ? '' : ' ep-price--free'; ?>"><?php echo $price ? '$' . number_format($price, 2) : 'Free'; ?></span>
