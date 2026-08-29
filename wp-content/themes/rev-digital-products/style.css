@@ -227,6 +227,7 @@ html.js .ep-reveal.is-visible { opacity: 1; transform: none; }
 .ep-auth__aside {
   position: relative; padding: 50px 42px; color: #fff; display: flex; flex-direction: column;
   background: linear-gradient(135deg, #6366f1, #8b5cf6 55%, #ec4899);
+  min-height: 100%;
 }
 .ep-auth__aside::before, .ep-auth__aside::after { content: ""; position: absolute; border-radius: 50%; background: rgba(255,255,255,.14); filter: blur(8px); }
 .ep-auth__aside::before { width: 230px; height: 230px; top: -90px; right: -70px; }
@@ -260,7 +261,7 @@ html.js .ep-reveal.is-visible { opacity: 1; transform: none; }
   position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
   width: min(920px, 94vw); max-height: 92vh; overflow: auto;
   background: var(--ep-surface); border-radius: 28px; box-shadow: var(--ep-shadow-lg);
-  display: grid; grid-template-columns: 1fr 1fr;
+  display: grid; grid-template-columns: 1fr 1fr; align-items: stretch;
 }
 .ep-modal__close {
   position: absolute; top: 14px; right: 16px; z-index: 3;

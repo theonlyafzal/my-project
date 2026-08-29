@@ -209,7 +209,7 @@ function rev_digital_products_scripts() {
 
 function eproduct_theme_storefront_assets() {
     wp_enqueue_style('eproduct-inter', 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap', array(), null);
-    wp_enqueue_style('rev-digital-products-style', get_stylesheet_uri(), array(), wp_get_theme()->get('Version'));
+    wp_enqueue_style('rev-digital-products-style', get_stylesheet_uri(), array(), filemtime(get_stylesheet_directory() . '/style.css'));
     wp_enqueue_script('eproduct-ui', get_template_directory_uri() . '/js/eproduct-ui.js', array('jquery'), filemtime(get_template_directory() . '/js/eproduct-ui.js'), true);
     wp_enqueue_script('eproduct-store', get_template_directory_uri() . '/js/store.js', array('jquery'), filemtime(get_template_directory() . '/js/store.js'), true);
     wp_localize_script('eproduct-store', 'EP', array('ajax' => admin_url('admin-ajax.php'), 'authNonce' => wp_create_nonce('eproduct_auth')));

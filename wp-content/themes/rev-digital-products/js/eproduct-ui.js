@@ -42,38 +42,36 @@
       forEach(reveals, function (el) { el.classList.add('is-visible'); });
     }
 
-    // ---------- Auth modal ----------
-    function getModal() { return document.getElementById('epAuthModal'); }
+    // ---------- Auth modals (separate login / register) ----------
+    var MODALS = ['epLoginModal', 'epRegisterModal'];
 
-    function epOpenAuth(tab) {
-      var modal = getModal();
-      if (!modal) return;
-      modal.setAttribute('aria-hidden', 'false');
-      modal.classList.add('is-open');
-      doc.body.classList.add('ep-modal-open');
-      epSetTab(tab || 'login');
-      var msg = document.getElementById('epAuthMsg');
-      if (msg) { msg.textContent = ''; msg.className = 'ep-auth__msg'; }
+    function syncLock() {
+      doc.body.classList.toggle('ep-modal-open', !!doc.querySelector('.ep-modal.is-open'));
     }
-    function epCloseAuth() {
-      var modal = getModal();
-      if (!modal) return;
-      modal.setAttribute('aria-hidden', 'true');
-      modal.classList.remove('is-open');
-      doc.body.classList.remove('ep-modal-open');
+    function closeModal(m) {
+      if (!m) return;
+      m.classList.remove('is-open');
+      m.setAttribute('aria-hidden', 'true');
+      syncLock();
     }
-    function epSetTab(tab) {
-      var modal = getModal();
-      if (!modal) return;
-      forEach(modal.querySelectorAll('.ep-tab'), function (t) {
-        t.classList.toggle('active', t.getAttribute('data-tab') === tab);
+    function openModal(id) {
+      forEach(MODALS, function (mid) {
+        var m = document.getElementById(mid);
+        if (m) { m.classList.remove('is-open'); m.setAttribute('aria-hidden', 'true'); }
       });
-      var lf = document.getElementById('epLoginForm'), rf = document.getElementById('epRegisterForm');
-      if (lf) lf.hidden = tab !== 'login';
-      if (rf) rf.hidden = tab !== 'register';
+      var m = document.getElementById(id);
+      if (!m) return;
+      m.classList.add('is-open');
+      m.setAttribute('aria-hidden', 'false');
+      var msg = m.querySelector('.ep-auth__msg');
+      if (msg) { msg.textContent = ''; msg.className = 'ep-auth__msg'; }
+      syncLock();
+    }
+    function epOpenAuth(tab) {
+      openModal(tab === 'register' ? 'epRegisterModal' : 'epLoginModal');
     }
 
-    // Delegated open / close / tab switch
+    // Delegated open / close
     document.addEventListener('click', function (e) {
       var opener = e.target.closest && e.target.closest('[data-ep-auth]');
       if (opener) {
@@ -81,13 +79,18 @@
         epOpenAuth(opener.getAttribute('data-tab') || 'login');
         return;
       }
-      if (e.target.closest && e.target.closest('[data-ep-modal-close]')) { epCloseAuth(); return; }
-      if (e.target.closest && e.target.closest('.ep-modal__overlay')) { epCloseAuth(); return; }
-      var tab = e.target.closest && e.target.closest('.ep-tab');
-      var m = getModal();
-      if (tab && m && m.contains(tab)) { epSetTab(tab.getAttribute('data-tab')); }
+      if (e.target.closest && e.target.closest('[data-ep-modal-close]')) {
+        closeModal(e.target.closest('.ep-modal'));
+        return;
+      }
+      if (e.target.closest && e.target.closest('.ep-modal__overlay')) {
+        closeModal(e.target.closest('.ep-modal'));
+        return;
+      }
     });
-    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') epCloseAuth(); });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') { var o = doc.querySelector('.ep-modal.is-open'); closeModal(o); }
+    });
 
     // AJAX auth submit
     forEach(['epLoginForm', 'epRegisterForm'], function (id) {
@@ -96,7 +99,7 @@
       form.addEventListener('submit', function (e) {
         e.preventDefault();
         var mode = form.getAttribute('data-mode');
-        var msg = document.getElementById('epAuthMsg');
+        var msg = form.closest('.ep-modal').querySelector('.ep-auth__msg');
         var fd = new FormData(form);
         var data = {
           action: mode === 'login' ? 'eproduct_login' : 'eproduct_register',
@@ -114,7 +117,6 @@
             } else {
               if (msg) { msg.textContent = res.data.message; msg.className = 'ep-auth__msg is-ok'; }
               form.reset();
-              epSetTab('login');
             }
           } else {
             if (msg) { msg.textContent = res.data; msg.className = 'ep-auth__msg is-err'; }
