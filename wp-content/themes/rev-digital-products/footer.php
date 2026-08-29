@@ -28,11 +28,6 @@ $ep_year = date('Y');
             <a href="<?php echo esc_url(home_url('/about/')); ?>">About</a>
             <a href="<?php echo esc_url(home_url('/privacy/')); ?>">Privacy Policy</a>
           </div>
-          <div>
-            <h4>Account</h4>
-            <a href="<?php echo esc_url(home_url('/login/')); ?>">Log In</a>
-            <a href="<?php echo esc_url(home_url('/register/')); ?>">Register</a>
-          </div>
         </div>
       </div>
       <div class="ep-footer__bar">&copy; <?php echo $ep_year; ?> <?php echo esc_html($ep_company); ?>. All rights reserved.</div>

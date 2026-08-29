@@ -43,9 +43,10 @@
     }
 
     // ---------- Auth modal ----------
-    var modal = document.getElementById('epAuthModal');
+    function getModal() { return document.getElementById('epAuthModal'); }
 
     function epOpenAuth(tab) {
+      var modal = getModal();
       if (!modal) return;
       modal.setAttribute('aria-hidden', 'false');
       modal.classList.add('is-open');
@@ -55,12 +56,14 @@
       if (msg) { msg.textContent = ''; msg.className = 'ep-auth__msg'; }
     }
     function epCloseAuth() {
+      var modal = getModal();
       if (!modal) return;
       modal.setAttribute('aria-hidden', 'true');
       modal.classList.remove('is-open');
       doc.body.classList.remove('ep-modal-open');
     }
     function epSetTab(tab) {
+      var modal = getModal();
       if (!modal) return;
       forEach(modal.querySelectorAll('.ep-tab'), function (t) {
         t.classList.toggle('active', t.getAttribute('data-tab') === tab);
@@ -81,7 +84,8 @@
       if (e.target.closest && e.target.closest('[data-ep-modal-close]')) { epCloseAuth(); return; }
       if (e.target.closest && e.target.closest('.ep-modal__overlay')) { epCloseAuth(); return; }
       var tab = e.target.closest && e.target.closest('.ep-tab');
-      if (tab && modal && modal.contains(tab)) { epSetTab(tab.getAttribute('data-tab')); }
+      var m = getModal();
+      if (tab && m && m.contains(tab)) { epSetTab(tab.getAttribute('data-tab')); }
     });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape') epCloseAuth(); });
 
