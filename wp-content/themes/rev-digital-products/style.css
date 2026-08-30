@@ -208,6 +208,49 @@ body.eproduct {
 .ep-footer__cols a:hover { color: #fff; }
 .ep-footer__bar { border-top: 1px solid rgba(255,255,255,.08); text-align: center; padding: 18px; font-size: 13px; color: #64748b; }
 
+/* ---------- Brand homepage: grid variants ---------- */
+.ep-grid--3 { grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
+.ep-grid--4 { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
+@media (max-width: 860px) { .ep-grid--3, .ep-grid--4 { grid-template-columns: 1fr; } }
+
+/* ---------- Brand homepage: flat cards (for-you / features / trust) ---------- */
+.ep-card--flat {
+  background: var(--ep-surface); border: 1px solid var(--ep-border); border-radius: 18px;
+  padding: 30px 26px; text-align: center; transition: transform .25s ease, box-shadow .25s ease;
+}
+.ep-card--flat:hover { transform: translateY(-6px); box-shadow: var(--ep-shadow-lg); }
+.ep-card__icon { width: 52px; height: 52px; border-radius: 14px; background: var(--ep-bg); display: grid; place-items: center; margin: 0 auto 16px; color: var(--ep-primary); }
+.ep-card__icon svg { width: 26px; height: 26px; }
+.ep-card--flat h3 { font-size: 18px; margin: 0 0 8px; color: var(--ep-ink); }
+.ep-card--flat p { margin: 0; color: var(--ep-muted); font-size: 15px; line-height: 1.6; }
+
+/* ---------- Brand homepage: steps (how it works) ---------- */
+.ep-steps { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 28px; }
+.ep-step { text-align: center; padding: 24px 16px; }
+.ep-step__num {
+  display: inline-flex; align-items: center; justify-content: center; width: 52px; height: 52px;
+  border-radius: 50%; background: var(--ep-gradient); color: #fff; font-weight: 800; font-size: 18px;
+  margin-bottom: 16px;
+}
+.ep-step h3 { font-size: 17px; margin: 0 0 8px; color: var(--ep-ink); }
+.ep-step p { margin: 0; color: var(--ep-muted); font-size: 15px; line-height: 1.6; }
+
+/* ---------- Brand homepage: testimonials ---------- */
+.ep-testimonials { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 22px; }
+.ep-testimonial { background: var(--ep-surface); border: 1px solid var(--ep-border); border-radius: 18px; padding: 26px 24px; }
+.ep-testimonial__stars { color: #f59e0b; font-size: 16px; letter-spacing: 2px; margin-bottom: 12px; }
+.ep-testimonial p { margin: 0 0 14px; color: var(--ep-text); font-size: 15px; line-height: 1.6; font-style: italic; }
+.ep-testimonial__author { font-size: 14px; font-weight: 600; color: var(--ep-ink); }
+
+/* ---------- Brand homepage: FAQ ---------- */
+.ep-faq { max-width: 760px; margin: 0 auto; display: grid; gap: 16px; }
+.ep-faq__item { background: var(--ep-surface); border: 1px solid var(--ep-border); border-radius: 14px; padding: 22px 26px; }
+.ep-faq__item h3 { font-size: 16px; margin: 0 0 8px; color: var(--ep-ink); }
+.ep-faq__item p { margin: 0; color: var(--ep-muted); font-size: 15px; line-height: 1.6; }
+
+/* ---------- CTA sub-text ---------- */
+.ep-cta__sub { font-size: 14px !important; color: rgba(255,255,255,.65) !important; margin-top: 16px !important; margin-bottom: 0 !important; }
+
 /* ---------- Reveal animation (progressive enhancement) ---------- */
 html.js .ep-reveal { opacity: 0; transform: translateY(26px); transition: opacity .7s ease, transform .7s ease; }
 html.js .ep-reveal.is-visible { opacity: 1; transform: none; }

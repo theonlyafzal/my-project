@@ -81,15 +81,17 @@ function eproduct_create_pages() {
 
 function eproduct_home_shortcode() {
     $company = get_option('eproduct_company_name', 'eProduct');
+    $store = 'https://store.eproduct.org/';
     ob_start();
     ?>
     <div class="eproduct">
+
         <section class="ep-hero">
             <h1>Premium digital products, delivered instantly.</h1>
-            <p>Welcome to <?php echo esc_html($company); ?> — your trusted marketplace for templates, eBooks, software and creative assets. Secure global checkout, instant download.</p>
+            <p>Welcome to <?php echo esc_html($company); ?> — your trusted source for templates, eBooks, software, courses and creative assets. Secure global checkout, instant download.</p>
             <div class="ep-hero__actions">
-                <a class="ep-btn" href="<?php echo esc_url(home_url('/products/')); ?>">Browse Products</a>
-                <a class="ep-btn ep-btn--ghost" href="#" data-ep-auth data-tab="register">Create Free Account</a>
+                <a class="ep-btn" href="<?php echo esc_url($store); ?>" target="_blank" rel="noopener">Visit Store &rarr;</a>
+                <a class="ep-btn ep-btn--ghost" href="#features">See What's Inside</a>
             </div>
             <div class="ep-hero__badges">
                 <span><?php echo eproduct_icon('bolt'); ?> Instant download</span>
@@ -98,45 +100,210 @@ function eproduct_home_shortcode() {
             </div>
         </section>
 
-        <section class="ep-section">
+        <section class="ep-section" id="for-you">
             <div class="ep-section__head">
-                <h2>Why shop with us</h2>
-                <p>Everything you need to create, build and grow — without the friction.</p>
+                <h2>Made for anyone who wants to learn, create or grow</h2>
+                <p>Whatever stage you're at, there's something in the store that fits how you work and learn.</p>
             </div>
-            <div class="ep-features">
-                <?php echo eproduct_feature('bolt', 'Instant Delivery', 'Get your files the moment payment clears — no waiting, no shipping.'); ?>
-                <?php echo eproduct_feature('shield', 'Secure Checkout', 'Pay with Stripe, PayPal or Razorpay. Your data stays protected.'); ?>
-                <?php echo eproduct_feature('spark', 'Hand-picked Quality', 'Every product is reviewed to meet a high standard of quality.'); ?>
-                <?php echo eproduct_feature('globe', 'Global Access', 'Available in 150+ countries with localized pricing.'); ?>
+            <div class="ep-grid ep-grid--3">
+                <div class="ep-card ep-card--flat ep-reveal">
+                    <div class="ep-card__icon"><?php echo eproduct_icon('spark'); ?></div>
+                    <h3>Students</h3>
+                    <p>Learn real, in-demand skills with courses and templates built for beginners — study alongside your degree.</p>
+                </div>
+                <div class="ep-card ep-card--flat ep-reveal">
+                    <div class="ep-card__icon"><?php echo eproduct_icon('bolt'); ?></div>
+                    <h3>Content Creators</h3>
+                    <p>Skip the design grind. Grab ready-to-use templates, reels and hooks that keep your feed consistent and on-brand.</p>
+                </div>
+                <div class="ep-card ep-card--flat ep-reveal">
+                    <div class="ep-card__icon"><?php echo eproduct_icon('shield'); ?></div>
+                    <h3>Freelancers</h3>
+                    <p>Add polished templates and toolkits to your service offering, without spending hours building from scratch.</p>
+                </div>
+                <div class="ep-card ep-card--flat ep-reveal">
+                    <div class="ep-card__icon"><?php echo eproduct_icon('globe'); ?></div>
+                    <h3>Homepreneurs</h3>
+                    <p>Run a knowledge-based side business from your phone — no inventory, no shipping, no fixed hours.</p>
+                </div>
+                <div class="ep-card ep-card--flat ep-reveal">
+                    <div class="ep-card__icon"><?php echo eproduct_icon('spark'); ?></div>
+                    <h3>AI Enthusiasts</h3>
+                    <p>Get curated prompt packs and AI tool guides that save hours of trial and error every single week.</p>
+                </div>
+                <div class="ep-card ep-card--flat ep-reveal">
+                    <div class="ep-card__icon"><?php echo eproduct_icon('bolt'); ?></div>
+                    <h3>Anyone Getting Started</h3>
+                    <p>Tried free tutorials but never finished? Our step-by-step products are your shortcut to actually starting.</p>
+                </div>
             </div>
-<?php echo '<script>document.addEventListener("DOMContentLoaded",function(){var f=document.querySelectorAll(".ep-feature");f.forEach(function(el,i){el.classList.add("ep-reveal");el.style.transitionDelay=(i*80)+"ms";});if(window.epRevealObserve)window.epRevealObserve(document);});</script>'; ?>
+        </section>
+
+        <section class="ep-section" id="features">
+            <div class="ep-section__head">
+                <h2>One store. Every format you'll ever need.</h2>
+                <p>Every category is organised, previewed and ready to download the moment you check out.</p>
+            </div>
+            <div class="ep-grid ep-grid--3">
+                <div class="ep-card ep-card--flat ep-reveal">
+                    <div class="ep-card__icon"><?php echo eproduct_icon('spark'); ?></div>
+                    <h3>Premium Courses</h3>
+                    <p>Structured, video-based courses that take you from zero to confident, module by module.</p>
+                </div>
+                <div class="ep-card ep-card--flat ep-reveal">
+                    <div class="ep-card__icon"><?php echo eproduct_icon('bolt'); ?></div>
+                    <h3>Templates</h3>
+                    <p>Notion, Canva, Excel and presentation templates — fully editable and ready in minutes.</p>
+                </div>
+                <div class="ep-card ep-card--flat ep-reveal">
+                    <div class="ep-card__icon"><?php echo eproduct_icon('shield'); ?></div>
+                    <h3>Ebooks &amp; Guides</h3>
+                    <p>Well-researched, practical ebooks that go deep on the topics that actually move the needle.</p>
+                </div>
+                <div class="ep-card ep-card--flat ep-reveal">
+                    <div class="ep-card__icon"><?php echo eproduct_icon('globe'); ?></div>
+                    <h3>AI Tools &amp; Prompts</h3>
+                    <p>Tested prompt libraries and AI workflow guides so you get better output, faster.</p>
+                </div>
+                <div class="ep-card ep-card--flat ep-reveal">
+                    <div class="ep-card__icon"><?php echo eproduct_icon('bolt'); ?></div>
+                    <h3>Software &amp; Plugins</h3>
+                    <p>Themes, plugins and tools that extend what your website or workflow can do — ready to install.</p>
+                </div>
+                <div class="ep-card ep-card--flat ep-reveal">
+                    <div class="ep-card__icon"><?php echo eproduct_icon('shield'); ?></div>
+                    <h3>Graphics &amp; Assets</h3>
+                    <p>Icons, illustrations, stock photos and design resources for projects that need a polished finish.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="ep-section" id="how">
+            <div class="ep-section__head">
+                <h2>From browsing to downloading in minutes</h2>
+                <p>No confusing checkout, no waiting around. Pick a product, pay securely, and get instant access.</p>
+            </div>
+            <div class="ep-steps">
+                <div class="ep-step ep-reveal">
+                    <span class="ep-step__num">01</span>
+                    <h3>Visit The Store</h3>
+                    <p>Tap the button to head over to our full product catalog.</p>
+                </div>
+                <div class="ep-step ep-reveal">
+                    <span class="ep-step__num">02</span>
+                    <h3>Pick Your Product</h3>
+                    <p>Browse by category — courses, templates, ebooks, software, graphics or tools.</p>
+                </div>
+                <div class="ep-step ep-reveal">
+                    <span class="ep-step__num">03</span>
+                    <h3>Secure Checkout</h3>
+                    <p>Pay safely via cards, PayPal or Razorpay. Your order is confirmed instantly.</p>
+                </div>
+                <div class="ep-step ep-reveal">
+                    <span class="ep-step__num">04</span>
+                    <h3>Instant Access</h3>
+                    <p>Your files unlock immediately — no waiting, no manual approval, no delays.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="ep-section" id="trust">
+            <div class="ep-section__head">
+                <h2>Shop with total confidence</h2>
+                <p>Every checkout is backed by the same four promises — no fine print, no surprises.</p>
+            </div>
+            <div class="ep-grid ep-grid--4">
+                <div class="ep-card ep-card--flat ep-reveal">
+                    <div class="ep-card__icon"><?php echo eproduct_icon('shield'); ?></div>
+                    <h3>Secure Checkout</h3>
+                    <p>Every payment is encrypted and processed through a trusted, verified gateway.</p>
+                </div>
+                <div class="ep-card ep-card--flat ep-reveal">
+                    <div class="ep-card__icon"><?php echo eproduct_icon('bolt'); ?></div>
+                    <h3>Instant Delivery</h3>
+                    <p>No waiting for approval — your files unlock the second payment is confirmed.</p>
+                </div>
+                <div class="ep-card ep-card--flat ep-reveal">
+                    <div class="ep-card__icon"><?php echo eproduct_icon('spark'); ?></div>
+                    <h3>Real Human Support</h3>
+                    <p>Stuck on a download or a doubt before buying? Our team replies quickly.</p>
+                </div>
+                <div class="ep-card ep-card--flat ep-reveal">
+                    <div class="ep-card__icon"><?php echo eproduct_icon('globe'); ?></div>
+                    <h3>Lifetime Access</h3>
+                    <p>Pay once, own it forever. Re-download your products any time you need them.</p>
+                </div>
+            </div>
         </section>
 
         <section class="ep-section">
             <div class="ep-section__head">
-                <h2>Featured products</h2>
-                <p>Start with some of our most popular digital downloads.</p>
+                <h2>What people are saying</h2>
+                <p>Real feedback from people who picked up products from the store.</p>
             </div>
-            <div class="ep-grid">
-                <?php
-                $feat = new WP_Query(array('post_type' => 'eproduct', 'posts_per_page' => 4, 'post_status' => 'publish', 'meta_query' => array(array('key' => '_thumbnail_id', 'compare' => 'EXISTS'))));
-                if (!$feat->have_posts()) {
-                    $feat = new WP_Query(array('post_type' => 'eproduct', 'posts_per_page' => 4, 'post_status' => 'publish'));
-                }
-                while ($feat->have_posts()) { $feat->the_post(); echo eproduct_product_item_html($feat->post); }
-                wp_reset_postdata();
-                ?>
+            <div class="ep-testimonials">
+                <div class="ep-testimonial ep-reveal">
+                    <div class="ep-testimonial__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                    <p>"Downloaded the template pack and my content instantly looked more polished. Delivery was truly instant."</p>
+                    <span class="ep-testimonial__author">Priya K. &middot; Delhi</span>
+                </div>
+                <div class="ep-testimonial ep-reveal">
+                    <div class="ep-testimonial__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                    <p>"The AI prompt pack alone was worth it. Everything is organised so well, I found what I needed in two minutes."</p>
+                    <span class="ep-testimonial__author">Aman S. &middot; Pune</span>
+                </div>
+                <div class="ep-testimonial ep-reveal">
+                    <div class="ep-testimonial__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                    <p>"Bought the toolkit bundle for my freelance clients. Saved me days of work and the templates look premium."</p>
+                    <span class="ep-testimonial__author">Neha R. &middot; Bangalore</span>
+                </div>
+                <div class="ep-testimonial ep-reveal">
+                    <div class="ep-testimonial__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                    <p>"Support replied within minutes when I had a download issue. Sorted immediately."</p>
+                    <span class="ep-testimonial__author">Sanjay V. &middot; Hyderabad</span>
+                </div>
             </div>
-            <div style="text-align:center;margin-top:34px">
-                <a class="ep-btn ep-btn--dark" href="<?php echo esc_url(home_url('/products/')); ?>">View all products</a>
+        </section>
+
+        <section class="ep-section" id="faq">
+            <div class="ep-section__head">
+                <h2>Frequently asked questions</h2>
+            </div>
+            <div class="ep-faq">
+                <div class="ep-faq__item ep-reveal">
+                    <h3>How do I receive my product after payment?</h3>
+                    <p>The moment your payment is confirmed, your product unlocks instantly on the store — no waiting, no manual approval.</p>
+                </div>
+                <div class="ep-faq__item ep-reveal">
+                    <h3>Is this a one-time payment or a subscription?</h3>
+                    <p>Every product is a one-time payment. Once you buy it, it's yours to keep — no recurring charges.</p>
+                </div>
+                <div class="ep-faq__item ep-reveal">
+                    <h3>What payment methods are supported?</h3>
+                    <p>You can pay securely using cards, PayPal and Razorpay, all processed through a trusted payment gateway.</p>
+                </div>
+                <div class="ep-faq__item ep-reveal">
+                    <h3>Can I use the templates and toolkits for my own clients?</h3>
+                    <p>Yes — most products come with usage rights that let you use them personally or in your own freelance and client work.</p>
+                </div>
+                <div class="ep-faq__item ep-reveal">
+                    <h3>What if I need help after buying?</h3>
+                    <p>Our support team is available to help with downloads, access issues or general questions.</p>
+                </div>
+                <div class="ep-faq__item ep-reveal">
+                    <h3>Will I get updates if a product improves later?</h3>
+                    <p>Yes, whenever a product you own gets updated or improved, you get the latest version at no extra cost.</p>
+                </div>
             </div>
         </section>
 
         <section class="ep-cta">
-            <h2>Join thousands of creators</h2>
-            <p>Create a free account and start downloading in minutes.</p>
-            <a class="ep-btn" href="#" data-ep-auth data-tab="register">Get started free</a>
+            <h2>Ready to explore the store?</h2>
+            <p>Courses, templates, ebooks, software and graphics — all waiting for you on the other side of one click.</p>
+            <a class="ep-btn" href="<?php echo esc_url($store); ?>" target="_blank" rel="noopener">Go To The Store &rarr;</a>
+            <p class="ep-cta__sub">Secure checkout &middot; Instant digital delivery &middot; One-time payment</p>
         </section>
+
     </div>
     <?php
     return ob_get_clean();
