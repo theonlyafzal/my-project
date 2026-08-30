@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 190 44" fill="none">
+  <defs>
+    <linearGradient id="epurple" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#6366f1"/>
+      <stop offset="100%" stop-color="#a78bfa"/>
+    </linearGradient>
+  </defs>
+  <!-- Icon: stylized e + orange swoosh -->
+  <g transform="translate(2,2)">
+    <!-- Orange swoosh -->
+    <path d="M7 1.5C3.5 1.5 1 4.5 1 8c0 4.5 3.5 7.5 9 9" stroke="#f97316" stroke-width="3" stroke-linecap="round" fill="none"/>
+    <!-- Dark e -->
+    <path d="M21 17H6c0.2 3 2.2 5.5 6 5.5 2.2 0 4-0.8 5.2-2.2l0.1-0.1-0.7 3.5h4c0.2-1 0.3-2.2 0.3-3.8 0-2.8-0.9-4.8-1.6-5.6" fill="#1e293b"/>
+    <path d="M10 14.5c0-2.8 2-5 5-5 2.8 0 4.8 1.8 5.2 4H10z" fill="#1e293b"/>
+  </g>
+  <!-- "Product" text -->
+  <text x="38" y="32" font-family="Inter, -apple-system, system-ui, sans-serif" font-size="22" font-weight="700" fill="url(#epurple)" letter-spacing="-0.3">Product</text>
+</svg>

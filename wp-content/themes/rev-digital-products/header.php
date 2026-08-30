@@ -21,14 +21,11 @@
 
     <?php
     $ep_company = get_option('eproduct_company_name', 'eProduct');
-    $ep_icon = get_site_icon_url(34);
-    if (!$ep_icon) $ep_icon = esc_url(home_url('/wp-content/uploads/2026/08/cropped-product-32x32.png'));
     ?>
     <header class="ep-header" id="epHeader">
       <div class="ep-header__inner">
         <a class="ep-brand" href="<?php echo esc_url(home_url('/')); ?>">
-          <img class="ep-brand__mark" src="<?php echo esc_url($ep_icon); ?>" alt="<?php echo esc_attr($ep_company); ?>" width="34" height="34">
-          <span class="ep-brand__name"><?php echo esc_html($ep_company); ?></span>
+          <img class="ep-brand__logo" src="<?php echo esc_url(get_template_directory_uri().'/assets/images/eproduct-logo.svg'); ?>" alt="<?php echo esc_attr($ep_company); ?>" height="40">
         </a>
         <nav class="ep-nav" id="epNav">
           <a class="ep-nav__link" href="<?php echo esc_url(home_url('/')); ?>">Home</a>

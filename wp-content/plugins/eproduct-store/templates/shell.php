@@ -3,14 +3,11 @@ defined('ABSPATH') || exit;
 
 function eproduct_site_header() {
     $company = get_option('eproduct_company_name', 'eProduct');
-    $icon = get_site_icon_url(34);
-    if (!$icon) $icon = esc_url(home_url('/wp-content/uploads/2026/08/cropped-product-32x32.png'));
     ?>
     <header class="ep-header" id="epHeader">
       <div class="ep-header__inner">
         <a class="ep-brand" href="<?php echo esc_url(home_url('/')); ?>">
-          <img class="ep-brand__mark" src="<?php echo esc_url($icon); ?>" alt="<?php echo esc_attr($company); ?>" width="34" height="34">
-          <span class="ep-brand__name"><?php echo esc_html($company); ?></span>
+          <img class="ep-brand__logo" src="<?php echo esc_url(get_template_directory_uri().'/assets/images/eproduct-logo.svg'); ?>" alt="<?php echo esc_attr($company); ?>" height="40">
         </a>
         <nav class="ep-nav" id="epNav">
           <a class="ep-nav__link" href="<?php echo esc_url(home_url('/')); ?>">Home</a>
@@ -31,15 +28,12 @@ function eproduct_site_header() {
 
 function eproduct_site_footer() {
     $company = get_option('eproduct_company_name', 'eProduct');
-    $icon = get_site_icon_url(34);
-    if (!$icon) $icon = esc_url(home_url('/wp-content/uploads/2026/08/cropped-product-32x32.png'));
     $year = date('Y');
     ?>
     <footer class="ep-footer">
       <div class="ep-footer__inner">
         <div class="ep-footer__brand">
-          <img class="ep-brand__mark" src="<?php echo esc_url($icon); ?>" alt="<?php echo esc_attr($company); ?>" width="34" height="34">
-          <span class="ep-brand__name"><?php echo esc_html($company); ?></span>
+          <img class="ep-brand__logo" src="<?php echo esc_url(get_template_directory_uri().'/assets/images/eproduct-logo.svg'); ?>" alt="<?php echo esc_attr($company); ?>" height="36" style="filter:brightness(0) invert(1);">
           <p>Premium digital products, delivered instantly to your inbox.</p>
         </div>
         <div class="ep-footer__cols">

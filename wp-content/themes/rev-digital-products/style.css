@@ -72,7 +72,8 @@ body.eproduct {
 }
 .ep-header.is-scrolled { box-shadow: 0 8px 28px rgba(15,23,42,.08); background: rgba(255,255,255,.94); }
 .ep-header__inner { max-width: 1180px; margin: 0 auto; padding: 14px 22px; display: flex; align-items: center; gap: 20px; }
-.ep-brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; font-weight: 800; font-size: 20px; color: var(--ep-ink); }
+.ep-brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; }
+.ep-brand__logo { height: 40px; width: auto; }
 .ep-brand__mark {
   width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center;
   object-fit: cover; box-shadow: 0 6px 16px rgba(99,102,241,.4);
