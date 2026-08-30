@@ -5,6 +5,8 @@
  * @package Rev Digital Products
  */
 $ep_company = get_option('eproduct_company_name', 'eProduct');
+$ep_icon = get_site_icon_url(34);
+if (!$ep_icon) $ep_icon = esc_url(home_url('/wp-content/uploads/2026/08/cropped-product-32x32.png'));
 $ep_year = date('Y');
 ?>
     </main><!-- .ep-main -->
@@ -12,7 +14,8 @@ $ep_year = date('Y');
     <footer class="ep-footer">
       <div class="ep-footer__inner">
         <div class="ep-footer__brand">
-          <img class="ep-brand__logo" src="<?php echo esc_url(get_template_directory_uri().'/assets/images/eproduct-logo.svg'); ?>" alt="<?php echo esc_attr($ep_company); ?>" height="36" style="filter:brightness(0) invert(1);">
+          <img class="ep-brand__mark" src="<?php echo esc_url($ep_icon); ?>" alt="<?php echo esc_attr($ep_company); ?>" width="34" height="34" style="filter:brightness(0) invert(1);">
+          <span class="ep-brand__name" style="-webkit-text-fill-color:#fff;color:#fff;"><?php echo esc_html($ep_company); ?></span>
           <p>Premium digital products, delivered instantly to your inbox.</p>
         </div>
         <div class="ep-footer__cols">
