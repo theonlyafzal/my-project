@@ -75,7 +75,7 @@ body.eproduct {
 .ep-brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; font-weight: 800; font-size: 20px; color: var(--ep-ink); }
 .ep-brand__mark {
   width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center;
-  background: var(--ep-gradient); color: #fff; font-size: 16px; box-shadow: 0 6px 16px rgba(99,102,241,.4);
+  object-fit: cover; box-shadow: 0 6px 16px rgba(99,102,241,.4);
 }
 .ep-brand__name { background: var(--ep-gradient); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
 .ep-nav { margin-left: auto; display: flex; align-items: center; gap: 26px; }
