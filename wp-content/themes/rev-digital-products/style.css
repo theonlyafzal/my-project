@@ -73,8 +73,7 @@ body.eproduct {
 .ep-header.is-scrolled { box-shadow: 0 8px 28px rgba(15,23,42,.08); background: rgba(255,255,255,.94); }
 .ep-header__inner { max-width: 1180px; margin: 0 auto; padding: 14px 22px; display: flex; align-items: center; gap: 20px; }
 .ep-brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; font-weight: 800; font-size: 20px; color: var(--ep-ink); }
-.ep-brand__mark { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; object-fit: contain; box-shadow: 0 2px 8px rgba(99,102,241,.3); transition: box-shadow .2s ease; }
-.ep-brand__mark:hover { box-shadow: 0 4px 14px rgba(99,102,241,.45); }
+.ep-brand__mark { width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; object-fit: cover; box-shadow: 0 6px 16px rgba(99,102,241,.4); }
 .ep-brand__name { background: var(--ep-gradient); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
 .ep-nav { margin-left: auto; display: flex; align-items: center; gap: 26px; }
 .ep-nav__link { color: var(--ep-text); text-decoration: none; font-weight: 500; font-size: 15px; position: relative; }
