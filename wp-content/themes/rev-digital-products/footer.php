@@ -14,7 +14,7 @@ $ep_year = date('Y');
     <footer class="ep-footer">
       <div class="ep-footer__inner">
         <div class="ep-footer__brand">
-          <img class="ep-brand__mark" src="<?php echo esc_url($ep_icon); ?>" alt="<?php echo esc_attr($ep_company); ?>" width="34" height="34" style="filter:brightness(0) invert(1);">
+          <img class="ep-brand__mark" src="<?php echo esc_url($ep_icon); ?>" alt="<?php echo esc_attr($ep_company); ?>" width="34" height="34">
           <span class="ep-brand__name" style="-webkit-text-fill-color:#fff;color:#fff;"><?php echo esc_html($ep_company); ?></span>
           <p>Premium digital products, delivered instantly to your inbox.</p>
         </div>
