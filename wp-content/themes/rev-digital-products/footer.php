@@ -60,7 +60,7 @@ $cats = get_terms(array('taxonomy' => 'eproduct_category', 'hide_empty' => true)
             <h4>Our Products</h4>
             <?php if (!empty($cats) && !is_wp_error($cats)): ?>
               <?php foreach ($cats as $c): ?>
-                <a href="<?php echo esc_url(get_term_link($c)); ?>"><?php echo esc_html($c->name); ?></a>
+                <a href="<?php echo esc_url(get_term_link($c)); ?>" data-cat-slug="<?php echo esc_attr($c->slug); ?>"><?php echo esc_html($c->name); ?></a>
               <?php endforeach; ?>
             <?php endif; ?>
             <a href="<?php echo esc_url($store_url); ?>" target="_blank" rel="noopener">Visit Store</a>

@@ -67,6 +67,20 @@ jQuery(function ($) {
         epFilterByCategory(slug);
     });
 
+    // Generic data-cat-slug links (header, footer, etc.)
+    $(document).on('click', '[data-cat-slug]', function (e) {
+        e.preventDefault();
+        var slug = $(this).data('cat-slug');
+        if (slug !== undefined && slug !== '') epFilterByCategory(String(slug));
+    });
+
+    // Fallback: any link with /product-category/ in href
+    $(document).on('click', 'a[href*="/product-category/"]', function (e) {
+        if ($(this).data('cat-slug')) return;
+        var match = $(this).attr('href').match(/\/product-category\/([^/]+)/);
+        if (match && match[1]) { e.preventDefault(); epFilterByCategory(match[1]); }
+    });
+
     /* ---------- Carousel ---------- */
     $(document).on('click', '[data-carousel-prev]', function () {
         var track = $(this).closest('[data-carousel]').find('[data-carousel-track]');
