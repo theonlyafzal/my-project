@@ -188,7 +188,7 @@ function eproduct_home_shortcode() {
             </div>
         </section>
 
-        <section class="ep-section" id="trust">
+        <section class="ep-section" id="what">
             <div class="ep-section__head">
                 <h2>Why choose us</h2>
                 <p>Every checkout is backed by the same four promises — no fine print, no surprises.</p>

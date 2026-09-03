@@ -8,15 +8,18 @@
 $ep_company = get_option('eproduct_company_name', 'eProduct');
 $ep_year = date('Y');
 $store_url = 'https://store.eproduct.org/';
-?>
+    $ep_icon = get_site_icon_url(36);
+    if (!$ep_icon) $ep_icon = esc_url(home_url('/wp-content/uploads/2026/08/cropped-product-32x32.png'));
+    ?>
     </main><!-- .ep-main -->
 
     <style>
     .ep-footer{background:#f9fafb;border-top:1px solid #e5e7eb}
     .ep-footer__inner{max-width:1200px;margin:0 auto;padding:48px 24px 32px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:40px}
     .ep-footer__brand{max-width:320px}
-    .ep-footer__logo{display:inline-block;margin-bottom:12px;text-decoration:none}
+    .ep-footer__logo{display:inline-flex;align-items:center;gap:8px;margin-bottom:12px;text-decoration:none}
     .ep-footer__logo .ep-brand__name{font-size:1.2rem;font-weight:700;color:#111827}
+    .ep-footer__logo img{border-radius:6px}
     .ep-footer__brand p{font-size:.9rem;color:#6b7280;line-height:1.6;margin:0}
     .ep-footer__links{display:flex;gap:48px}
     .ep-footer__col h4{font-size:.85rem;font-weight:600;color:#111827;text-transform:uppercase;letter-spacing:.5px;margin:0 0 16px}
@@ -32,6 +35,7 @@ $store_url = 'https://store.eproduct.org/';
       <div class="ep-footer__inner">
         <div class="ep-footer__brand">
           <a href="<?php echo esc_url(home_url('/')); ?>" class="ep-footer__logo">
+            <img src="<?php echo esc_url($ep_icon); ?>" alt="" width="28" height="28">
             <span class="ep-brand__name">eProduct</span>
           </a>
           <p>A premium digital products store — courses, templates, ebooks, software and creative assets, all in one place.</p>

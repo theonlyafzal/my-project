@@ -16,7 +16,8 @@
     <style>
     .ep-header{position:sticky;top:0;z-index:1000;background:#fff;border-bottom:1px solid #e5e7eb;box-shadow:0 1px 3px rgba(0,0,0,.04)}
     .ep-header__inner{max-width:1200px;margin:0 auto;padding:0 24px;height:64px;display:flex;align-items:center;justify-content:space-between;gap:24px}
-    .ep-brand{display:flex;align-items:center;text-decoration:none;flex-shrink:0}
+    .ep-brand{display:flex;align-items:center;text-decoration:none;flex-shrink:0;gap:8px}
+    .ep-brand__icon{border-radius:6px}
     .ep-brand__name{font-size:1.2rem;font-weight:700;color:#111827}
     .ep-nav{display:flex;align-items:center;gap:4px}
     .ep-nav__link{padding:8px 14px;border-radius:6px;font-size:.9rem;font-weight:500;color:#374151;text-decoration:none;transition:background .15s,color .15s}
@@ -55,11 +56,12 @@
     <header class="ep-header" id="epHeader">
       <div class="ep-header__inner">
         <a class="ep-brand" href="<?php echo esc_url(home_url('/')); ?>">
+          <img class="ep-brand__icon" src="<?php echo esc_url($ep_icon); ?>" alt="" width="28" height="28">
           <span class="ep-brand__name">eProduct</span>
         </a>
 
         <nav class="ep-nav" id="epNav">
-          <a class="ep-nav__link" href="#who">Who It's For</a>
+          <a class="ep-nav__link" href="#for-you">Who It's For</a>
           <a class="ep-nav__link" href="#what">What You Get</a>
           <a class="ep-nav__link" href="#how">How It Works</a>
           <a class="ep-nav__link" href="#faq">FAQ</a>
@@ -75,7 +77,7 @@
     <!-- Mobile menu -->
     <div class="ep-mobile-menu" id="epMobileMenu">
       <nav class="ep-mobile-menu__nav">
-        <a href="#who">Who It's For</a>
+        <a href="#for-you">Who It's For</a>
         <a href="#what">What You Get</a>
         <a href="#how">How It Works</a>
         <a href="#faq">FAQ</a>
