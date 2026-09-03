@@ -325,9 +325,9 @@ function eproduct_product_item_html($post) {
                 <button class="ep-card__action ep-card__action--wish" data-wishlist="<?php echo $post->ID; ?>" title="Add to Wishlist">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
                 </button>
-                <a class="ep-card__action ep-card__action--cart" href="<?php echo esc_url($cart_url); ?>" title="Add to Cart">
+                <button class="ep-card__action ep-card__action--cart" data-add-to-cart="<?php echo $post->ID; ?>" title="Add to Cart">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
-                </a>
+                </button>
             </div>
         </div>
         <div class="ep-card__body">
@@ -347,7 +347,7 @@ function eproduct_product_item_html($post) {
                         <span class="ep-price"><?php echo $price > 0 ? '$' . number_format($price, 2) : 'Free'; ?></span>
                     <?php endif; ?>
                 </div>
-                <a class="ep-card__cart" href="<?php echo esc_url($cart_url); ?>">Add to Cart</a>
+                <button class="ep-card__cart" data-add-to-cart="<?php echo $post->ID; ?>">Add to Cart</button>
             </div>
         </div>
     </div>
@@ -496,9 +496,27 @@ function eproduct_products_shortcode() {
         </div>
         <div class="ep-cart-notify__text">
             <strong>Product added to cart!</strong>
-            <a href="<?php echo esc_url(home_url('/checkout/')); ?>">View Cart</a>
         </div>
         <button class="ep-cart-notify__close" data-notify-close>&times;</button>
+    </div>
+
+    <!-- Cart Drawer -->
+    <div class="ep-drawer" id="epCartDrawer" aria-hidden="true">
+        <div class="ep-drawer__overlay" data-drawer-close></div>
+        <div class="ep-drawer__panel">
+            <div class="ep-drawer__head">
+                <h3>Your Cart (<span id="epCartCount">0</span>)</h3>
+                <button class="ep-drawer__close" data-drawer-close>&times;</button>
+            </div>
+            <div class="ep-drawer__body" id="epCartBody">
+                <div class="ep-drawer__empty">Your cart is empty.</div>
+            </div>
+            <div class="ep-drawer__foot" id="epCartFoot" style="display:none;">
+                <div class="ep-drawer__total">Total: <strong>$<span id="epCartTotal">0.00</span></strong></div>
+                <a class="ep-btn ep-btn--lg ep-btn--full" href="<?php echo esc_url(home_url('/checkout/')); ?>">Proceed to Checkout</a>
+                <button class="ep-btn ep-btn--outline ep-btn--full" data-drawer-close style="margin-top:8px;">Continue Shopping</button>
+            </div>
+        </div>
     </div>
 
     <?php
@@ -654,7 +672,7 @@ function eproduct_ajax_quick_view() {
             </div>
             <p class="ep-qv__excerpt"><?php echo esc_html($excerpt); ?></p>
             <div class="ep-qv__actions">
-                <a class="ep-btn ep-btn--lg" href="<?php echo esc_url($cart_url); ?>">Add to Cart</a>
+                <button class="ep-btn ep-btn--lg" data-add-to-cart="<?php echo $id; ?>">Add to Cart</button>
                 <a class="ep-btn ep-btn--outline ep-btn--lg" href="<?php echo esc_url($permalink); ?>">View Full Details</a>
             </div>
             <div class="ep-qv__features">

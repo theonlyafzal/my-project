@@ -29,7 +29,7 @@ ob_start();
       <h1 class="ep-single__title"><?php the_title(); ?></h1>
       <div class="ep-single__price"><?php echo $price ? '$' . number_format($price, 2) : 'Free'; ?></div>
       <div class="ep-single__desc"><?php the_content(); ?></div>
-      <a class="ep-btn" href="<?php echo esc_url(home_url('/product/' . $slug . '/?add_to_cart=' . get_the_ID())); ?>">Buy Now</a>
+      <button class="ep-btn" data-add-to-cart="<?php echo get_the_ID(); ?>">Add to Cart</button>
       <?php if ($file): ?><p class="ep-note">Delivered as an instant download after purchase.</p><?php endif; ?>
       <?php if (!empty($cats)): ?><div class="ep-single__meta"><?php foreach ($cats as $c) echo '<span class="ep-badge">' . esc_html($c) . '</span>'; ?></div><?php endif; ?>
     </div>

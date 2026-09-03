@@ -212,7 +212,7 @@ function eproduct_theme_storefront_assets() {
     wp_enqueue_style('rev-digital-products-style', get_stylesheet_uri(), array(), filemtime(get_stylesheet_directory() . '/style.css'));
     wp_enqueue_script('eproduct-ui', get_template_directory_uri() . '/js/eproduct-ui.js', array('jquery'), filemtime(get_template_directory() . '/js/eproduct-ui.js'), true);
     wp_enqueue_script('eproduct-store', get_template_directory_uri() . '/js/store.js', array('jquery'), filemtime(get_template_directory() . '/js/store.js'), true);
-    wp_localize_script('eproduct-store', 'EP', array('ajax' => admin_url('admin-ajax.php'), 'authNonce' => wp_create_nonce('eproduct_auth')));
+    wp_localize_script('eproduct-store', 'EP', array('ajax' => admin_url('admin-ajax.php'), 'authNonce' => wp_create_nonce('eproduct_auth'), 'checkoutUrl' => esc_url(home_url('/checkout/'))));
 }
 add_action('wp_enqueue_scripts', 'eproduct_theme_storefront_assets');
 
