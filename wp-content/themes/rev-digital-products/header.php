@@ -52,7 +52,7 @@
               </div>
             </div>
 
-            <a class="ep-header__icon-link" href="<?php echo esc_url(home_url('/account/')); ?>" title="My Account">
+            <a class="ep-header__icon-link" href="#" data-ep-auth data-tab="login" title="My Account">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
             </a>
 
@@ -91,7 +91,7 @@
             <a class="ep-nav__link" href="<?php echo esc_url(home_url('/about/')); ?>">About</a>
             <a class="ep-nav__link" href="<?php echo esc_url(home_url('/privacy/')); ?>">Privacy</a>
             <a class="ep-nav__link" href="<?php echo esc_url(home_url('/terms/')); ?>">Terms</a>
-            <a class="ep-nav__link" href="<?php echo esc_url(home_url('/account/')); ?>">My Account</a>
+            <a class="ep-nav__link" href="#" data-ep-auth data-tab="login">My Account</a>
           </nav>
 
           <div class="ep-header__quick-links">

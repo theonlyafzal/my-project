@@ -98,6 +98,78 @@ $cats = get_terms(array('taxonomy' => 'eproduct_category', 'hide_empty' => true)
       </div>
     </footer>
 
+    <!-- Login Modal -->
+    <div class="ep-modal" id="epLoginModal" aria-hidden="true">
+      <div class="ep-modal__overlay" data-ep-modal-close></div>
+      <div class="ep-modal__dialog">
+        <button class="ep-modal__close" data-ep-modal-close>&times;</button>
+        <div class="ep-auth__aside">
+          <div class="ep-auth__brand">
+            <img class="ep-brand__mark" src="<?php echo esc_url($ep_icon); ?>" alt="" width="32" height="32">
+            <span class="ep-brand__name"><?php echo esc_html($ep_company); ?></span>
+          </div>
+          <h2>Welcome Back!</h2>
+          <p>Sign in to access your downloads, order history and account settings.</p>
+          <ul class="ep-auth__points">
+            <li>Access your purchased products</li>
+            <li>View order history</li>
+            <li>Download files instantly</li>
+            <li>Get updates on new products</li>
+          </ul>
+        </div>
+        <div class="ep-modal__body">
+          <h2 class="ep-auth__title">Sign In</h2>
+          <p class="ep-auth__sub">Don't have an account? <a href="#" data-ep-auth data-tab="register">Create one</a></p>
+          <form class="ep-auth__form" id="epLoginForm" data-mode="login">
+            <label>Username or Email</label>
+            <input type="text" name="log" placeholder="Enter your username or email" required>
+            <label>Password</label>
+            <input type="password" name="pwd" placeholder="Enter your password" required>
+            <div class="ep-auth__submit">
+              <button type="submit" class="ep-btn">Sign In</button>
+            </div>
+          </form>
+          <div class="ep-auth__msg"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div class="ep-modal" id="epRegisterModal" aria-hidden="true">
+      <div class="ep-modal__overlay" data-ep-modal-close></div>
+      <div class="ep-modal__dialog">
+        <button class="ep-modal__close" data-ep-modal-close>&times;</button>
+        <div class="ep-auth__aside">
+          <div class="ep-auth__brand">
+            <img class="ep-brand__mark" src="<?php echo esc_url($ep_icon); ?>" alt="" width="32" height="32">
+            <span class="ep-brand__name"><?php echo esc_html($ep_company); ?></span>
+          </div>
+          <h2>Create Account</h2>
+          <p>Join us to get instant access to premium digital products.</p>
+          <ul class="ep-auth__points">
+            <li>Instant download after purchase</li>
+            <li>Track all your orders</li>
+            <li>Get exclusive deals &amp; updates</li>
+            <li>Lifetime access to products</li>
+          </ul>
+        </div>
+        <div class="ep-modal__body">
+          <h2 class="ep-auth__title">Create Account</h2>
+          <p class="ep-auth__sub">Already have an account? <a href="#" data-ep-auth data-tab="login">Sign in</a></p>
+          <form class="ep-auth__form" id="epRegisterForm" data-mode="register">
+            <label>Username</label>
+            <input type="text" name="user_login" placeholder="Choose a username" required>
+            <label>Email</label>
+            <input type="email" name="user_email" placeholder="Enter your email" required>
+            <div class="ep-auth__submit">
+              <button type="submit" class="ep-btn">Create Account</button>
+            </div>
+          </form>
+          <div class="ep-auth__msg"></div>
+        </div>
+      </div>
+    </div>
+
     <?php wp_footer(); ?>
 </div><!-- #page -->
 </body>
