@@ -1,7 +1,7 @@
 <?php
 /**
  * The header for Rev Digital Products (eproduct.org).
- * Matching glexmedia.in layout: dark top bar + second nav row.
+ * Matching glexmedia.in layout: clean single-row header.
  *
  * @package Rev Digital Products
  */
@@ -13,6 +13,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="profile" href="https://gmpg.org/xfn/11">
     <?php wp_head(); ?>
+    <style>
+    .ep-header{position:sticky;top:0;z-index:1000;background:#fff;border-bottom:1px solid #e5e7eb;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+    .ep-header__inner{max-width:1200px;margin:0 auto;padding:0 24px;height:64px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+    .ep-brand{display:flex;align-items:center;text-decoration:none;flex-shrink:0}
+    .ep-brand__name{font-size:1.2rem;font-weight:700;color:#111827}
+    .ep-nav{display:flex;align-items:center;gap:4px}
+    .ep-nav__link{padding:8px 14px;border-radius:6px;font-size:.9rem;font-weight:500;color:#374151;text-decoration:none;transition:background .15s,color .15s}
+    .ep-nav__link:hover{background:#f3f4f6;color:#111827}
+    .ep-header__actions{display:flex;align-items:center;gap:12px;flex-shrink:0}
+    .ep-btn--sm{padding:8px 18px;font-size:.85rem;border-radius:6px;font-weight:600;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;transition:background .15s,transform .1s}
+    .ep-btn--primary{background:#374bff;color:#fff}
+    .ep-btn--primary:hover{background:#2b3ae0}
+    .ep-btn--full{width:100%}
+    .ep-burger{display:none;background:none;border:none;cursor:pointer;padding:8px}
+    .ep-burger span{display:block;width:22px;height:2px;background:#374151;margin:5px 0;border-radius:2px;transition:transform .2s,opacity .2s}
+    .ep-burger.active span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+    .ep-burger.active span:nth-child(2){opacity:0}
+    .ep-burger.active span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+    .ep-mobile-menu{display:none;position:fixed;top:64px;left:0;right:0;bottom:0;background:#fff;z-index:999;padding:24px;overflow-y:auto}
+    .ep-mobile-menu.open{display:block}
+    .ep-mobile-menu__nav{display:flex;flex-direction:column;gap:4px}
+    .ep-mobile-menu__nav a{display:block;padding:14px 16px;font-size:1rem;font-weight:500;color:#374151;text-decoration:none;border-radius:8px;transition:background .15s}
+    .ep-mobile-menu__nav a:hover{background:#f3f4f6}
+    .ep-mobile-menu__nav .ep-btn{margin-top:12px;text-align:center}
+    @media(max-width:768px){.ep-nav{display:none}.ep-burger{display:block}.ep-header__inner{height:56px}}
+    </style>
 </head>
 
 <body <?php body_class('eproduct'); ?>>
@@ -25,100 +51,36 @@
     $ep_icon = get_site_icon_url(36);
     if (!$ep_icon) $ep_icon = esc_url(home_url('/wp-content/uploads/2026/08/cropped-product-32x32.png'));
     $store_url = 'https://store.eproduct.org/';
-    $cats = get_terms(array('taxonomy' => 'eproduct_category', 'hide_empty' => true));
     ?>
     <header class="ep-header" id="epHeader">
-      <!-- Top bar: dark background, logo + search + account/cart -->
-      <div class="ep-header__top">
-        <div class="ep-header__top-inner">
-          <a class="ep-brand" href="<?php echo esc_url(home_url('/')); ?>">
-            <img class="ep-brand__mark" src="<?php echo esc_url($ep_icon); ?>" alt="<?php echo esc_attr($ep_company); ?>" width="40" height="40">
-            <span class="ep-brand__name"><?php echo esc_html($ep_company); ?></span>
-          </a>
+      <div class="ep-header__inner">
+        <a class="ep-brand" href="<?php echo esc_url(home_url('/')); ?>">
+          <span class="ep-brand__name">eProduct</span>
+        </a>
 
-          <div class="ep-header__search">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
-            <input type="text" placeholder="Search products..." id="ep-header-search">
-          </div>
+        <nav class="ep-nav" id="epNav">
+          <a class="ep-nav__link" href="#who">Who It's For</a>
+          <a class="ep-nav__link" href="#what">What You Get</a>
+          <a class="ep-nav__link" href="#how">How It Works</a>
+          <a class="ep-nav__link" href="#faq">FAQ</a>
+        </nav>
 
-          <div class="ep-header__right">
-            <div class="ep-header__help">
-              <div class="ep-header__help-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-              </div>
-              <div class="ep-header__help-text">
-                <span class="ep-header__help-label">Need Help?</span>
-                <a href="mailto:support@eproduct.org">support@eproduct.org</a>
-              </div>
-            </div>
-
-            <a class="ep-header__icon-link" href="#" data-ep-auth data-tab="login" title="My Account">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-            </a>
-
-            <a class="ep-header__icon-link ep-header__cart-link" href="#" data-open-cart title="Cart">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
-              <span class="ep-header__cart-count" id="epCartCount">0</span>
-              <span class="ep-header__cart-text">Cart</span>
-            </a>
-          </div>
-
+        <div class="ep-header__actions">
+          <a href="<?php echo esc_url($store_url); ?>" class="ep-btn ep-btn--sm ep-btn--primary">Visit Store</a>
           <button class="ep-burger" id="epBurger" aria-label="Toggle menu"><span></span><span></span><span></span></button>
-        </div>
-      </div>
-
-      <!-- Second row: category dropdown + main nav + quick links -->
-      <div class="ep-header__nav-row">
-        <div class="ep-header__nav-inner">
-          <?php if (!empty($cats) && !is_wp_error($cats)): ?>
-          <div class="ep-cat-dropdown" id="epCatDropdown">
-            <button class="ep-cat-dropdown__toggle" id="epCatToggle">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-              <span>Select Category</span>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><path d="M6 9l6 6 6-6"/></svg>
-            </button>
-            <div class="ep-cat-dropdown__menu" id="epCatMenu">
-              <?php foreach ($cats as $c): ?>
-                <a href="<?php echo esc_url(get_term_link($c)); ?>"><?php echo esc_html($c->name); ?></a>
-              <?php endforeach; ?>
-            </div>
-          </div>
-          <?php endif; ?>
-
-          <nav class="ep-nav" id="epNav">
-            <a class="ep-nav__link" href="<?php echo esc_url(home_url('/')); ?>">Home</a>
-            <a class="ep-nav__link" href="<?php echo esc_url(home_url('/about/')); ?>">About</a>
-            <a class="ep-nav__link" href="<?php echo esc_url($store_url); ?>">Shop</a>
-            <a class="ep-nav__link" href="#" data-ep-auth data-tab="login">My Account</a>
-            <a class="ep-nav__link" href="<?php echo esc_url(home_url('/contact/')); ?>">Contact</a>
-          </nav>
-
-          <div class="ep-header__quick-links">
-            <a href="<?php echo esc_url($store_url); ?>" class="ep-quick-link">Visit Store</a>
-            <a href="<?php echo esc_url(home_url('/checkout/')); ?>" class="ep-quick-link ep-quick-link--accent">Checkout</a>
-          </div>
         </div>
       </div>
     </header>
 
-    <!-- Mobile bottom bar -->
-    <div class="ep-mobile-bar" id="epMobileBar">
-      <a class="ep-mobile-bar__item" href="<?php echo esc_url(home_url('/')); ?>">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-        <span>Home</span>
-      </a>
-      <a class="ep-mobile-bar__item" href="<?php echo esc_url($store_url); ?>">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
-        <span>Shop</span>
-      </a>
-      <a class="ep-mobile-bar__item" href="<?php echo esc_url(home_url('/about/')); ?>">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-        <span>About</span>
-      </a>
-      <a class="ep-mobile-bar__item" href="#" data-ep-auth data-tab="login">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-        <span>Account</span>
-      </a>
+    <!-- Mobile menu -->
+    <div class="ep-mobile-menu" id="epMobileMenu">
+      <nav class="ep-mobile-menu__nav">
+        <a href="#who">Who It's For</a>
+        <a href="#what">What You Get</a>
+        <a href="#how">How It Works</a>
+        <a href="#faq">FAQ</a>
+        <a href="<?php echo esc_url($store_url); ?>" class="ep-btn ep-btn--primary ep-btn--full">Visit Store</a>
+      </nav>
     </div>
 
     <main class="ep-main" id="primary">

@@ -226,46 +226,86 @@ function eproduct_home_shortcode() {
             .ep-testimonials-track{display:flex;gap:20px;width:max-content;animation:epScrollTestimonials var(--scroll-duration,30s) linear infinite}
             .ep-testimonials-scroll:hover .ep-testimonials-track{animation-play-state:paused}
             .ep-testimonial{flex:0 0 320px;background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:24px;box-shadow:0 1px 3px rgba(0,0,0,.06)}
-            .ep-testimonial__stars{color:#f59e0b;font-size:1.1rem;margin-bottom:10px;letter-spacing:2px}
-            .ep-testimonial p{color:#374151;font-size:.95rem;line-height:1.6;margin:0 0 12px}
-            .ep-testimonial__author{color:#6b7280;font-size:.85rem;font-weight:500}
+            .ep-testimonial__stars{color:#f59e0b;font-size:1rem;margin-bottom:12px;letter-spacing:2px}
+            .ep-testimonial p{color:#374151;font-size:.95rem;line-height:1.6;margin:0 0 16px;font-style:italic}
+            .ep-testimonial__author{display:flex;align-items:center;gap:10px}
+            .ep-testimonial__avatar{width:36px;height:36px;border-radius:50%;background:#374bff;color:#fff;display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:600}
+            .ep-testimonial__info{display:flex;flex-direction:column}
+            .ep-testimonial__name{color:#111827;font-size:.9rem;font-weight:600}
+            .ep-testimonial__location{color:#6b7280;font-size:.8rem}
             @keyframes epScrollTestimonials{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
             </style>
             <div class="ep-section__head">
-                <h2>What people are saying</h2>
-                <p>Real feedback from people who picked up products from the store.</p>
+                <h2>Loved By Customers</h2>
+                <p>What people are saying</p>
             </div>
             <div class="ep-testimonials-scroll" data-speed="30">
                 <div class="ep-testimonials-track">
                     <div class="ep-testimonial">
                         <div class="ep-testimonial__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
                         <p>"Downloaded the template pack and my content instantly looked more polished. Delivery was truly instant."</p>
-                        <span class="ep-testimonial__author">Priya K. &middot; Delhi</span>
+                        <div class="ep-testimonial__author">
+                            <div class="ep-testimonial__avatar">PK</div>
+                            <div class="ep-testimonial__info">
+                                <span class="ep-testimonial__name">Priya K.</span>
+                                <span class="ep-testimonial__location">Delhi</span>
+                            </div>
+                        </div>
                     </div>
                     <div class="ep-testimonial">
                         <div class="ep-testimonial__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
                         <p>"The AI prompt pack alone was worth it. Everything is organised so well, I found what I needed in two minutes."</p>
-                        <span class="ep-testimonial__author">Aman S. &middot; Pune</span>
+                        <div class="ep-testimonial__author">
+                            <div class="ep-testimonial__avatar">AS</div>
+                            <div class="ep-testimonial__info">
+                                <span class="ep-testimonial__name">Aman S.</span>
+                                <span class="ep-testimonial__location">Pune</span>
+                            </div>
+                        </div>
                     </div>
                     <div class="ep-testimonial">
                         <div class="ep-testimonial__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
                         <p>"Bought the toolkit bundle for my freelance clients. Saved me days of work and the templates look premium."</p>
-                        <span class="ep-testimonial__author">Neha R. &middot; Bangalore</span>
+                        <div class="ep-testimonial__author">
+                            <div class="ep-testimonial__avatar">NR</div>
+                            <div class="ep-testimonial__info">
+                                <span class="ep-testimonial__name">Neha R.</span>
+                                <span class="ep-testimonial__location">Bangalore</span>
+                            </div>
+                        </div>
                     </div>
                     <div class="ep-testimonial">
                         <div class="ep-testimonial__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
                         <p>"Support replied within minutes when I had a download issue. Sorted immediately."</p>
-                        <span class="ep-testimonial__author">Sanjay V. &middot; Hyderabad</span>
+                        <div class="ep-testimonial__author">
+                            <div class="ep-testimonial__avatar">SV</div>
+                            <div class="ep-testimonial__info">
+                                <span class="ep-testimonial__name">Sanjay V.</span>
+                                <span class="ep-testimonial__location">Hyderabad</span>
+                            </div>
+                        </div>
                     </div>
                     <div class="ep-testimonial">
                         <div class="ep-testimonial__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-                        <p>"Great quality products at affordable prices. Will definitely buy again!"</p>
-                        <span class="ep-testimonial__author">Rahul M. &middot; Mumbai</span>
+                        <p>"I was skeptical about digital products, but the ebook I bought was genuinely well-written and practical."</p>
+                        <div class="ep-testimonial__author">
+                            <div class="ep-testimonial__avatar">RM</div>
+                            <div class="ep-testimonial__info">
+                                <span class="ep-testimonial__name">Riya M.</span>
+                                <span class="ep-testimonial__location">Mumbai</span>
+                            </div>
+                        </div>
                     </div>
                     <div class="ep-testimonial">
                         <div class="ep-testimonial__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-                        <p>"The course content is well-structured and easy to follow. Highly recommended for beginners."</p>
-                        <span class="ep-testimonial__author">Sneha T. &middot; Chennai</span>
+                        <p>"The Notion templates saved me an entire weekend of setup. Plugged straight into my workflow."</p>
+                        <div class="ep-testimonial__author">
+                            <div class="ep-testimonial__avatar">KT</div>
+                            <div class="ep-testimonial__info">
+                                <span class="ep-testimonial__name">Kabir T.</span>
+                                <span class="ep-testimonial__location">Chennai</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
