@@ -366,7 +366,7 @@ function eproduct_products_shortcode() {
             <p>Discover templates, eBooks, courses, software and creative assets — instant download after purchase.</p>
             <div class="ep-hero__actions">
                 <a class="ep-btn ep-btn--lg" href="#ep-store-grid">Browse Products</a>
-                <a class="ep-btn ep-btn--ghost ep-btn--lg" href="#ep-trending">Trending Now</a>
+                <a class="ep-btn ep-btn--ghost ep-btn--lg" href="#" data-ep-auth data-tab="register">Sign Up</a>
             </div>
             <div class="ep-hero__badges">
                 <span><?php echo eproduct_icon('bolt'); ?> Instant download</span>
