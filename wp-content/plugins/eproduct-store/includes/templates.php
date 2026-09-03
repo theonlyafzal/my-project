@@ -252,28 +252,46 @@ function eproduct_home_shortcode() {
             </div>
             <div class="ep-faq">
                 <div class="ep-faq__item ep-reveal">
-                    <h3>How do I receive my product after payment?</h3>
-                    <p>The moment your payment is confirmed, your product unlocks instantly on the store — no waiting, no manual approval.</p>
+                    <button class="ep-faq__toggle" aria-expanded="false">
+                        <span>How do I receive my product after payment?</span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                    <div class="ep-faq__answer"><p>The moment your payment is confirmed, your product unlocks instantly on the store — no waiting, no manual approval.</p></div>
                 </div>
                 <div class="ep-faq__item ep-reveal">
-                    <h3>Is this a one-time payment or a subscription?</h3>
-                    <p>Every product is a one-time payment. Once you buy it, it's yours to keep — no recurring charges.</p>
+                    <button class="ep-faq__toggle" aria-expanded="false">
+                        <span>Is this a one-time payment or a subscription?</span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                    <div class="ep-faq__answer"><p>Every product is a one-time payment. Once you buy it, it's yours to keep — no recurring charges.</p></div>
                 </div>
                 <div class="ep-faq__item ep-reveal">
-                    <h3>What payment methods are supported?</h3>
-                    <p>You can pay securely using cards, PayPal and Razorpay, all processed through a trusted payment gateway.</p>
+                    <button class="ep-faq__toggle" aria-expanded="false">
+                        <span>What payment methods are supported?</span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                    <div class="ep-faq__answer"><p>You can pay securely using cards, PayPal and Razorpay, all processed through a trusted payment gateway.</p></div>
                 </div>
                 <div class="ep-faq__item ep-reveal">
-                    <h3>Can I use the templates for my own clients?</h3>
-                    <p>Yes — most products come with usage rights that let you use them personally or in your own freelance and client work.</p>
+                    <button class="ep-faq__toggle" aria-expanded="false">
+                        <span>Can I use the templates for my own clients?</span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                    <div class="ep-faq__answer"><p>Yes — most products come with usage rights that let you use them personally or in your own freelance and client work.</p></div>
                 </div>
                 <div class="ep-faq__item ep-reveal">
-                    <h3>What if I need help after buying?</h3>
-                    <p>Our support team is available to help with downloads, access issues or general questions.</p>
+                    <button class="ep-faq__toggle" aria-expanded="false">
+                        <span>What if I need help after buying?</span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                    <div class="ep-faq__answer"><p>Our support team is available to help with downloads, access issues or general questions.</p></div>
                 </div>
                 <div class="ep-faq__item ep-reveal">
-                    <h3>Will I get updates if a product improves later?</h3>
-                    <p>Yes, whenever a product you own gets updated or improved, you get the latest version at no extra cost.</p>
+                    <button class="ep-faq__toggle" aria-expanded="false">
+                        <span>Will I get updates if a product improves later?</span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                    <div class="ep-faq__answer"><p>Yes, whenever a product you own gets updated or improved, you get the latest version at no extra cost.</p></div>
                 </div>
             </div>
         </section>

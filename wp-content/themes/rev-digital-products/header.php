@@ -78,7 +78,6 @@
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><path d="M6 9l6 6 6-6"/></svg>
             </button>
             <div class="ep-cat-dropdown__menu" id="epCatMenu">
-              <a href="<?php echo esc_url($store_url); ?>">All Products</a>
               <?php foreach ($cats as $c): ?>
                 <a href="<?php echo esc_url(get_term_link($c)); ?>"><?php echo esc_html($c->name); ?></a>
               <?php endforeach; ?>
@@ -96,7 +95,6 @@
 
           <div class="ep-header__quick-links">
             <a href="<?php echo esc_url($store_url); ?>" class="ep-quick-link">Visit Store</a>
-            <a href="<?php echo esc_url(home_url('/checkout/')); ?>" class="ep-quick-link ep-quick-link--accent">Checkout</a>
           </div>
         </div>
       </div>
@@ -107,10 +105,6 @@
       <a class="ep-mobile-bar__item" href="<?php echo esc_url(home_url('/')); ?>">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
         <span>Home</span>
-      </a>
-      <a class="ep-mobile-bar__item" href="<?php echo esc_url(home_url('/products/')); ?>">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
-        <span>Shop</span>
       </a>
       <a class="ep-mobile-bar__item" href="<?php echo esc_url(home_url('/about/')); ?>">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>

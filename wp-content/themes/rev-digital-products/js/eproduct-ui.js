@@ -176,5 +176,24 @@
         });
       });
     });
+
+    // FAQ accordion
+    document.addEventListener('click', function (e) {
+      var toggle = e.target.closest('.ep-faq__toggle');
+      if (!toggle) return;
+      var item = toggle.closest('.ep-faq__item');
+      if (!item) return;
+      var isOpen = item.classList.contains('is-open');
+      // Close all others
+      forEach(document.querySelectorAll('.ep-faq__item.is-open'), function (el) {
+        el.classList.remove('is-open');
+        el.querySelector('.ep-faq__toggle').setAttribute('aria-expanded', 'false');
+      });
+      // Toggle current
+      if (!isOpen) {
+        item.classList.add('is-open');
+        toggle.setAttribute('aria-expanded', 'true');
+      }
+    });
   });
 })();
