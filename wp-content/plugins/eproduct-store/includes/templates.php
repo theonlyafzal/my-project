@@ -402,59 +402,6 @@ function eproduct_products_shortcode() {
         </section>
         <?php endif; ?>
 
-        <?php
-        $sale_products = new WP_Query(array(
-            'post_type' => 'eproduct', 'posts_per_page' => 8, 'post_status' => 'publish',
-            'meta_key' => '_eproduct_sale_price', 'meta_compare' => 'EXISTS',
-            'meta_query' => array(array('key' => '_eproduct_sale_price', 'value' => '0', 'compare' => '>', 'type' => 'NUMERIC'))
-        ));
-        $has_sale = $sale_products->have_posts();
-        if (!$has_sale) wp_reset_postdata();
-        $popular = new WP_Query(array('post_type' => 'eproduct', 'posts_per_page' => 8, 'post_status' => 'publish', 'orderby' => 'comment_count'));
-        $new_arrivals = new WP_Query(array('post_type' => 'eproduct', 'posts_per_page' => 8, 'post_status' => 'publish', 'orderby' => 'date', 'order' => 'DESC'));
-        ?>
-        <section class="ep-section" id="ep-trending">
-            <div class="ep-section__head">
-                <h2>Trending Now</h2>
-                <p>Browse products by category — sale, popular or newest.</p>
-            </div>
-            <div class="ep-tabs" data-tabs>
-                <div class="ep-tabs__nav">
-                    <button class="ep-tab active" data-tab="sale">Sale Products</button>
-                    <button class="ep-tab" data-tab="popular">Popular</button>
-                    <button class="ep-tab" data-tab="new">New Arrivals</button>
-                </div>
-                <div class="ep-tabs__panel active" data-tab-panel="sale">
-                    <div class="ep-grid">
-                        <?php
-                        if ($has_sale) {
-                            while ($sale_products->have_posts()) { $sale_products->the_post(); echo eproduct_product_item_html($sale_products->post); }
-                        } else {
-                            echo '<p class="ep-empty">No products on sale yet. Check back soon!</p>';
-                        }
-                        wp_reset_postdata();
-                        ?>
-                    </div>
-                </div>
-                <div class="ep-tabs__panel" data-tab-panel="popular">
-                    <div class="ep-grid">
-                        <?php
-                        while ($popular->have_posts()) { $popular->the_post(); echo eproduct_product_item_html($popular->post); }
-                        wp_reset_postdata();
-                        ?>
-                    </div>
-                </div>
-                <div class="ep-tabs__panel" data-tab-panel="new">
-                    <div class="ep-grid">
-                        <?php
-                        while ($new_arrivals->have_posts()) { $new_arrivals->the_post(); echo eproduct_product_item_html($new_arrivals->post); }
-                        wp_reset_postdata();
-                        ?>
-                    </div>
-                </div>
-            </div>
-        </section>
-
         <?php if (!empty($cats) && !is_wp_error($cats)): ?>
         <section class="ep-section" id="ep-categories">
             <div class="ep-section__head">
