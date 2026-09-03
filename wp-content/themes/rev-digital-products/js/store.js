@@ -51,15 +51,16 @@ jQuery(function ($) {
         e.preventDefault();
         var $btn = $(this);
         var id = $btn.data('add-to-cart');
+        var origText = $btn.text();
         $btn.addClass('is-loading').text('Adding...');
         $.post(EP.ajax, { action: 'eproduct_add_to_cart', product_id: id }, function (res) {
-            $btn.removeClass('is-loading').text('Add to Cart');
+            $btn.removeClass('is-loading').text('Added ✓');
             if (res.success) {
-                epRenderCart(res.data);
-                epOpenDrawer();
+                $('#epCartCount').text(res.data.count);
             }
+            setTimeout(function () { $btn.text(origText); }, 1500);
         }).fail(function () {
-            $btn.removeClass('is-loading').text('Add to Cart');
+            $btn.removeClass('is-loading').text(origText);
         });
     });
 
