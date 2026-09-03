@@ -298,6 +298,7 @@ function eproduct_product_item_html($post) {
     $on_sale = ($sale_price !== '' && $sale_price < $price);
     $img = get_the_post_thumbnail_url($post->ID, 'medium');
     $cats = wp_get_post_terms($post->ID, 'eproduct_category', array('fields' => 'names'));
+    $cat_slugs = wp_get_post_terms($post->ID, 'eproduct_category', array('fields' => 'slugs'));
     $excerpt = $post->post_excerpt ? $post->post_excerpt : wp_trim_words(strip_shortcodes(wp_strip_all_tags($post->post_content)), 16);
     $initial = preg_match('/./u', $post->post_title, $m) ? $m[0] : '★';
     $pct = $on_sale ? round((1 - $sale_price / $price) * 100) : 0;
@@ -332,8 +333,8 @@ function eproduct_product_item_html($post) {
         <div class="ep-card__body">
             <h3 class="ep-card__title"><a href="<?php echo esc_url($permalink); ?>"><?php echo esc_html($post->post_title); ?></a></h3>
             <div class="ep-card__cat-row">
-                <?php if (!empty($cats)): foreach (array_slice($cats, 0, 2) as $c): ?>
-                    <span class="ep-card__cat-tag"><?php echo esc_html($c); ?></span>
+                <?php if (!empty($cats)): foreach (array_slice($cats, 0, 2) as $i => $c): ?>
+                    <span class="ep-card__cat-tag" data-cat-slug="<?php echo esc_attr(isset($cat_slugs[$i]) ? $cat_slugs[$i] : sanitize_title($c)); ?>"><?php echo esc_html($c); ?></span>
                 <?php endforeach; endif; ?>
             </div>
             <p class="ep-card__excerpt"><?php echo esc_html($excerpt); ?></p>
