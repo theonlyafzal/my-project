@@ -12,20 +12,28 @@ add_action('registered_post_type', function($post_type, $args) {
     $wp_post_types['eproduct']->publicly_queryable = true;
     $wp_post_types['eproduct']->has_archive = true;
     $wp_post_types['eproduct']->show_in_rest = true;
-    $wp_post_types['eproduct']->rewrite = array('slug' => 'product');
+    $wp_post_types['eproduct']->rewrite = array('slug' => 'product', 'with_front' => false);
     if (!isset($wp_post_types['eproduct']->taxonomies) || !in_array('eproduct_category', $wp_post_types['eproduct']->taxonomies)) {
         $wp_post_types['eproduct']->taxonomies[] = 'eproduct_category';
     }
 }, 99, 2);
 
-// 2. Add rewrite rules for product CPT (nginx-compatible)
+// 2. Force correct permalink for eproduct posts
+add_filter('post_type_link', function($post_link, $post) {
+    if ($post->post_type === 'eproduct') {
+        return home_url('/product/' . $post->post_name . '/');
+    }
+    return $post_link;
+}, 10, 2);
+
+// 3. Add rewrite rules for product CPT
 add_action('init', function() {
     add_rewrite_rule('product/([^/]+)/?$', 'index.php?post_type=eproduct&name=$matches[1]', 'top');
     add_rewrite_rule('product-category/([^/]+)/?$', 'index.php?eproduct_category=$matches[1]', 'top');
     add_rewrite_rule('product-category/([^/]+)/page/([0-9]+)/?$', 'index.php?eproduct_category=$matches[1]&paged=$matches[2]', 'top');
 }, 1);
 
-// 3. Force single-eproduct.php template
+// 4. Force single-eproduct.php template
 add_filter('template_include', function($template) {
     if (is_singular('eproduct')) {
         $t = locate_template('single-eproduct.php');
@@ -38,7 +46,7 @@ add_filter('template_include', function($template) {
     return $template;
 }, 99);
 
-// 4. Remove the plugin's hide-from-frontend filter
+// 5. Remove the plugin's hide-from-frontend filter
 add_action('init', function() {
     global $wp_filter;
     if (isset($wp_filter['pre_get_posts'])) {
