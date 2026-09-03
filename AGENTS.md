@@ -16,8 +16,8 @@ When delegating to a model/subagent, route by domain:
 ## Three locations — GitHub is the source of truth
 - **GitHub (canonical):** `github.com/theonlyafzal/my-project` (private).
 - **Local desktop:** `C:\Users\afzal\Desktop\my-project`.
-- **Live server:** `169.58.90.8`, SSH/SFTP user `eproduct` (port 22), doc root `/home/eproduct/htdocs/eproduct.org`.
-- Deploy by syncing repo content into the live doc root. The live doc root is not itself a git checkout.
+- **Live server:** `169.58.90.8`, SSH user `root` (port 22, password in vault), doc root `/home/eproduct-store/htdocs/store.eproduct.org/`.
+- Deploy via: upload files to `/tmp` via pscp, then `cp` + `chown eproduct-store:eproduct-store` via plink. The live doc root is not itself a git checkout. **Do NOT deploy to `/home/eproduct/htdocs/eproduct.org/`** — that is a different/old path.
 
 ## Architecture (verified from code)
 - **Products:** custom post type `eproduct` (`includes/cpt-products.php`) with taxonomy `eproduct_category` and meta `_eproduct_price`, `_eproduct_file`. The product cover image is the WordPress **featured image** — set via the "Product Cover Image" uploader in the Product Details meta box (saves `_thumbnail_id`); product cards (`eproduct_product_item_html()`) and `single-eproduct.php` render it at the top.
