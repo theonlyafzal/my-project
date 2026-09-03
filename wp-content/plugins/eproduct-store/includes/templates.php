@@ -301,20 +301,41 @@ function eproduct_product_item_html($post) {
     $excerpt = $post->post_excerpt ? $post->post_excerpt : wp_trim_words(strip_shortcodes(wp_strip_all_tags($post->post_content)), 16);
     $initial = preg_match('/./u', $post->post_title, $m) ? $m[0] : '★';
     $pct = $on_sale ? round((1 - $sale_price / $price) * 100) : 0;
+    $permalink = get_permalink($post->ID);
+    $cart_url = add_query_arg('add_to_cart', $post->ID, $permalink);
+    $full_img = get_the_post_thumbnail_url($post->ID, 'large');
     ob_start();
     ?>
-    <div class="ep-card ep-reveal">
-        <a class="ep-card__media" href="<?php echo get_permalink($post->ID); ?>">
-            <?php if ($img): ?>
-                <img src="<?php echo esc_url($img); ?>" alt="<?php echo esc_attr($post->post_title); ?>" loading="lazy">
-            <?php else: ?>
-                <span class="ep-card__placeholder"><?php echo esc_html($initial); ?></span>
-            <?php endif; ?>
+    <div class="ep-card ep-reveal" data-product-id="<?php echo $post->ID; ?>">
+        <div class="ep-card__media">
+            <a href="<?php echo esc_url($permalink); ?>">
+                <?php if ($img): ?>
+                    <img src="<?php echo esc_url($img); ?>" alt="<?php echo esc_attr($post->post_title); ?>" loading="lazy">
+                <?php else: ?>
+                    <span class="ep-card__placeholder"><?php echo esc_html($initial); ?></span>
+                <?php endif; ?>
+            </a>
             <?php if ($on_sale): ?><span class="ep-card__badge"><?php echo $pct; ?>% OFF</span><?php endif; ?>
             <?php if (!empty($cats)): ?><span class="ep-card__tag"><?php echo esc_html($cats[0]); ?></span><?php endif; ?>
-        </a>
+            <div class="ep-card__actions">
+                <button class="ep-card__action ep-card__action--view" data-quick-view="<?php echo $post->ID; ?>" title="Quick View">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                </button>
+                <button class="ep-card__action ep-card__action--wish" data-wishlist="<?php echo $post->ID; ?>" title="Add to Wishlist">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                </button>
+                <a class="ep-card__action ep-card__action--cart" href="<?php echo esc_url($cart_url); ?>" title="Add to Cart">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+                </a>
+            </div>
+        </div>
         <div class="ep-card__body">
-            <h3 class="ep-card__title"><a href="<?php echo get_permalink($post->ID); ?>"><?php echo esc_html($post->post_title); ?></a></h3>
+            <h3 class="ep-card__title"><a href="<?php echo esc_url($permalink); ?>"><?php echo esc_html($post->post_title); ?></a></h3>
+            <div class="ep-card__cat-row">
+                <?php if (!empty($cats)): foreach (array_slice($cats, 0, 2) as $c): ?>
+                    <span class="ep-card__cat-tag"><?php echo esc_html($c); ?></span>
+                <?php endforeach; endif; ?>
+            </div>
             <p class="ep-card__excerpt"><?php echo esc_html($excerpt); ?></p>
             <div class="ep-card__foot">
                 <div class="ep-card__prices">
@@ -325,7 +346,7 @@ function eproduct_product_item_html($post) {
                         <span class="ep-price"><?php echo $price > 0 ? '$' . number_format($price, 2) : 'Free'; ?></span>
                     <?php endif; ?>
                 </div>
-                <a class="ep-btn ep-card__cart" href="<?php echo esc_url(add_query_arg('add_to_cart', $post->ID, get_permalink($post->ID))); ?>">Add to Cart</a>
+                <a class="ep-card__cart" href="<?php echo esc_url($cart_url); ?>">Add to Cart</a>
             </div>
         </div>
     </div>
@@ -355,20 +376,111 @@ function eproduct_products_shortcode() {
         </section>
 
         <?php
-        $featured = new WP_Query(array(
-            'post_type' => 'eproduct', 'posts_per_page' => 4, 'post_status' => 'publish',
+        $you_may_like = new WP_Query(array(
+            'post_type' => 'eproduct', 'posts_per_page' => 8, 'post_status' => 'publish', 'orderby' => 'rand',
+        ));
+        if ($you_may_like->have_posts()):
+        ?>
+        <section class="ep-section ep-section--carousel" id="ep-you-like">
+            <div class="ep-section__head">
+                <h2>You May Like</h2>
+                <p>Handpicked products we think you'll love.</p>
+            </div>
+            <div class="ep-carousel" data-carousel>
+                <button class="ep-carousel__btn ep-carousel__btn--prev" data-carousel-prev>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><path d="M15 18l-6-6 6-6"/></svg>
+                </button>
+                <div class="ep-carousel__track" data-carousel-track>
+                    <?php while ($you_may_like->have_posts()) { $you_may_like->the_post(); ?>
+                        <div class="ep-carousel__slide"><?php echo eproduct_product_item_html($you_may_like->post); ?></div>
+                    <?php } wp_reset_postdata(); ?>
+                </div>
+                <button class="ep-carousel__btn ep-carousel__btn--next" data-carousel-next>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><path d="M9 18l6-6-6-6"/></svg>
+                </button>
+            </div>
+        </section>
+        <?php endif; ?>
+
+        <?php
+        $sale_products = new WP_Query(array(
+            'post_type' => 'eproduct', 'posts_per_page' => 8, 'post_status' => 'publish',
             'meta_key' => '_eproduct_sale_price', 'meta_compare' => 'EXISTS',
             'meta_query' => array(array('key' => '_eproduct_sale_price', 'value' => '0', 'compare' => '>', 'type' => 'NUMERIC'))
         ));
-        if ($featured->have_posts()):
+        $has_sale = $sale_products->have_posts();
+        if (!$has_sale) wp_reset_postdata();
+        $popular = new WP_Query(array('post_type' => 'eproduct', 'posts_per_page' => 8, 'post_status' => 'publish', 'orderby' => 'comment_count'));
+        $new_arrivals = new WP_Query(array('post_type' => 'eproduct', 'posts_per_page' => 8, 'post_status' => 'publish', 'orderby' => 'date', 'order' => 'DESC'));
         ?>
         <section class="ep-section" id="ep-trending">
             <div class="ep-section__head">
                 <h2>Trending Now</h2>
-                <p>Hot products with special pricing — grab them before the sale ends.</p>
+                <p>Browse products by category — sale, popular or newest.</p>
             </div>
-            <div class="ep-grid">
-                <?php while ($featured->have_posts()) { $featured->the_post(); echo eproduct_product_item_html($featured->post); } wp_reset_postdata(); ?>
+            <div class="ep-tabs" data-tabs>
+                <div class="ep-tabs__nav">
+                    <button class="ep-tab active" data-tab="sale">Sale Products</button>
+                    <button class="ep-tab" data-tab="popular">Popular</button>
+                    <button class="ep-tab" data-tab="new">New Arrivals</button>
+                </div>
+                <div class="ep-tabs__panel active" data-tab-panel="sale">
+                    <div class="ep-grid">
+                        <?php
+                        if ($has_sale) {
+                            while ($sale_products->have_posts()) { $sale_products->the_post(); echo eproduct_product_item_html($sale_products->post); }
+                        } else {
+                            echo '<p class="ep-empty">No products on sale yet. Check back soon!</p>';
+                        }
+                        wp_reset_postdata();
+                        ?>
+                    </div>
+                </div>
+                <div class="ep-tabs__panel" data-tab-panel="popular">
+                    <div class="ep-grid">
+                        <?php
+                        while ($popular->have_posts()) { $popular->the_post(); echo eproduct_product_item_html($popular->post); }
+                        wp_reset_postdata();
+                        ?>
+                    </div>
+                </div>
+                <div class="ep-tabs__panel" data-tab-panel="new">
+                    <div class="ep-grid">
+                        <?php
+                        while ($new_arrivals->have_posts()) { $new_arrivals->the_post(); echo eproduct_product_item_html($new_arrivals->post); }
+                        wp_reset_postdata();
+                        ?>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <?php if (!empty($cats) && !is_wp_error($cats)): ?>
+        <section class="ep-section" id="ep-categories">
+            <div class="ep-section__head">
+                <h2>Popular Categories</h2>
+                <p>Browse by category to find exactly what you need.</p>
+            </div>
+            <div class="ep-cats-grid">
+                <?php foreach ($cats as $c):
+                    $count = $c->count;
+                    $cat_url = get_term_link($c);
+                    $icons = array('Templates' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="28" height="28"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>',
+                        'Course' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="28" height="28"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>',
+                        'Ebooks' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="28" height="28"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>',
+                        'Software' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="28" height="28"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>',
+                        'AI Tools' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="28" height="28"><path d="M12 2l2.2 6.3L20 10l-5.8 1.7L12 18l-2.2-6.3L4 10l5.8-1.7L12 2z"/></svg>',
+                        'Reels Bundle' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="28" height="28"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>',
+                        'Toolkit' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="28" height="28"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>',
+                    );
+                    $icon = isset($icons[$c->name]) ? $icons[$c->name] : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="28" height="28"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>';
+                ?>
+                <a class="ep-cat-card" href="<?php echo esc_url($cat_url); ?>">
+                    <div class="ep-cat-card__icon"><?php echo $icon; ?></div>
+                    <h3 class="ep-cat-card__name"><?php echo esc_html($c->name); ?></h3>
+                    <span class="ep-cat-card__count"><?php echo $count; ?> <?php echo $count === 1 ? 'product' : 'products'; ?></span>
+                </a>
+                <?php endforeach; ?>
             </div>
         </section>
         <?php endif; ?>
@@ -399,6 +511,18 @@ function eproduct_products_shortcode() {
             </div>
         </section>
 
+        <section class="ep-section ep-newsletter-section">
+            <div class="ep-newsletter">
+                <h2>Subscribe &amp; Get 10% Off</h2>
+                <p>Get email updates about our latest products and special offers.</p>
+                <form class="ep-newsletter__form" data-newsletter>
+                    <input type="email" placeholder="Enter your email address" required>
+                    <button type="submit" class="ep-btn">Sign Up</button>
+                </form>
+                <p class="ep-newsletter__note">No spam, ever. Unsubscribe anytime.</p>
+            </div>
+        </section>
+
         <section class="ep-cta">
             <h2>Can't find what you need?</h2>
             <p>We're adding new products every week. Check back soon or contact us for custom requests.</p>
@@ -407,6 +531,28 @@ function eproduct_products_shortcode() {
         </section>
 
     </div>
+
+    <!-- Quick View Modal -->
+    <div class="ep-qv-modal" id="epQuickView">
+        <div class="ep-qv-modal__overlay" data-qv-close></div>
+        <div class="ep-qv-modal__dialog">
+            <button class="ep-qv-modal__close" data-qv-close>&times;</button>
+            <div class="ep-qv-modal__content" id="epQvContent"></div>
+        </div>
+    </div>
+
+    <!-- Cart Notification -->
+    <div class="ep-cart-notify" id="epCartNotify">
+        <div class="ep-cart-notify__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        </div>
+        <div class="ep-cart-notify__text">
+            <strong>Product added to cart!</strong>
+            <a href="<?php echo esc_url(home_url('/checkout/')); ?>">View Cart</a>
+        </div>
+        <button class="ep-cart-notify__close" data-notify-close>&times;</button>
+    </div>
+
     <?php
     return ob_get_clean();
 }
@@ -514,6 +660,69 @@ function eproduct_ajax_register() {
         wp_send_json_error($result->get_error_message());
     }
     wp_send_json_success(array('message' => 'Registration successful! Check your email for your password.'));
+}
+
+/* ---------- AJAX quick view ---------- */
+add_action('wp_ajax_eproduct_quick_view', 'eproduct_ajax_quick_view');
+add_action('wp_ajax_nopriv_eproduct_quick_view', 'eproduct_ajax_quick_view');
+
+function eproduct_ajax_quick_view() {
+    $id = intval($_POST['product_id']);
+    if (!$id || get_post_type($id) !== 'eproduct') {
+        wp_send_json_error('Invalid product.');
+    }
+    $price = floatval(get_post_meta($id, '_eproduct_price', true));
+    $sale_price = get_post_meta($id, '_eproduct_sale_price', true);
+    $sale_price = ($sale_price !== '' && floatval($sale_price) > 0) ? floatval($sale_price) : '';
+    $on_sale = ($sale_price !== '' && $sale_price < $price);
+    $pct = $on_sale ? round((1 - $sale_price / $price) * 100) : 0;
+    $img = get_the_post_thumbnail_url($id, 'large');
+    $cats = wp_get_post_terms($id, 'eproduct_category', array('fields' => 'names'));
+    $excerpt = get_post_field('post_excerpt', $id) ?: wp_trim_words(strip_shortcodes(wp_strip_all_tags(get_post_field('post_content', $id))), 20);
+    $permalink = get_permalink($id);
+    $cart_url = add_query_arg('add_to_cart', $id, $permalink);
+    ?>
+    <div class="ep-qv">
+        <div class="ep-qv__media">
+            <?php if ($img): ?>
+                <img src="<?php echo esc_url($img); ?>" alt="<?php echo esc_attr(get_the_title($id)); ?>">
+            <?php endif; ?>
+            <?php if ($on_sale): ?><span class="ep-qv__badge"><?php echo $pct; ?>% OFF</span><?php endif; ?>
+        </div>
+        <div class="ep-qv__info">
+            <?php if (!empty($cats)): ?>
+                <div class="ep-qv__cats">
+                    <?php foreach ($cats as $c) echo '<span class="ep-card__cat-tag">' . esc_html($c) . '</span>'; ?>
+                </div>
+            <?php endif; ?>
+            <h2 class="ep-qv__title"><?php echo esc_html(get_the_title($id)); ?></h2>
+            <div class="ep-qv__pricing">
+                <?php if ($on_sale): ?>
+                    <span class="ep-price ep-price--sale">$<?php echo number_format($sale_price, 2); ?></span>
+                    <span class="ep-price ep-price--orig">$<?php echo number_format($price, 2); ?></span>
+                <?php else: ?>
+                    <span class="ep-price"><?php echo $price > 0 ? '$' . number_format($price, 2) : 'Free'; ?></span>
+                <?php endif; ?>
+            </div>
+            <p class="ep-qv__excerpt"><?php echo esc_html($excerpt); ?></p>
+            <div class="ep-qv__actions">
+                <a class="ep-btn ep-btn--lg" href="<?php echo esc_url($cart_url); ?>">Add to Cart</a>
+                <a class="ep-btn ep-btn--outline ep-btn--lg" href="<?php echo esc_url($permalink); ?>">View Full Details</a>
+            </div>
+            <div class="ep-qv__features">
+                <div class="ep-single__feature">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                    Instant download after purchase
+                </div>
+                <div class="ep-single__feature">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    Secure payment processing
+                </div>
+            </div>
+        </div>
+    </div>
+    <?php
+    wp_send_json_success(ob_get_clean());
 }
 
 function eproduct_template_include($template) {
