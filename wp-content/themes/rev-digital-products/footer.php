@@ -24,7 +24,6 @@ $ep_year = date('Y');
           <div>
             <h4>Store</h4>
             <a href="https://store.eproduct.org/" target="_blank" rel="noopener">Visit Store</a>
-            <a href="<?php echo esc_url(home_url('/products/')); ?>">All Products</a>
           </div>
           <div>
             <h4>Company</h4>

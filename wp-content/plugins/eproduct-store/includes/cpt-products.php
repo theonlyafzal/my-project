@@ -41,10 +41,13 @@ function eproduct_product_meta_box() {
 function eproduct_product_meta_cb($post) {
     wp_nonce_field('eproduct_meta_save', 'eproduct_meta_nonce');
     $price = get_post_meta($post->ID, '_eproduct_price', true);
+    $sale_price = get_post_meta($post->ID, '_eproduct_sale_price', true);
     $file = get_post_meta($post->ID, '_eproduct_file', true);
     $thumb_id = get_post_thumbnail_id($post->ID);
-    echo '<p><label>Price (USD)</label><br>';
+    echo '<p><label>Regular Price (USD)</label><br>';
     echo '<input type="number" step="0.01" name="eproduct_price" value="' . esc_attr($price) . '" style="width:200px"></p>';
+    echo '<p><label>Sale Price (USD) <em style="font-weight:normal;color:#888">(leave empty for no sale)</em></label><br>';
+    echo '<input type="number" step="0.01" name="eproduct_sale_price" value="' . esc_attr($sale_price) . '" style="width:200px"></p>';
     echo '<p><label>Download File URL</label><br>';
     echo '<input type="url" name="eproduct_file" value="' . esc_url($file) . '" style="width:100%"></p>';
     echo '<p><label><strong>Product Cover Image</strong></label><br>';
@@ -80,6 +83,10 @@ function eproduct_product_meta_save($post_id) {
     if (!current_user_can('edit_post', $post_id)) return;
     if (isset($_POST['eproduct_price'])) {
         update_post_meta($post_id, '_eproduct_price', floatval($_POST['eproduct_price']));
+    }
+    if (isset($_POST['eproduct_sale_price'])) {
+        $sp = floatval($_POST['eproduct_sale_price']);
+        update_post_meta($post_id, '_eproduct_sale_price', $sp > 0 ? $sp : '');
     }
     if (isset($_POST['eproduct_file'])) {
         update_post_meta($post_id, '_eproduct_file', esc_url_raw($_POST['eproduct_file']));

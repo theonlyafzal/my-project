@@ -91,7 +91,6 @@ function eproduct_home_shortcode() {
             <p>Your trusted source for templates, eBooks, software, courses and creative assets. Secure global checkout, instant download.</p>
             <div class="ep-hero__actions">
                 <a class="ep-btn ep-btn--lg" href="<?php echo esc_url($store); ?>" target="_blank" rel="noopener">Visit Store</a>
-                <a class="ep-btn ep-btn--ghost ep-btn--lg" href="#features">Explore Products</a>
             </div>
             <div class="ep-hero__badges">
                 <span><?php echo eproduct_icon('bolt'); ?> Instant download</span>
@@ -117,45 +116,6 @@ function eproduct_home_shortcode() {
                 <div class="ep-stat">
                     <div class="ep-stat__num">4.9</div>
                     <div class="ep-stat__label">Average Rating</div>
-                </div>
-            </div>
-        </section>
-
-        <section class="ep-section" id="features">
-            <div class="ep-section__head">
-                <h2>Browse by category</h2>
-                <p>One store, every format you'll ever need. All categories organised, previewed and ready to download.</p>
-            </div>
-            <div class="ep-grid ep-grid--3">
-                <div class="ep-card ep-card--flat ep-reveal">
-                    <div class="ep-card__icon"><?php echo eproduct_icon('spark'); ?></div>
-                    <h3>Premium Courses</h3>
-                    <p>Structured, video-based courses that take you from zero to confident, module by module.</p>
-                </div>
-                <div class="ep-card ep-card--flat ep-reveal">
-                    <div class="ep-card__icon"><?php echo eproduct_icon('bolt'); ?></div>
-                    <h3>Templates</h3>
-                    <p>Notion, Canva, Excel and presentation templates — fully editable and ready in minutes.</p>
-                </div>
-                <div class="ep-card ep-card--flat ep-reveal">
-                    <div class="ep-card__icon"><?php echo eproduct_icon('shield'); ?></div>
-                    <h3>Ebooks &amp; Guides</h3>
-                    <p>Well-researched, practical ebooks that go deep on the topics that actually move the needle.</p>
-                </div>
-                <div class="ep-card ep-card--flat ep-reveal">
-                    <div class="ep-card__icon"><?php echo eproduct_icon('globe'); ?></div>
-                    <h3>AI Tools &amp; Prompts</h3>
-                    <p>Tested prompt libraries and AI workflow guides so you get better output, faster.</p>
-                </div>
-                <div class="ep-card ep-card--flat ep-reveal">
-                    <div class="ep-card__icon"><?php echo eproduct_icon('bolt'); ?></div>
-                    <h3>Software &amp; Plugins</h3>
-                    <p>Themes, plugins and tools that extend what your website or workflow can do — ready to install.</p>
-                </div>
-                <div class="ep-card ep-card--flat ep-reveal">
-                    <div class="ep-card__icon"><?php echo eproduct_icon('shield'); ?></div>
-                    <h3>Graphics &amp; Assets</h3>
-                    <p>Icons, illustrations, stock photos and design resources for projects that need a polished finish.</p>
                 </div>
             </div>
         </section>
@@ -332,11 +292,15 @@ function eproduct_home_shortcode() {
 add_shortcode('eproduct_home', 'eproduct_home_shortcode');
 
 function eproduct_product_item_html($post) {
-    $price = get_post_meta($post->ID, '_eproduct_price', true);
+    $price = floatval(get_post_meta($post->ID, '_eproduct_price', true));
+    $sale_price = get_post_meta($post->ID, '_eproduct_sale_price', true);
+    $sale_price = ($sale_price !== '' && floatval($sale_price) > 0) ? floatval($sale_price) : '';
+    $on_sale = ($sale_price !== '' && $sale_price < $price);
     $img = get_the_post_thumbnail_url($post->ID, 'medium');
     $cats = wp_get_post_terms($post->ID, 'eproduct_category', array('fields' => 'names'));
     $excerpt = $post->post_excerpt ? $post->post_excerpt : wp_trim_words(strip_shortcodes(wp_strip_all_tags($post->post_content)), 16);
     $initial = preg_match('/./u', $post->post_title, $m) ? $m[0] : '★';
+    $pct = $on_sale ? round((1 - $sale_price / $price) * 100) : 0;
     ob_start();
     ?>
     <div class="ep-card ep-reveal">
@@ -346,17 +310,22 @@ function eproduct_product_item_html($post) {
             <?php else: ?>
                 <span class="ep-card__placeholder"><?php echo esc_html($initial); ?></span>
             <?php endif; ?>
+            <?php if ($on_sale): ?><span class="ep-card__badge"><?php echo $pct; ?>% OFF</span><?php endif; ?>
             <?php if (!empty($cats)): ?><span class="ep-card__tag"><?php echo esc_html($cats[0]); ?></span><?php endif; ?>
         </a>
         <div class="ep-card__body">
             <h3 class="ep-card__title"><a href="<?php echo get_permalink($post->ID); ?>"><?php echo esc_html($post->post_title); ?></a></h3>
             <p class="ep-card__excerpt"><?php echo esc_html($excerpt); ?></p>
             <div class="ep-card__foot">
-                <span class="ep-price<?php echo $price ? '' : ' ep-price--free'; ?>"><?php echo $price ? '$' . number_format($price, 2) : 'Free'; ?></span>
-                <a class="ep-card__link" href="<?php echo get_permalink($post->ID); ?>">
-                    View Details
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                </a>
+                <div class="ep-card__prices">
+                    <?php if ($on_sale): ?>
+                        <span class="ep-price ep-price--sale">$<?php echo number_format($sale_price, 2); ?></span>
+                        <span class="ep-price ep-price--orig">$<?php echo number_format($price, 2); ?></span>
+                    <?php else: ?>
+                        <span class="ep-price"><?php echo $price > 0 ? '$' . number_format($price, 2) : 'Free'; ?></span>
+                    <?php endif; ?>
+                </div>
+                <a class="ep-btn ep-card__cart" href="<?php echo esc_url(add_query_arg('add_to_cart', $post->ID, get_permalink($post->ID))); ?>">Add to Cart</a>
             </div>
         </div>
     </div>
@@ -367,12 +336,47 @@ function eproduct_product_item_html($post) {
 function eproduct_products_shortcode() {
     ob_start();
     $cats = get_terms(array('taxonomy' => 'eproduct_category', 'hide_empty' => false));
+    $company = get_option('eproduct_company_name', 'eProduct');
     ?>
     <div class="eproduct">
-        <section class="ep-section" style="margin-top:30px">
+
+        <section class="ep-hero ep-hero--store">
+            <h1>Premium Digital Products</h1>
+            <p>Discover templates, eBooks, courses, software and creative assets — instant download after purchase.</p>
+            <div class="ep-hero__actions">
+                <a class="ep-btn ep-btn--lg" href="#ep-store-grid">Browse Products</a>
+                <a class="ep-btn ep-btn--ghost ep-btn--lg" href="#ep-trending">Trending Now</a>
+            </div>
+            <div class="ep-hero__badges">
+                <span><?php echo eproduct_icon('bolt'); ?> Instant download</span>
+                <span><?php echo eproduct_icon('shield'); ?> Secure checkout</span>
+                <span><?php echo eproduct_icon('globe'); ?> 150+ countries</span>
+            </div>
+        </section>
+
+        <?php
+        $featured = new WP_Query(array(
+            'post_type' => 'eproduct', 'posts_per_page' => 4, 'post_status' => 'publish',
+            'meta_key' => '_eproduct_sale_price', 'meta_compare' => 'EXISTS',
+            'meta_query' => array(array('key' => '_eproduct_sale_price', 'value' => '0', 'compare' => '>', 'type' => 'NUMERIC'))
+        ));
+        if ($featured->have_posts()):
+        ?>
+        <section class="ep-section" id="ep-trending">
             <div class="ep-section__head">
-                <h2>Our Products</h2>
-                <p>Browse our curated collection of premium digital products.</p>
+                <h2>Trending Now</h2>
+                <p>Hot products with special pricing — grab them before the sale ends.</p>
+            </div>
+            <div class="ep-grid">
+                <?php while ($featured->have_posts()) { $featured->the_post(); echo eproduct_product_item_html($featured->post); } wp_reset_postdata(); ?>
+            </div>
+        </section>
+        <?php endif; ?>
+
+        <section class="ep-section" id="ep-store-grid">
+            <div class="ep-section__head">
+                <h2>All Products</h2>
+                <p>Browse our full collection of premium digital products.</p>
             </div>
             <div class="ep-toolbar">
                 <div class="ep-search">
@@ -394,6 +398,14 @@ function eproduct_products_shortcode() {
                 ?>
             </div>
         </section>
+
+        <section class="ep-cta">
+            <h2>Can't find what you need?</h2>
+            <p>We're adding new products every week. Check back soon or contact us for custom requests.</p>
+            <div><a class="ep-btn ep-btn--lg" href="<?php echo esc_url(home_url('/privacy/')); ?>">Contact Us</a></div>
+            <p class="ep-cta__sub">Secure checkout &middot; Instant digital delivery &middot; One-time payment</p>
+        </section>
+
     </div>
     <?php
     return ob_get_clean();

@@ -38,7 +38,6 @@
 
         <nav class="ep-nav" id="epNav">
           <a class="ep-nav__link" href="<?php echo esc_url(home_url('/')); ?>">Home</a>
-          <a class="ep-nav__link" href="<?php echo esc_url(home_url('/products/')); ?>">Products</a>
           <a class="ep-nav__link" href="<?php echo esc_url(home_url('/about/')); ?>">About</a>
           <a class="ep-nav__link" href="<?php echo esc_url(home_url('/privacy/')); ?>">Privacy</a>
           <a class="ep-nav__link" href="<?php echo esc_url(home_url('/terms/')); ?>">Terms</a>
