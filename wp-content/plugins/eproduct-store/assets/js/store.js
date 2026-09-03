@@ -109,6 +109,15 @@ jQuery(function ($) {
         $('#epNav').toggleClass('is-open');
     });
 
+    /* ---------- Category dropdown ---------- */
+    $('#epCatToggle').on('click', function (e) {
+        e.stopPropagation();
+        $(this).closest('.ep-cat-dropdown').toggleClass('is-open');
+    });
+    $(document).on('click', function () {
+        $('.ep-cat-dropdown').removeClass('is-open');
+    });
+
     /* ---------- Sticky header shadow ---------- */
     $(window).on('scroll', function () {
         $('#epHeader').toggleClass('is-scrolled', $(this).scrollTop() > 20);
