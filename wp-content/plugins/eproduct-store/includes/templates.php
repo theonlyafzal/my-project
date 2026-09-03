@@ -82,7 +82,6 @@ function eproduct_create_pages() {
 function eproduct_home_shortcode() {
     $company = get_option('eproduct_company_name', 'eProduct');
     $store = 'https://store.eproduct.org/';
-    $cats = get_terms(array('taxonomy' => 'eproduct_category', 'hide_empty' => false));
     ob_start();
     ?>
     <div class="eproduct">
@@ -91,8 +90,7 @@ function eproduct_home_shortcode() {
             <h1>Premium digital products,<br><span>delivered instantly.</span></h1>
             <p>Your trusted source for templates, eBooks, software, courses and creative assets. Secure global checkout, instant download.</p>
             <div class="ep-hero__actions">
-                <a class="ep-btn ep-btn--lg" href="#ep-home-products">Browse Products</a>
-                <a class="ep-btn ep-btn--ghost ep-btn--lg" href="<?php echo esc_url($store); ?>" target="_blank" rel="noopener">Visit Store</a>
+                <a class="ep-btn ep-btn--lg" href="<?php echo esc_url($store); ?>" target="_blank" rel="noopener">Visit Store</a>
             </div>
             <div class="ep-hero__badges">
                 <span><?php echo eproduct_icon('bolt'); ?> Instant download</span>
@@ -119,28 +117,6 @@ function eproduct_home_shortcode() {
                     <div class="ep-stat__num">4.9</div>
                     <div class="ep-stat__label">Average Rating</div>
                 </div>
-            </div>
-        </section>
-
-        <section class="ep-section" id="ep-home-products">
-            <div class="ep-section__head">
-                <h2>Our Products</h2>
-                <p>Browse our collection of premium digital products by category.</p>
-            </div>
-            <div class="ep-toolbar">
-                <div class="ep-cats">
-                    <button class="ep-cat active" data-cat="">All</button>
-                    <?php foreach ($cats as $c): ?>
-                        <button class="ep-cat" data-cat="<?php echo esc_attr($c->slug); ?>"><?php echo esc_html($c->name); ?></button>
-                    <?php endforeach; ?>
-                </div>
-            </div>
-            <div id="ep-grid" class="ep-grid">
-                <?php
-                $q = new WP_Query(array('post_type' => 'eproduct', 'posts_per_page' => -1, 'post_status' => 'publish'));
-                while ($q->have_posts()) { $q->the_post(); echo eproduct_product_item_html($q->post); }
-                wp_reset_postdata();
-                ?>
             </div>
         </section>
 
