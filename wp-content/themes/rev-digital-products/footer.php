@@ -19,12 +19,12 @@ $cats = get_terms(array('taxonomy' => 'eproduct_category', 'hide_empty' => true)
       <div class="ep-footer__newsletter">
         <div class="ep-footer__newsletter-inner">
           <div class="ep-footer__newsletter-text">
-            <h2>Subscribe &amp; Get 10% Off</h2>
-            <p>Get email updates about our latest products and special offers.</p>
+            <h2>Subscribe &amp; Get 10% Discount</h2>
+            <p>Get E-mail updates about our latest shop and special offers.</p>
           </div>
           <form class="ep-footer__newsletter-form" data-newsletter>
             <input type="email" placeholder="Enter your email address" required>
-            <button type="submit" class="ep-btn">Sign Up</button>
+            <button type="submit" class="ep-btn">Subscribe</button>
           </form>
         </div>
       </div>
@@ -55,7 +55,26 @@ $cats = get_terms(array('taxonomy' => 'eproduct_category', 'hide_empty' => true)
             </div>
           </div>
 
-          <!-- Column 2: Support -->
+          <!-- Column 2: Need Help -->
+          <div class="ep-footer__col">
+            <h4>Need Help?</h4>
+            <p>Monday – Friday: 9:00 – 20:00</p>
+            <p>Saturday: 11:00 – 15:00</p>
+            <a href="mailto:support@eproduct.org">support@eproduct.org</a>
+          </div>
+
+          <!-- Column 3: Our Products -->
+          <div class="ep-footer__col">
+            <h4>Our Products</h4>
+            <?php if (!empty($cats) && !is_wp_error($cats)): ?>
+              <?php foreach ($cats as $c): ?>
+                <a href="<?php echo esc_url(get_term_link($c)); ?>" data-cat-slug="<?php echo esc_attr($c->slug); ?>"><?php echo esc_html($c->name); ?></a>
+              <?php endforeach; ?>
+            <?php endif; ?>
+            <a href="<?php echo esc_url($store_url); ?>" target="_blank" rel="noopener">Visit Store</a>
+          </div>
+
+          <!-- Column 4: Support -->
           <div class="ep-footer__col">
             <h4>Support</h4>
             <a href="mailto:support@eproduct.org">Help Center</a>
@@ -64,7 +83,7 @@ $cats = get_terms(array('taxonomy' => 'eproduct_category', 'hide_empty' => true)
             <a href="<?php echo esc_url(home_url('/account/')); ?>">My Account</a>
           </div>
 
-          <!-- Column 3: Customer Service -->
+          <!-- Column 5: Customer Service -->
           <div class="ep-footer__col">
             <h4>Customer Service</h4>
             <a href="mailto:support@eproduct.org">Contact Us</a>
@@ -82,6 +101,7 @@ $cats = get_terms(array('taxonomy' => 'eproduct_category', 'hide_empty' => true)
           <div class="ep-footer__bar-links">
             <a href="<?php echo esc_url(home_url('/terms/')); ?>">Terms of Use</a>
             <a href="<?php echo esc_url(home_url('/privacy/')); ?>">Privacy</a>
+            <a href="<?php echo esc_url(home_url('/privacy/')); ?>">Security</a>
           </div>
         </div>
       </div>

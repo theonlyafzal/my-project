@@ -218,30 +218,55 @@ function eproduct_home_shortcode() {
         </section>
 
         <section class="ep-section">
+            <style>
+            .ep-testimonials-scroll{overflow:hidden;width:100%;position:relative;padding:20px 0}
+            .ep-testimonials-scroll::before,.ep-testimonials-scroll::after{content:'';position:absolute;top:0;bottom:0;width:80px;z-index:2;pointer-events:none}
+            .ep-testimonials-scroll::before{left:0;background:linear-gradient(to right,#fff,transparent)}
+            .ep-testimonials-scroll::after{right:0;background:linear-gradient(to left,#fff,transparent)}
+            .ep-testimonials-track{display:flex;gap:20px;width:max-content;animation:epScrollTestimonials var(--scroll-duration,30s) linear infinite}
+            .ep-testimonials-scroll:hover .ep-testimonials-track{animation-play-state:paused}
+            .ep-testimonial{flex:0 0 320px;background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:24px;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+            .ep-testimonial__stars{color:#f59e0b;font-size:1.1rem;margin-bottom:10px;letter-spacing:2px}
+            .ep-testimonial p{color:#374151;font-size:.95rem;line-height:1.6;margin:0 0 12px}
+            .ep-testimonial__author{color:#6b7280;font-size:.85rem;font-weight:500}
+            @keyframes epScrollTestimonials{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+            </style>
             <div class="ep-section__head">
                 <h2>What people are saying</h2>
                 <p>Real feedback from people who picked up products from the store.</p>
             </div>
-            <div class="ep-testimonials">
-                <div class="ep-testimonial ep-reveal">
-                    <div class="ep-testimonial__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-                    <p>"Downloaded the template pack and my content instantly looked more polished. Delivery was truly instant."</p>
-                    <span class="ep-testimonial__author">Priya K. &middot; Delhi</span>
-                </div>
-                <div class="ep-testimonial ep-reveal">
-                    <div class="ep-testimonial__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-                    <p>"The AI prompt pack alone was worth it. Everything is organised so well, I found what I needed in two minutes."</p>
-                    <span class="ep-testimonial__author">Aman S. &middot; Pune</span>
-                </div>
-                <div class="ep-testimonial ep-reveal">
-                    <div class="ep-testimonial__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-                    <p>"Bought the toolkit bundle for my freelance clients. Saved me days of work and the templates look premium."</p>
-                    <span class="ep-testimonial__author">Neha R. &middot; Bangalore</span>
-                </div>
-                <div class="ep-testimonial ep-reveal">
-                    <div class="ep-testimonial__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-                    <p>"Support replied within minutes when I had a download issue. Sorted immediately."</p>
-                    <span class="ep-testimonial__author">Sanjay V. &middot; Hyderabad</span>
+            <div class="ep-testimonials-scroll" data-speed="30">
+                <div class="ep-testimonials-track">
+                    <div class="ep-testimonial">
+                        <div class="ep-testimonial__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                        <p>"Downloaded the template pack and my content instantly looked more polished. Delivery was truly instant."</p>
+                        <span class="ep-testimonial__author">Priya K. &middot; Delhi</span>
+                    </div>
+                    <div class="ep-testimonial">
+                        <div class="ep-testimonial__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                        <p>"The AI prompt pack alone was worth it. Everything is organised so well, I found what I needed in two minutes."</p>
+                        <span class="ep-testimonial__author">Aman S. &middot; Pune</span>
+                    </div>
+                    <div class="ep-testimonial">
+                        <div class="ep-testimonial__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                        <p>"Bought the toolkit bundle for my freelance clients. Saved me days of work and the templates look premium."</p>
+                        <span class="ep-testimonial__author">Neha R. &middot; Bangalore</span>
+                    </div>
+                    <div class="ep-testimonial">
+                        <div class="ep-testimonial__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                        <p>"Support replied within minutes when I had a download issue. Sorted immediately."</p>
+                        <span class="ep-testimonial__author">Sanjay V. &middot; Hyderabad</span>
+                    </div>
+                    <div class="ep-testimonial">
+                        <div class="ep-testimonial__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                        <p>"Great quality products at affordable prices. Will definitely buy again!"</p>
+                        <span class="ep-testimonial__author">Rahul M. &middot; Mumbai</span>
+                    </div>
+                    <div class="ep-testimonial">
+                        <div class="ep-testimonial__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                        <p>"The course content is well-structured and easy to follow. Highly recommended for beginners."</p>
+                        <span class="ep-testimonial__author">Sneha T. &middot; Chennai</span>
+                    </div>
                 </div>
             </div>
         </section>
