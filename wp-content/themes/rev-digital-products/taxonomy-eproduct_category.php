@@ -23,7 +23,7 @@ $ep_term = get_queried_object();
     <div class="ep-cats">
       <button class="ep-cat active" data-cat="">All</button>
       <?php foreach ($ep_cats as $c): ?>
-        <button class="ep-cat" data-cat="<?php echo esc_attr($c->slug); ?>"><?php echo esc_html($c->name); ?></button>
+        <button class="ep-cat" data-cat="<?php echo esc_attr($c->slug); ?>"<?php echo ($ep_term && $c->slug === $ep_term->slug) ? ' class="active"' : ''; ?>><?php echo esc_html($c->name); ?></button>
       <?php endforeach; ?>
     </div>
   </div>

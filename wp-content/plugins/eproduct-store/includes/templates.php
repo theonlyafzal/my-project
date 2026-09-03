@@ -87,11 +87,11 @@ function eproduct_home_shortcode() {
     <div class="eproduct">
 
         <section class="ep-hero">
-            <h1>Premium digital products, delivered instantly.</h1>
-            <p>Welcome to <?php echo esc_html($company); ?> — your trusted source for templates, eBooks, software, courses and creative assets. Secure global checkout, instant download.</p>
+            <h1>Premium digital products,<br><span>delivered instantly.</span></h1>
+            <p>Your trusted source for templates, eBooks, software, courses and creative assets. Secure global checkout, instant download.</p>
             <div class="ep-hero__actions">
-                <a class="ep-btn" href="<?php echo esc_url($store); ?>" target="_blank" rel="noopener">Visit Store &rarr;</a>
-                <a class="ep-btn ep-btn--ghost" href="#features">See What's Inside</a>
+                <a class="ep-btn ep-btn--lg" href="<?php echo esc_url($store); ?>" target="_blank" rel="noopener">Visit Store</a>
+                <a class="ep-btn ep-btn--ghost ep-btn--lg" href="#features">Explore Products</a>
             </div>
             <div class="ep-hero__badges">
                 <span><?php echo eproduct_icon('bolt'); ?> Instant download</span>
@@ -100,49 +100,31 @@ function eproduct_home_shortcode() {
             </div>
         </section>
 
-        <section class="ep-section" id="for-you">
-            <div class="ep-section__head">
-                <h2>Made for anyone who wants to learn, create or grow</h2>
-                <p>Whatever stage you're at, there's something in the store that fits how you work and learn.</p>
-            </div>
-            <div class="ep-grid ep-grid--3">
-                <div class="ep-card ep-card--flat ep-reveal">
-                    <div class="ep-card__icon"><?php echo eproduct_icon('spark'); ?></div>
-                    <h3>Students</h3>
-                    <p>Learn real, in-demand skills with courses and templates built for beginners — study alongside your degree.</p>
+        <section class="ep-stats ep-reveal">
+            <div class="ep-stats__inner">
+                <div class="ep-stat">
+                    <div class="ep-stat__num">50+</div>
+                    <div class="ep-stat__label">Premium Products</div>
                 </div>
-                <div class="ep-card ep-card--flat ep-reveal">
-                    <div class="ep-card__icon"><?php echo eproduct_icon('bolt'); ?></div>
-                    <h3>Content Creators</h3>
-                    <p>Skip the design grind. Grab ready-to-use templates, reels and hooks that keep your feed consistent and on-brand.</p>
+                <div class="ep-stat">
+                    <div class="ep-stat__num">2K+</div>
+                    <div class="ep-stat__label">Happy Customers</div>
                 </div>
-                <div class="ep-card ep-card--flat ep-reveal">
-                    <div class="ep-card__icon"><?php echo eproduct_icon('shield'); ?></div>
-                    <h3>Freelancers</h3>
-                    <p>Add polished templates and toolkits to your service offering, without spending hours building from scratch.</p>
+                <div class="ep-stat">
+                    <div class="ep-stat__num">150+</div>
+                    <div class="ep-stat__label">Countries Served</div>
                 </div>
-                <div class="ep-card ep-card--flat ep-reveal">
-                    <div class="ep-card__icon"><?php echo eproduct_icon('globe'); ?></div>
-                    <h3>Homepreneurs</h3>
-                    <p>Run a knowledge-based side business from your phone — no inventory, no shipping, no fixed hours.</p>
-                </div>
-                <div class="ep-card ep-card--flat ep-reveal">
-                    <div class="ep-card__icon"><?php echo eproduct_icon('spark'); ?></div>
-                    <h3>AI Enthusiasts</h3>
-                    <p>Get curated prompt packs and AI tool guides that save hours of trial and error every single week.</p>
-                </div>
-                <div class="ep-card ep-card--flat ep-reveal">
-                    <div class="ep-card__icon"><?php echo eproduct_icon('bolt'); ?></div>
-                    <h3>Anyone Getting Started</h3>
-                    <p>Tried free tutorials but never finished? Our step-by-step products are your shortcut to actually starting.</p>
+                <div class="ep-stat">
+                    <div class="ep-stat__num">4.9</div>
+                    <div class="ep-stat__label">Average Rating</div>
                 </div>
             </div>
         </section>
 
         <section class="ep-section" id="features">
             <div class="ep-section__head">
-                <h2>One store. Every format you'll ever need.</h2>
-                <p>Every category is organised, previewed and ready to download the moment you check out.</p>
+                <h2>Browse by category</h2>
+                <p>One store, every format you'll ever need. All categories organised, previewed and ready to download.</p>
             </div>
             <div class="ep-grid ep-grid--3">
                 <div class="ep-card ep-card--flat ep-reveal">
@@ -178,21 +160,60 @@ function eproduct_home_shortcode() {
             </div>
         </section>
 
+        <section class="ep-section" id="for-you">
+            <div class="ep-section__head">
+                <h2>Made for creators, learners and builders</h2>
+                <p>Whatever stage you're at, there's something in the store that fits how you work and learn.</p>
+            </div>
+            <div class="ep-grid ep-grid--3">
+                <div class="ep-card ep-card--flat ep-reveal">
+                    <div class="ep-card__icon"><?php echo eproduct_icon('spark'); ?></div>
+                    <h3>Students</h3>
+                    <p>Learn real, in-demand skills with courses and templates built for beginners — study alongside your degree.</p>
+                </div>
+                <div class="ep-card ep-card--flat ep-reveal">
+                    <div class="ep-card__icon"><?php echo eproduct_icon('bolt'); ?></div>
+                    <h3>Content Creators</h3>
+                    <p>Skip the design grind. Grab ready-to-use templates, reels and hooks that keep your feed consistent.</p>
+                </div>
+                <div class="ep-card ep-card--flat ep-reveal">
+                    <div class="ep-card__icon"><?php echo eproduct_icon('shield'); ?></div>
+                    <h3>Freelancers</h3>
+                    <p>Add polished templates and toolkits to your service offering, without spending hours building from scratch.</p>
+                </div>
+                <div class="ep-card ep-card--flat ep-reveal">
+                    <div class="ep-card__icon"><?php echo eproduct_icon('globe'); ?></div>
+                    <h3>Homepreneurs</h3>
+                    <p>Run a knowledge-based side business from your phone — no inventory, no shipping, no fixed hours.</p>
+                </div>
+                <div class="ep-card ep-card--flat ep-reveal">
+                    <div class="ep-card__icon"><?php echo eproduct_icon('spark'); ?></div>
+                    <h3>AI Enthusiasts</h3>
+                    <p>Get curated prompt packs and AI tool guides that save hours of trial and error every single week.</p>
+                </div>
+                <div class="ep-card ep-card--flat ep-reveal">
+                    <div class="ep-card__icon"><?php echo eproduct_icon('bolt'); ?></div>
+                    <h3>Getting Started</h3>
+                    <p>Tried free tutorials but never finished? Our step-by-step products are your shortcut to actually starting.</p>
+                </div>
+            </div>
+        </section>
+
         <section class="ep-section" id="how">
             <div class="ep-section__head">
-                <h2>From browsing to downloading in minutes</h2>
-                <p>No confusing checkout, no waiting around. Pick a product, pay securely, and get instant access.</p>
+                <h2>How it works</h2>
+                <p>From browsing to downloading in minutes. No confusing checkout, no waiting around.</p>
             </div>
             <div class="ep-steps">
                 <div class="ep-step ep-reveal">
                     <span class="ep-step__num">01</span>
-                    <h3>Visit The Store</h3>
-                    <p>Tap the button to head over to our full product catalog.</p>
+                    <h3>Browse Products</h3>
+                    <p>Explore our catalog by category — courses, templates, ebooks, software or graphics.</p>
                 </div>
                 <div class="ep-step ep-reveal">
                     <span class="ep-step__num">02</span>
                     <h3>Pick Your Product</h3>
-                    <p>Browse by category — courses, templates, ebooks, software, graphics or tools.</p>
+                    <p>Find exactly what you need. Every product has a detailed description and preview.</p>
                 </div>
                 <div class="ep-step ep-reveal">
                     <span class="ep-step__num">03</span>
@@ -209,7 +230,7 @@ function eproduct_home_shortcode() {
 
         <section class="ep-section" id="trust">
             <div class="ep-section__head">
-                <h2>Shop with total confidence</h2>
+                <h2>Why choose us</h2>
                 <p>Every checkout is backed by the same four promises — no fine print, no surprises.</p>
             </div>
             <div class="ep-grid ep-grid--4">
@@ -283,7 +304,7 @@ function eproduct_home_shortcode() {
                     <p>You can pay securely using cards, PayPal and Razorpay, all processed through a trusted payment gateway.</p>
                 </div>
                 <div class="ep-faq__item ep-reveal">
-                    <h3>Can I use the templates and toolkits for my own clients?</h3>
+                    <h3>Can I use the templates for my own clients?</h3>
                     <p>Yes — most products come with usage rights that let you use them personally or in your own freelance and client work.</p>
                 </div>
                 <div class="ep-faq__item ep-reveal">
@@ -300,7 +321,7 @@ function eproduct_home_shortcode() {
         <section class="ep-cta">
             <h2>Ready to explore the store?</h2>
             <p>Courses, templates, ebooks, software and graphics — all waiting for you on the other side of one click.</p>
-            <a class="ep-btn" href="<?php echo esc_url($store); ?>" target="_blank" rel="noopener">Go To The Store &rarr;</a>
+            <a class="ep-btn ep-btn--lg" href="<?php echo esc_url($store); ?>" target="_blank" rel="noopener">Go To The Store</a>
             <p class="ep-cta__sub">Secure checkout &middot; Instant digital delivery &middot; One-time payment</p>
         </section>
 
@@ -314,26 +335,28 @@ function eproduct_product_item_html($post) {
     $price = get_post_meta($post->ID, '_eproduct_price', true);
     $img = get_the_post_thumbnail_url($post->ID, 'medium');
     $cats = wp_get_post_terms($post->ID, 'eproduct_category', array('fields' => 'names'));
-    $excerpt = $post->post_excerpt ? $post->post_excerpt : wp_trim_words(strip_shortcodes(wp_strip_all_tags($post->post_content)), 14);
+    $excerpt = $post->post_excerpt ? $post->post_excerpt : wp_trim_words(strip_shortcodes(wp_strip_all_tags($post->post_content)), 16);
     $initial = preg_match('/./u', $post->post_title, $m) ? $m[0] : '★';
     ob_start();
     ?>
     <div class="ep-card ep-reveal">
         <a class="ep-card__media" href="<?php echo get_permalink($post->ID); ?>">
-            <span class="ep-card__scrim"></span>
             <?php if ($img): ?>
                 <img src="<?php echo esc_url($img); ?>" alt="<?php echo esc_attr($post->post_title); ?>" loading="lazy">
             <?php else: ?>
                 <span class="ep-card__placeholder"><?php echo esc_html($initial); ?></span>
             <?php endif; ?>
             <?php if (!empty($cats)): ?><span class="ep-card__tag"><?php echo esc_html($cats[0]); ?></span><?php endif; ?>
-            <span class="ep-card__name"><?php echo esc_html($post->post_title); ?></span>
         </a>
         <div class="ep-card__body">
+            <h3 class="ep-card__title"><a href="<?php echo get_permalink($post->ID); ?>"><?php echo esc_html($post->post_title); ?></a></h3>
             <p class="ep-card__excerpt"><?php echo esc_html($excerpt); ?></p>
             <div class="ep-card__foot">
                 <span class="ep-price<?php echo $price ? '' : ' ep-price--free'; ?>"><?php echo $price ? '$' . number_format($price, 2) : 'Free'; ?></span>
-                <a class="ep-btn ep-btn--sm" href="<?php echo esc_url(home_url('/product/' . $post->post_name . '/?add_to_cart=' . $post->ID)); ?>">Buy Now</a>
+                <a class="ep-card__link" href="<?php echo get_permalink($post->ID); ?>">
+                    View Details
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
             </div>
         </div>
     </div>
@@ -379,7 +402,17 @@ add_shortcode('eproduct_products', 'eproduct_products_shortcode');
 
 function eproduct_about_shortcode() {
     $company = get_option('eproduct_company_name', 'eProduct');
-    return '<section class="ep-about"><h1>About ' . esc_html($company) . '</h1><p>We are a digital products marketplace dedicated to delivering high-quality downloads — templates, software, assets, and more — with a secure, global checkout experience.</p></section>';
+    ob_start();
+    ?>
+    <div class="eproduct">
+        <section class="ep-about ep-reveal">
+            <h1>About <?php echo esc_html($company); ?></h1>
+            <p>We are a digital products marketplace dedicated to delivering high-quality downloads — templates, software, assets, and more — with a secure, global checkout experience.</p>
+            <p>Our mission is to provide creators, students, freelancers and professionals with the tools they need to learn, build and grow — all delivered instantly after purchase.</p>
+        </section>
+    </div>
+    <?php
+    return ob_get_clean();
 }
 add_shortcode('eproduct_about', 'eproduct_about_shortcode');
 
@@ -387,12 +420,12 @@ add_shortcode('eproduct_about', 'eproduct_about_shortcode');
 // No dedicated [eproduct_login] / [eproduct_register] pages or shortcodes.
 
 function eproduct_checkout_shortcode() {
-    if (!is_user_logged_in()) return '<p>Please <a href="#" data-ep-auth data-tab="login">log in</a> to checkout.</p>';
+    if (!is_user_logged_in()) return '<div class="ep-checkout"><h1>Checkout</h1><p>Please <a href="#" data-ep-auth data-tab="login">log in</a> to checkout.</p></div>';
     $cart = eproduct_cart_items();
-    if (empty($cart)) return '<p>Your cart is empty. <a href="' . esc_url(home_url('/products/')) . '">Browse products</a></p>';
+    if (empty($cart)) return '<div class="ep-checkout"><h1>Checkout</h1><p>Your cart is empty. <a href="' . esc_url(home_url('/products/')) . '">Browse products</a></p></div>';
     $total = 0;
     ob_start();
-    echo '<h1>Checkout</h1><ul class="ep-cart">';
+    echo '<div class="ep-checkout"><h1>Checkout</h1><ul class="ep-cart">';
     foreach ($cart as $id) {
         $price = floatval(get_post_meta($id, '_eproduct_price', true));
         $total += $price;
@@ -411,23 +444,23 @@ function eproduct_checkout_shortcode() {
             </select>
         </p>
         <p><button class="ep-btn" type="submit">Pay $<?php echo number_format($total, 2); ?></button></p>
-    </form>
+    </form></div>
     <?php
     return ob_get_clean();
 }
 add_shortcode('eproduct_checkout', 'eproduct_checkout_shortcode');
 
 function eproduct_account_shortcode() {
-    if (!is_user_logged_in()) return '<p>Please <a href="#" data-ep-auth data-tab="login">log in</a>.</p>';
+    if (!is_user_logged_in()) return '<div class="ep-checkout"><h1>My Account</h1><p>Please <a href="#" data-ep-auth data-tab="login">log in</a>.</p></div>';
     global $wpdb;
     $uid = get_current_user_id();
     $orders = $wpdb->get_results($wpdb->prepare("SELECT * FROM {$wpdb->prefix}eproduct_orders WHERE user_id=%d ORDER BY created_at DESC", $uid));
     ob_start();
-    echo '<h1>My Account</h1><h2>My Orders</h2><table class="ep-orders"><tr><th>Order</th><th>Product</th><th>Amount</th><th>Status</th></tr>';
+    echo '<div class="ep-checkout"><h1>My Account</h1><h2>My Orders</h2><table class="ep-orders"><tr><th>Order</th><th>Product</th><th>Amount</th><th>Status</th></tr>';
     foreach ($orders as $o) {
         echo '<tr><td>#' . $o->id . '</td><td>' . esc_html(get_the_title($o->product_id)) . '</td><td>$' . number_format($o->amount, 2) . '</td><td>' . esc_html($o->status) . '</td></tr>';
     }
-    echo '</table><p><a href="' . esc_url(wp_logout_url(home_url())) . '">Log out</a></p>';
+    echo '</table><p><a href="' . esc_url(wp_logout_url(home_url())) . '">Log out</a></p></div>';
     return ob_get_clean();
 }
 add_shortcode('eproduct_account', 'eproduct_account_shortcode');

@@ -21,17 +21,24 @@
 
     <?php
     $ep_company = get_option('eproduct_company_name', 'eProduct');
-    $ep_icon = get_site_icon_url(34);
+    $ep_icon = get_site_icon_url(36);
     if (!$ep_icon) $ep_icon = esc_url(home_url('/wp-content/uploads/2026/08/cropped-product-32x32.png'));
     ?>
     <header class="ep-header" id="epHeader">
       <div class="ep-header__inner">
         <a class="ep-brand" href="<?php echo esc_url(home_url('/')); ?>">
-          <img class="ep-brand__mark" src="<?php echo esc_url($ep_icon); ?>" alt="<?php echo esc_attr($ep_company); ?>" width="34" height="34">
+          <img class="ep-brand__mark" src="<?php echo esc_url($ep_icon); ?>" alt="<?php echo esc_attr($ep_company); ?>" width="36" height="36">
           <span class="ep-brand__name"><?php echo esc_html($ep_company); ?></span>
         </a>
+
+        <div class="ep-header__search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+          <input type="text" placeholder="Search products..." id="ep-header-search">
+        </div>
+
         <nav class="ep-nav" id="epNav">
           <a class="ep-nav__link" href="<?php echo esc_url(home_url('/')); ?>">Home</a>
+          <a class="ep-nav__link" href="<?php echo esc_url(home_url('/products/')); ?>">Products</a>
           <a class="ep-nav__link" href="<?php echo esc_url(home_url('/about/')); ?>">About</a>
           <a class="ep-nav__link" href="<?php echo esc_url(home_url('/privacy/')); ?>">Privacy</a>
           <a class="ep-nav__link" href="<?php echo esc_url(home_url('/terms/')); ?>">Terms</a>

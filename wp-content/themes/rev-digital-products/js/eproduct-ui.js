@@ -14,9 +14,12 @@
     // Sticky header shadow on scroll
     var header = document.getElementById('epHeader');
     if (header) {
+      var lastScroll = 0;
       var onScroll = function () {
-        if (window.scrollY > 8) header.classList.add('is-scrolled');
+        var st = window.scrollY;
+        if (st > 10) header.classList.add('is-scrolled');
         else header.classList.remove('is-scrolled');
+        lastScroll = st;
       };
       window.addEventListener('scroll', onScroll, { passive: true });
       onScroll();
@@ -26,8 +29,43 @@
     var burger = document.getElementById('epBurger');
     var nav = document.getElementById('epNav');
     if (burger && nav) {
-      burger.addEventListener('click', function () { nav.classList.toggle('is-open'); });
+      burger.addEventListener('click', function () {
+        nav.classList.toggle('is-open');
+        burger.classList.toggle('is-active');
+      });
+      // Close nav on outside click
+      document.addEventListener('click', function (e) {
+        if (!nav.contains(e.target) && !burger.contains(e.target) && nav.classList.contains('is-open')) {
+          nav.classList.remove('is-open');
+          burger.classList.remove('is-active');
+        }
+      });
     }
+
+    // Header search -> redirect to /products/?s=query
+    var headerSearch = document.getElementById('ep-header-search');
+    if (headerSearch) {
+      headerSearch.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') {
+          var q = headerSearch.value.trim();
+          if (q) {
+            window.location.href = '/product/?s=' + encodeURIComponent(q);
+          }
+        }
+      });
+    }
+
+    // Smooth scroll for anchor links
+    document.addEventListener('click', function (e) {
+      var link = e.target.closest('a[href^="#"]');
+      if (link) {
+        var target = document.querySelector(link.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }
+    });
 
     // Scroll reveal (reusable so AJAX-loaded content is also revealed)
     var epRevealObserver = null;
@@ -42,9 +80,12 @@
       if (!epRevealObserver) {
         epRevealObserver = new IntersectionObserver(function (entries) {
           forEach(entries, function (e) {
-            if (e.isIntersecting) { e.target.classList.add('is-visible'); epRevealObserver.unobserve(e.target); }
+            if (e.isIntersecting) {
+              e.target.classList.add('is-visible');
+              epRevealObserver.unobserve(e.target);
+            }
           });
-        }, { threshold: 0.12 });
+        }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
       }
       forEach(reveals, function (el) { epRevealObserver.observe(el); });
     }
