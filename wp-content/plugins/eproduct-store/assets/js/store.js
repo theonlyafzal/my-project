@@ -98,8 +98,8 @@ jQuery(function ($) {
         $modal.addClass('is-open');
         $('body').addClass('ep-modal-open');
 
-        $.post(EP.ajax, { action: 'eproduct_quick_view', product_id: id }, function (html) {
-            $content.html(html);
+        $.post(EP.ajax, { action: 'eproduct_quick_view', product_id: id }, function (res) {
+            $content.html(res.data || '<p>Could not load product details.</p>');
         }).fail(function() {
             $content.html('<p>Could not load product details.</p>');
         });
