@@ -729,7 +729,7 @@ function eproduct_ajax_quick_view() {
     $cats = wp_get_post_terms($id, 'eproduct_category', array('fields' => 'names'));
     $excerpt = get_post_field('post_excerpt', $id) ?: wp_trim_words(strip_shortcodes(wp_strip_all_tags(get_post_field('post_content', $id))), 20);
     $permalink = get_permalink($id);
-    $cart_url = add_query_arg('add_to_cart', $id, $permalink);
+    ob_start();
     ?>
     <div class="ep-qv">
         <div class="ep-qv__media">
