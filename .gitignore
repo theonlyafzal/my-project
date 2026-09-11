@@ -1,0 +1,6 @@
+wp-config.php
+wp-config.php.contabo-backup
+.htaccess
+*.log
+.DS_Store
+Thumbs.db

@@ -1,0 +1,90 @@
+/* ---------Customizer--------- */
+.control-section-rev-digital-products h3.accordion-section-title {
+  font-size: 15px !important;
+  color: #fff !important;
+  background: #1a42fa !important;
+  padding: 12px 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.control-section-rev-digital-products h3.accordion-section-title a:focus{
+  box-shadow: unset !important;
+}
+a.button.button-secondary.alignright {
+  color: #000;
+  box-shadow: none;
+  font-weight: bold;
+  padding: 0px 10px;
+  background: #fff;
+  height: 30px;
+  font-size: 15px !important;
+  border-radius: 0;
+  border: none;
+  margin-top: -3px;
+}
+a.button.button-secondary.alignright:hover {
+  background: #000;
+  color: #fff;
+  border:none;
+}
+.customize-pane-parent .control-section .accordion-section-title button:before {
+  font-family: dashicons;
+  content: "\f103";
+  font-size: 20px;
+  margin-right: 5px;
+  vertical-align: middle;
+}
+#accordion-panel-nav_menus .accordion-section-title button:before {
+  content: "\f333";
+}
+
+li#accordion-section-rev_digital_products_go_pro.cannot-expand .accordion-section-title:after,li#accordion-section-doc_section.cannot-expand .accordion-section-title:after,
+li#accordion-section-rev_digital_products_lite_documentation.cannot-expand .accordion-section-title:after,li#accordion-section-doc_section.cannot-expand .accordion-section-title:after,
+li#accordion-section-rev_digital_products_live_demo.cannot-expand .accordion-section-title:after,li#accordion-section-doc_section.cannot-expand .accordion-section-title:after,
+li#accordion-section-rev_digital_products_bundle.cannot-expand .accordion-section-title:after,li#accordion-section-doc_section.cannot-expand .accordion-section-title:after
+{
+  display: none;
+}
+#accordion-section-rev_digital_products_go_pro h3.accordion-section-title a:focus,
+#accordion-section-rev_digital_products_doc h3.accordion-section-title a:focus {
+  box-shadow: unset !important;
+}
+#customize-theme-controls .customize-pane-parent{
+  overflow: hidden;
+}
+
+/* Upgraded Features */
+
+.customizer-upgraded-features {
+    padding: 10px;
+    color: #000000;
+    border-radius: 4px;
+    border: 1px solid #FA7070;
+    font-style: normal;
+}
+.customizer-pro-icon {
+    font-size: 18px;
+    color: #000000;
+    margin-right: 10px;
+}
+.customizer-upgraded-features .pro-text {
+    font-size: 14px;
+    line-height: 20px;
+}
+.customizer-upgraded-features a {
+    color: #00f !important; 
+    font-weight: 700;
+    text-decoration: none;
+}
+.customizer-upgraded-features a:focus {
+  outline: unset !important;
+  box-shadow: unset !important;
+}
+.customizer-upgraded-features .pro-head:before {
+  font-family: dashicons;
+  content: "\f14c";
+  font-size: 20px;
+  margin-right: 5px;
+  vertical-align: middle;
+}
