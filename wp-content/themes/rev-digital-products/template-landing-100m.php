@@ -596,12 +596,16 @@ body.eproduct > .site > .ep-main > .ep-section:first-child {
 .lp-lib-card__img {
   width: 100%;
   aspect-ratio: 4/3;
-  background: linear-gradient(135deg, rgba(212,168,67,0.1), rgba(255,255,255,0.03));
+  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--lp-gray-400);
-  font-size: 2rem;
+}
+
+.lp-lib-card__img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .lp-lib-card__body {
@@ -882,12 +886,16 @@ body.eproduct > .site > .ep-main > .ep-section:first-child {
 .lp-preview__img {
   width: 100%;
   aspect-ratio: 16/10;
-  background: linear-gradient(135deg, rgba(212,168,67,0.08), rgba(255,255,255,0.02));
+  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--lp-gray-400);
-  font-size: 2.5rem;
+}
+
+.lp-preview__img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .lp-preview__card--featured .lp-preview__img {
@@ -1629,7 +1637,7 @@ body.eproduct > .site > .ep-main > .ep-section:first-child {
       <div class="lp-library__grid lp-reveal">
         <div class="lp-lib-card" data-cat="templates">
           <div class="lp-lib-card__img">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="40" height="40"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+            <img src="<?php echo esc_url(home_url('/wp-content/uploads/2026/08/cover1.png')); ?>" alt="Social Media Templates" loading="lazy">
           </div>
           <div class="lp-lib-card__body">
             <div class="lp-lib-card__cat">Templates</div>
@@ -1638,7 +1646,7 @@ body.eproduct > .site > .ep-main > .ep-section:first-child {
         </div>
         <div class="lp-lib-card" data-cat="ai">
           <div class="lp-lib-card__img">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="40" height="40"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            <img src="<?php echo esc_url(home_url('/wp-content/uploads/2026/08/cover2.png')); ?>" alt="ChatGPT AI Prompts" loading="lazy">
           </div>
           <div class="lp-lib-card__body">
             <div class="lp-lib-card__cat">AI Prompts</div>
@@ -1647,7 +1655,7 @@ body.eproduct > .site > .ep-main > .ep-section:first-child {
         </div>
         <div class="lp-lib-card" data-cat="graphics">
           <div class="lp-lib-card__img">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="40" height="40"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            <img src="<?php echo esc_url(home_url('/wp-content/uploads/2026/08/cover3.png')); ?>" alt="Icon Library Graphics" loading="lazy">
           </div>
           <div class="lp-lib-card__body">
             <div class="lp-lib-card__cat">Graphics</div>
@@ -1656,7 +1664,7 @@ body.eproduct > .site > .ep-main > .ep-section:first-child {
         </div>
         <div class="lp-lib-card" data-cat="videos">
           <div class="lp-lib-card__img">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="40" height="40"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+            <img src="<?php echo esc_url(home_url('/wp-content/uploads/2026/08/cover4.png')); ?>" alt="Stock Video Footage" loading="lazy">
           </div>
           <div class="lp-lib-card__body">
             <div class="lp-lib-card__cat">Videos</div>
@@ -1665,7 +1673,7 @@ body.eproduct > .site > .ep-main > .ep-section:first-child {
         </div>
         <div class="lp-lib-card" data-cat="ebooks">
           <div class="lp-lib-card__img">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="40" height="40"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+            <img src="<?php echo esc_url(home_url('/wp-content/uploads/2026/08/cover5.png')); ?>" alt="Business Guide eBook" loading="lazy">
           </div>
           <div class="lp-lib-card__body">
             <div class="lp-lib-card__cat">eBooks</div>
@@ -1674,7 +1682,7 @@ body.eproduct > .site > .ep-main > .ep-section:first-child {
         </div>
         <div class="lp-lib-card" data-cat="templates">
           <div class="lp-lib-card__img">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="40" height="40"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            <img src="<?php echo esc_url(home_url('/wp-content/uploads/2026/08/cover6.png')); ?>" alt="Presentation Templates" loading="lazy">
           </div>
           <div class="lp-lib-card__body">
             <div class="lp-lib-card__cat">Templates</div>
@@ -1683,7 +1691,7 @@ body.eproduct > .site > .ep-main > .ep-section:first-child {
         </div>
         <div class="lp-lib-card" data-cat="business">
           <div class="lp-lib-card__img">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="40" height="40"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+            <img src="<?php echo esc_url(home_url('/wp-content/uploads/2026/08/cover7.png')); ?>" alt="Finance Templates" loading="lazy">
           </div>
           <div class="lp-lib-card__body">
             <div class="lp-lib-card__cat">Business</div>
@@ -1692,7 +1700,7 @@ body.eproduct > .site > .ep-main > .ep-section:first-child {
         </div>
         <div class="lp-lib-card" data-cat="creative">
           <div class="lp-lib-card__img">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="40" height="40"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/></svg>
+            <img src="<?php echo esc_url(home_url('/wp-content/uploads/2026/08/cover8.png')); ?>" alt="Font Collection" loading="lazy">
           </div>
           <div class="lp-lib-card__body">
             <div class="lp-lib-card__cat">Creative</div>
@@ -1701,7 +1709,7 @@ body.eproduct > .site > .ep-main > .ep-section:first-child {
         </div>
         <div class="lp-lib-card" data-cat="graphics">
           <div class="lp-lib-card__img">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="40" height="40"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            <img src="<?php echo esc_url(home_url('/wp-content/uploads/2026/09/product.png')); ?>" alt="Mockup Bundle" loading="lazy">
           </div>
           <div class="lp-lib-card__body">
             <div class="lp-lib-card__cat">Graphics</div>
@@ -1710,7 +1718,7 @@ body.eproduct > .site > .ep-main > .ep-section:first-child {
         </div>
         <div class="lp-lib-card" data-cat="ai">
           <div class="lp-lib-card__img">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="40" height="40"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            <img src="<?php echo esc_url(home_url('/wp-content/uploads/2026/08/cover1.png')); ?>" alt="Midjourney Prompts" loading="lazy">
           </div>
           <div class="lp-lib-card__body">
             <div class="lp-lib-card__cat">AI Prompts</div>
@@ -1905,37 +1913,37 @@ body.eproduct > .site > .ep-main > .ep-section:first-child {
         <div class="lp-preview__grid">
           <div class="lp-preview__card lp-preview__card--featured">
             <div class="lp-preview__img">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="60" height="60"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+              <img src="<?php echo esc_url(home_url('/wp-content/uploads/2026/09/product.png')); ?>" alt="Design Templates Collection" loading="lazy">
             </div>
             <div class="lp-preview__label">Design Templates Collection</div>
           </div>
           <div class="lp-preview__card">
             <div class="lp-preview__img">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="40" height="40"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+              <img src="<?php echo esc_url(home_url('/wp-content/uploads/2026/08/cover2.png')); ?>" alt="AI Prompts Bundle" loading="lazy">
             </div>
             <div class="lp-preview__label">AI Prompts Bundle</div>
           </div>
           <div class="lp-preview__card">
             <div class="lp-preview__img">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="40" height="40"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+              <img src="<?php echo esc_url(home_url('/wp-content/uploads/2026/08/cover3.png')); ?>" alt="Graphics & Mockups" loading="lazy">
             </div>
             <div class="lp-preview__label">Graphics & Mockups</div>
           </div>
           <div class="lp-preview__card">
             <div class="lp-preview__img">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="40" height="40"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+              <img src="<?php echo esc_url(home_url('/wp-content/uploads/2026/08/cover4.png')); ?>" alt="Video Resources" loading="lazy">
             </div>
             <div class="lp-preview__label">Video Resources</div>
           </div>
           <div class="lp-preview__card">
             <div class="lp-preview__img">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="40" height="40"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+              <img src="<?php echo esc_url(home_url('/wp-content/uploads/2026/08/cover5.png')); ?>" alt="eBooks & Guides" loading="lazy">
             </div>
             <div class="lp-preview__label">eBooks & Guides</div>
           </div>
           <div class="lp-preview__card">
             <div class="lp-preview__img">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="40" height="40"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+              <img src="<?php echo esc_url(home_url('/wp-content/uploads/2026/08/cover7.png')); ?>" alt="Business Documents" loading="lazy">
             </div>
             <div class="lp-preview__label">Business Documents</div>
           </div>
