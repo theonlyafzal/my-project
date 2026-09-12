@@ -302,7 +302,8 @@ function eproduct_product_item_html($post) {
     $excerpt = $post->post_excerpt ? $post->post_excerpt : wp_trim_words(strip_shortcodes(wp_strip_all_tags($post->post_content)), 16);
     $initial = preg_match('/./u', $post->post_title, $m) ? $m[0] : '★';
     $pct = $on_sale ? round((1 - $sale_price / $price) * 100) : 0;
-    $permalink = get_permalink($post->ID);
+    $custom_link = get_post_meta($post->ID, '_eproduct_link', true);
+    $permalink = !empty($custom_link) ? $custom_link : get_permalink($post->ID);
     $cart_url = add_query_arg('add_to_cart', $post->ID, $permalink);
     $full_img = get_the_post_thumbnail_url($post->ID, 'large');
     ob_start();
