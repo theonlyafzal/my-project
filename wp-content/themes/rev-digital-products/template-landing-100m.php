@@ -12,7 +12,14 @@ if (!$ep_icon) $ep_icon = esc_url(home_url('/wp-content/uploads/2026/08/cropped-
 $store_url = 'https://store.eproduct.org/';
 $checkout_url = home_url('/checkout/');
 ?>
-<style>.ep-main{display:none;}</style>
+<style>
+body.eproduct .ep-header,
+body.eproduct .ep-mobile-bar,
+body.eproduct .ep-footer,
+body.eproduct > .site > .ep-main > .ep-section:first-child {
+  display: none !important;
+}
+</style>
 
 <!-- ===== LANDING PAGE STYLES ===== -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
