@@ -11,6 +11,31 @@ $ep_icon = get_site_icon_url(36);
 if (!$ep_icon) $ep_icon = esc_url(home_url('/wp-content/uploads/2026/08/cropped-product-32x32.png'));
 $store_url = 'https://store.eproduct.org/';
 $checkout_url = home_url('/checkout/');
+
+$lp_media_args = array(
+    'post_type' => 'attachment',
+    'post_mime_type' => 'image',
+    'post_status' => 'inherit',
+    'posts_per_page' => -1,
+    'orderby' => 'date',
+    'order' => 'DESC'
+);
+$lp_media_query = new WP_Query($lp_media_args);
+$lp_media_images = array();
+if ($lp_media_query->have_posts()) {
+    while ($lp_media_query->have_posts()) {
+        $lp_media_query->the_post();
+        $mid = get_the_ID();
+        $lp_media_images[] = array(
+            'id'     => $mid,
+            'url'    => wp_get_attachment_url($mid),
+            'title'  => get_the_title(),
+            'alt'    => get_post_meta($mid, '_wp_attachment_image_alt', true),
+            'file'   => basename(get_attached_file($mid))
+        );
+    }
+    wp_reset_postdata();
+}
 ?>
 <style>
 body.eproduct .ep-header,
@@ -1378,6 +1403,10 @@ body.eproduct > .site > .ep-main > .ep-section:first-child {
 }
 </style>
 
+<script>
+var lpMediaImages = <?php echo json_encode($lp_media_images); ?>;
+</script>
+
 <!-- ===== LANDING PAGE CONTENT ===== -->
 <div class="lp-wrapper">
 
@@ -1446,7 +1475,7 @@ body.eproduct > .site > .ep-main > .ep-section:first-child {
           </div>
         </div>
         <div class="lp-hero__visual">
-          <canvas class="lp-dyn-canvas" data-img-type="product" data-img-featured="1" style="width:100%;height:100%;border-radius:16px;"></canvas>
+          <canvas class="lp-dyn-canvas" data-img-type="product" data-img-featured="1" data-img-title="Hero Section Digital Asset Vault" style="width:100%;height:100%;border-radius:16px;"></canvas>
           <div class="lp-hero__floating-card" style="top:10%;left:-5%;">
             <svg viewBox="0 0 24 24" fill="none" stroke="#d4a843" stroke-width="2" width="20" height="20"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
             <span>Design Templates</span>
@@ -1640,70 +1669,70 @@ body.eproduct > .site > .ep-main > .ep-section:first-child {
       </div>
       <div class="lp-library__grid lp-reveal">
         <div class="lp-lib-card" data-cat="templates">
-          <div class="lp-lib-card__img"><canvas class="lp-dyn-canvas" data-img-type="templates"></canvas></div>
+          <div class="lp-lib-card__img"><canvas class="lp-dyn-canvas" data-img-type="templates" data-img-title="Social Media Templates"></canvas></div>
           <div class="lp-lib-card__body">
             <div class="lp-lib-card__cat">Templates</div>
             <div class="lp-lib-card__name">Social Media Pack</div>
           </div>
         </div>
         <div class="lp-lib-card" data-cat="ai">
-          <div class="lp-lib-card__img"><canvas class="lp-dyn-canvas" data-img-type="ai"></canvas></div>
+          <div class="lp-lib-card__img"><canvas class="lp-dyn-canvas" data-img-type="ai" data-img-title="AI Prompts Bundle"></canvas></div>
           <div class="lp-lib-card__body">
             <div class="lp-lib-card__cat">AI Prompts</div>
             <div class="lp-lib-card__name">ChatGPT Bundle</div>
           </div>
         </div>
         <div class="lp-lib-card" data-cat="graphics">
-          <div class="lp-lib-card__img"><canvas class="lp-dyn-canvas" data-img-type="graphics"></canvas></div>
+          <div class="lp-lib-card__img"><canvas class="lp-dyn-canvas" data-img-type="graphics" data-img-title="Graphics 3D Mockups"></canvas></div>
           <div class="lp-lib-card__body">
             <div class="lp-lib-card__cat">Graphics</div>
             <div class="lp-lib-card__name">Icon Library</div>
           </div>
         </div>
         <div class="lp-lib-card" data-cat="videos">
-          <div class="lp-lib-card__img"><canvas class="lp-dyn-canvas" data-img-type="videos"></canvas></div>
+          <div class="lp-lib-card__img"><canvas class="lp-dyn-canvas" data-img-type="videos" data-img-title="Video Resources"></canvas></div>
           <div class="lp-lib-card__body">
             <div class="lp-lib-card__cat">Videos</div>
             <div class="lp-lib-card__name">Stock Footage</div>
           </div>
         </div>
         <div class="lp-lib-card" data-cat="ebooks">
-          <div class="lp-lib-card__img"><canvas class="lp-dyn-canvas" data-img-type="ebooks"></canvas></div>
+          <div class="lp-lib-card__img"><canvas class="lp-dyn-canvas" data-img-type="ebooks" data-img-title="eBooks Action Guides"></canvas></div>
           <div class="lp-lib-card__body">
             <div class="lp-lib-card__cat">eBooks</div>
             <div class="lp-lib-card__name">Business Guide</div>
           </div>
         </div>
         <div class="lp-lib-card" data-cat="templates">
-          <div class="lp-lib-card__img"><canvas class="lp-dyn-canvas" data-img-type="templates"></canvas></div>
+          <div class="lp-lib-card__img"><canvas class="lp-dyn-canvas" data-img-type="templates" data-img-title="Pro Landing Page Template"></canvas></div>
           <div class="lp-lib-card__body">
             <div class="lp-lib-card__cat">Templates</div>
             <div class="lp-lib-card__name">Presentation Kit</div>
           </div>
         </div>
         <div class="lp-lib-card" data-cat="business">
-          <div class="lp-lib-card__img"><canvas class="lp-dyn-canvas" data-img-type="business"></canvas></div>
+          <div class="lp-lib-card__img"><canvas class="lp-dyn-canvas" data-img-type="business" data-img-title="Business Documents Templates"></canvas></div>
           <div class="lp-lib-card__body">
             <div class="lp-lib-card__cat">Business</div>
             <div class="lp-lib-card__name">Finance Templates</div>
           </div>
         </div>
         <div class="lp-lib-card" data-cat="creative">
-          <div class="lp-lib-card__img"><canvas class="lp-dyn-canvas" data-img-type="creative"></canvas></div>
+          <div class="lp-lib-card__img"><canvas class="lp-dyn-canvas" data-img-type="creative" data-img-title="Brand Identity Pack"></canvas></div>
           <div class="lp-lib-card__body">
             <div class="lp-lib-card__cat">Creative</div>
             <div class="lp-lib-card__name">Font Collection</div>
           </div>
         </div>
         <div class="lp-lib-card" data-cat="graphics">
-          <div class="lp-lib-card__img"><canvas class="lp-dyn-canvas" data-img-type="graphics"></canvas></div>
+          <div class="lp-lib-card__img"><canvas class="lp-dyn-canvas" data-img-type="graphics" data-img-title="Ultimate UI Kit"></canvas></div>
           <div class="lp-lib-card__body">
             <div class="lp-lib-card__cat">Graphics</div>
             <div class="lp-lib-card__name">Mockup Bundle</div>
           </div>
         </div>
         <div class="lp-lib-card" data-cat="ai">
-          <div class="lp-lib-card__img"><canvas class="lp-dyn-canvas" data-img-type="ai"></canvas></div>
+          <div class="lp-lib-card__img"><canvas class="lp-dyn-canvas" data-img-type="ai" data-img-title="Mastering WordPress eBook"></canvas></div>
           <div class="lp-lib-card__body">
             <div class="lp-lib-card__cat">AI Prompts</div>
             <div class="lp-lib-card__name">Midjourney Pack</div>
@@ -1896,27 +1925,27 @@ body.eproduct > .site > .ep-main > .ep-section:first-child {
       <div class="lp-preview lp-reveal">
         <div class="lp-preview__grid">
           <div class="lp-preview__card lp-preview__card--featured">
-            <div class="lp-preview__img"><canvas class="lp-dyn-canvas" data-img-type="product" data-img-featured="1"></canvas></div>
+            <div class="lp-preview__img"><canvas class="lp-dyn-canvas" data-img-type="product" data-img-featured="1" data-img-title="Design Templates Collection Featured Card"></canvas></div>
             <div class="lp-preview__label">Design Templates Collection</div>
           </div>
           <div class="lp-preview__card">
-            <div class="lp-preview__img"><canvas class="lp-dyn-canvas" data-img-type="ai"></canvas></div>
+            <div class="lp-preview__img"><canvas class="lp-dyn-canvas" data-img-type="ai" data-img-title="AI Prompts Bundle"></canvas></div>
             <div class="lp-preview__label">AI Prompts Bundle</div>
           </div>
           <div class="lp-preview__card">
-            <div class="lp-preview__img"><canvas class="lp-dyn-canvas" data-img-type="graphics"></canvas></div>
+            <div class="lp-preview__img"><canvas class="lp-dyn-canvas" data-img-type="graphics" data-img-title="Graphics 3D Mockups"></canvas></div>
             <div class="lp-preview__label">Graphics & Mockups</div>
           </div>
           <div class="lp-preview__card">
-            <div class="lp-preview__img"><canvas class="lp-dyn-canvas" data-img-type="videos"></canvas></div>
+            <div class="lp-preview__img"><canvas class="lp-dyn-canvas" data-img-type="videos" data-img-title="Video Resources"></canvas></div>
             <div class="lp-preview__label">Video Resources</div>
           </div>
           <div class="lp-preview__card">
-            <div class="lp-preview__img"><canvas class="lp-dyn-canvas" data-img-type="ebooks"></canvas></div>
+            <div class="lp-preview__img"><canvas class="lp-dyn-canvas" data-img-type="ebooks" data-img-title="eBooks Action Guides"></canvas></div>
             <div class="lp-preview__label">eBooks & Guides</div>
           </div>
           <div class="lp-preview__card">
-            <div class="lp-preview__img"><canvas class="lp-dyn-canvas" data-img-type="business"></canvas></div>
+            <div class="lp-preview__img"><canvas class="lp-dyn-canvas" data-img-type="business" data-img-title="Business Documents Templates"></canvas></div>
             <div class="lp-preview__label">Business Documents</div>
           </div>
         </div>
@@ -2372,20 +2401,77 @@ body.eproduct > .site > .ep-main > .ep-section:first-child {
       ctx.strokeStyle='rgba(212,168,67,0.5)';ctx.lineWidth=1;ctx.strokeRect(2,2,w-4,h-4);
     },
     render: function(el,type,featured){
+      var self=this;
       var dpr=window.devicePixelRatio||1;
       var rect=el.getBoundingClientRect();
       var w=rect.width||400,h=rect.height||300;
       el.width=w*dpr;el.height=h*dpr;
       var ctx=el.getContext('2d');ctx.scale(dpr,dpr);
-      var drawFn='draw'+type.charAt(0).toUpperCase()+type.slice(1);
-      if(this[drawFn]) this[drawFn](ctx,w,h);
-      else this.drawTemplates(ctx,w,h);
-      if(featured){ctx.strokeStyle='rgba(212,168,67,0.6)';ctx.lineWidth=2;ctx.strokeRect(2,2,w-4,h-4);}
+
+      var imgSrc=el.getAttribute('data-img-src');
+      if(imgSrc){
+        var img=new Image();
+        img.crossOrigin='anonymous';
+        img.onload=function(){
+          ctx.drawImage(img,0,0,w,h);
+          if(featured){ctx.strokeStyle='rgba(212,168,67,0.6)';ctx.lineWidth=2;ctx.strokeRect(2,2,w-4,h-4);}
+        };
+        img.onerror=function(){
+          var df='draw'+type.charAt(0).toUpperCase()+type.slice(1);
+          if(self[df]) self[df](ctx,w,h);
+          else self.drawTemplates(ctx,w,h);
+          if(featured){ctx.strokeStyle='rgba(212,168,67,0.6)';ctx.lineWidth=2;ctx.strokeRect(2,2,w-4,h-4);}
+        };
+        img.src=imgSrc;
+      } else {
+        var df='draw'+type.charAt(0).toUpperCase()+type.slice(1);
+        if(this[df]) this[df](ctx,w,h);
+        else this.drawTemplates(ctx,w,h);
+        if(featured){ctx.strokeStyle='rgba(212,168,67,0.6)';ctx.lineWidth=2;ctx.strokeRect(2,2,w-4,h-4);}
+      }
+    },
+    matchImage: function(canvas, type){
+      if(!window.lpMediaImages || !lpMediaImages.length) return null;
+      var title=(canvas.getAttribute('data-img-title')||'').toLowerCase();
+      var alt=(canvas.getAttribute('data-img-alt')||'').toLowerCase();
+      for(var i=0;i<lpMediaImages.length;i++){
+        var m=lpMediaImages[i];
+        var mt=(m.title||'').toLowerCase();
+        var ma=(m.alt||'').toLowerCase();
+        var mf=(m.file||'').toLowerCase();
+        if(title && (mt.indexOf(title)!==-1 || ma.indexOf(title)!==-1 || mf.indexOf(title)!==-1)) return m.url;
+        if(alt && (mt.indexOf(alt)!==-1 || ma.indexOf(alt)!==-1 || mf.indexOf(alt)!==-1)) return m.url;
+      }
+      return null;
+    },
+    matchImage: function(canvas, type){
+      if(!window.lpMediaImages || !lpMediaImages.length) return null;
+      var elTitle=(canvas.getAttribute('data-img-title')||'').toLowerCase();
+      var elAlt=(canvas.getAttribute('data-img-alt')||'').toLowerCase();
+      var elFile=(canvas.getAttribute('data-img-file')||'').toLowerCase();
+      var keywords=elTitle+' '+elAlt+' '+elFile;
+      for(var i=0;i<lpMediaImages.length;i++){
+        var m=lpMediaImages[i];
+        var mt=(m.title||'').toLowerCase();
+        var ma=(m.alt||'').toLowerCase();
+        var mf=(m.file||'').toLowerCase();
+        var mk=mt+' '+ma+' '+mf;
+        var words=keywords.split(/\s+/);
+        for(var j=0;j<words.length;j++){
+          var w=words[j];
+          if(w.length>2 && mk.indexOf(w)!==-1) return m.url;
+        }
+      }
+      return null;
     },
     initAll: function(){
       var self=this;
+      var media=(window.lpMediaImages)||[];
       document.querySelectorAll('.lp-dyn-canvas').forEach(function(c){
-        self.render(c,c.getAttribute('data-img-type'),c.getAttribute('data-img-featured')==='1');
+        var type=c.getAttribute('data-img-type');
+        var matched=self.matchImage(c,type);
+        if(matched) c.setAttribute('data-img-src',matched);
+        self.render(c,type,c.getAttribute('data-img-featured')==='1');
       });
     }
   };
