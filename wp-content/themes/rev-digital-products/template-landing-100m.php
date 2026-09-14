@@ -36,6 +36,19 @@ if ($lp_media_query->have_posts()) {
     }
     wp_reset_postdata();
 }
+function lp_find_image($keywords, $lp_media_images) {
+    $keywords = strtolower($keywords);
+    $words = array_filter(explode(' ', $keywords), function($w) { return strlen($w) > 2; });
+    foreach ($lp_media_images as $img) {
+        $haystack = strtolower($img['title'] . ' ' . $img['alt'] . ' ' . $img['file']);
+        foreach ($words as $word) {
+            if (strpos($haystack, $word) !== false) {
+                return $img['url'];
+            }
+        }
+    }
+    return '';
+}
 ?>
 <style>
 body.eproduct .ep-header,
@@ -352,8 +365,7 @@ body.eproduct > .site > .ep-main > .ep-section:first-child {
   align-items: center;
   justify-content: center;
 }
-.lp-hero__visual img,
-.lp-hero__visual canvas {
+.lp-hero__visual img {
   width: 100%;
   max-width: 480px;
   border-radius: 20px;
@@ -627,8 +639,7 @@ body.eproduct > .site > .ep-main > .ep-section:first-child {
   justify-content: center;
 }
 
-.lp-lib-card__img img,
-.lp-lib-card__img canvas {
+.lp-lib-card__img img {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -919,8 +930,7 @@ body.eproduct > .site > .ep-main > .ep-section:first-child {
   justify-content: center;
 }
 
-.lp-preview__img img,
-.lp-preview__img canvas {
+.lp-preview__img img {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -1403,10 +1413,6 @@ body.eproduct > .site > .ep-main > .ep-section:first-child {
 }
 </style>
 
-<script>
-var lpMediaImages = <?php echo json_encode($lp_media_images); ?>;
-</script>
-
 <!-- ===== LANDING PAGE CONTENT ===== -->
 <div class="lp-wrapper">
 
@@ -1475,7 +1481,7 @@ var lpMediaImages = <?php echo json_encode($lp_media_images); ?>;
           </div>
         </div>
         <div class="lp-hero__visual">
-          <canvas class="lp-dyn-canvas" data-img-type="product" data-img-featured="1" data-img-title="Hero Section Digital Asset Vault" style="width:100%;height:100%;border-radius:16px;"></canvas>
+          <img src="<?php echo esc_url(lp_find_image('Hero Section Digital Asset Vault', $lp_media_images)); ?>" alt="100+ Million Digital Resources Collection" style="width:100%;height:100%;border-radius:16px;object-fit:cover;">
           <div class="lp-hero__floating-card" style="top:10%;left:-5%;">
             <svg viewBox="0 0 24 24" fill="none" stroke="#d4a843" stroke-width="2" width="20" height="20"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
             <span>Design Templates</span>
@@ -1669,70 +1675,70 @@ var lpMediaImages = <?php echo json_encode($lp_media_images); ?>;
       </div>
       <div class="lp-library__grid lp-reveal">
         <div class="lp-lib-card" data-cat="templates">
-          <div class="lp-lib-card__img"><canvas class="lp-dyn-canvas" data-img-type="templates" data-img-title="Social Media Templates"></canvas></div>
+          <div class="lp-lib-card__img"><img src="<?php echo esc_url(lp_find_image('Social Media', $lp_media_images)); ?>" alt="Social Media Pack"></div>
           <div class="lp-lib-card__body">
             <div class="lp-lib-card__cat">Templates</div>
             <div class="lp-lib-card__name">Social Media Pack</div>
           </div>
         </div>
         <div class="lp-lib-card" data-cat="ai">
-          <div class="lp-lib-card__img"><canvas class="lp-dyn-canvas" data-img-type="ai" data-img-title="AI Prompts Bundle"></canvas></div>
+          <div class="lp-lib-card__img"><img src="<?php echo esc_url(lp_find_image('AI Prompts Bundle', $lp_media_images)); ?>" alt="ChatGPT Bundle"></div>
           <div class="lp-lib-card__body">
             <div class="lp-lib-card__cat">AI Prompts</div>
             <div class="lp-lib-card__name">ChatGPT Bundle</div>
           </div>
         </div>
         <div class="lp-lib-card" data-cat="graphics">
-          <div class="lp-lib-card__img"><canvas class="lp-dyn-canvas" data-img-type="graphics" data-img-title="Graphics 3D Mockups"></canvas></div>
+          <div class="lp-lib-card__img"><img src="<?php echo esc_url(lp_find_image('Graphics 3D Mockups', $lp_media_images)); ?>" alt="Icon Library"></div>
           <div class="lp-lib-card__body">
             <div class="lp-lib-card__cat">Graphics</div>
             <div class="lp-lib-card__name">Icon Library</div>
           </div>
         </div>
         <div class="lp-lib-card" data-cat="videos">
-          <div class="lp-lib-card__img"><canvas class="lp-dyn-canvas" data-img-type="videos" data-img-title="Video Resources"></canvas></div>
+          <div class="lp-lib-card__img"><img src="<?php echo esc_url(lp_find_image('Video Resources', $lp_media_images)); ?>" alt="Stock Footage"></div>
           <div class="lp-lib-card__body">
             <div class="lp-lib-card__cat">Videos</div>
             <div class="lp-lib-card__name">Stock Footage</div>
           </div>
         </div>
         <div class="lp-lib-card" data-cat="ebooks">
-          <div class="lp-lib-card__img"><canvas class="lp-dyn-canvas" data-img-type="ebooks" data-img-title="eBooks Action Guides"></canvas></div>
+          <div class="lp-lib-card__img"><img src="<?php echo esc_url(lp_find_image('eBooks Action Guides', $lp_media_images)); ?>" alt="Business Guide"></div>
           <div class="lp-lib-card__body">
             <div class="lp-lib-card__cat">eBooks</div>
             <div class="lp-lib-card__name">Business Guide</div>
           </div>
         </div>
         <div class="lp-lib-card" data-cat="templates">
-          <div class="lp-lib-card__img"><canvas class="lp-dyn-canvas" data-img-type="templates" data-img-title="Pro Landing Page Template"></canvas></div>
+          <div class="lp-lib-card__img"><img src="<?php echo esc_url(lp_find_image('Pro Landing Page Template', $lp_media_images)); ?>" alt="Presentation Kit"></div>
           <div class="lp-lib-card__body">
             <div class="lp-lib-card__cat">Templates</div>
             <div class="lp-lib-card__name">Presentation Kit</div>
           </div>
         </div>
         <div class="lp-lib-card" data-cat="business">
-          <div class="lp-lib-card__img"><canvas class="lp-dyn-canvas" data-img-type="business" data-img-title="Business Documents Templates"></canvas></div>
+          <div class="lp-lib-card__img"><img src="<?php echo esc_url(lp_find_image('Business Documents Templates', $lp_media_images)); ?>" alt="Finance Templates"></div>
           <div class="lp-lib-card__body">
             <div class="lp-lib-card__cat">Business</div>
             <div class="lp-lib-card__name">Finance Templates</div>
           </div>
         </div>
         <div class="lp-lib-card" data-cat="creative">
-          <div class="lp-lib-card__img"><canvas class="lp-dyn-canvas" data-img-type="creative" data-img-title="Brand Identity Pack"></canvas></div>
+          <div class="lp-lib-card__img"><img src="<?php echo esc_url(lp_find_image('Brand Identity Pack', $lp_media_images)); ?>" alt="Font Collection"></div>
           <div class="lp-lib-card__body">
             <div class="lp-lib-card__cat">Creative</div>
             <div class="lp-lib-card__name">Font Collection</div>
           </div>
         </div>
         <div class="lp-lib-card" data-cat="graphics">
-          <div class="lp-lib-card__img"><canvas class="lp-dyn-canvas" data-img-type="graphics" data-img-title="Ultimate UI Kit"></canvas></div>
+          <div class="lp-lib-card__img"><img src="<?php echo esc_url(lp_find_image('Ultimate UI Kit', $lp_media_images)); ?>" alt="Mockup Bundle"></div>
           <div class="lp-lib-card__body">
             <div class="lp-lib-card__cat">Graphics</div>
             <div class="lp-lib-card__name">Mockup Bundle</div>
           </div>
         </div>
         <div class="lp-lib-card" data-cat="ai">
-          <div class="lp-lib-card__img"><canvas class="lp-dyn-canvas" data-img-type="ai" data-img-title="Mastering WordPress eBook"></canvas></div>
+          <div class="lp-lib-card__img"><img src="<?php echo esc_url(lp_find_image('Invoice Manager', $lp_media_images)); ?>" alt="Midjourney Pack"></div>
           <div class="lp-lib-card__body">
             <div class="lp-lib-card__cat">AI Prompts</div>
             <div class="lp-lib-card__name">Midjourney Pack</div>
@@ -1925,27 +1931,27 @@ var lpMediaImages = <?php echo json_encode($lp_media_images); ?>;
       <div class="lp-preview lp-reveal">
         <div class="lp-preview__grid">
           <div class="lp-preview__card lp-preview__card--featured">
-            <div class="lp-preview__img"><canvas class="lp-dyn-canvas" data-img-type="product" data-img-featured="1" data-img-title="Design Templates Collection Featured Card"></canvas></div>
+            <div class="lp-preview__img"><img src="<?php echo esc_url(lp_find_image('Design Templates Collection Featured', $lp_media_images)); ?>" alt="Design Templates Collection"></div>
             <div class="lp-preview__label">Design Templates Collection</div>
           </div>
           <div class="lp-preview__card">
-            <div class="lp-preview__img"><canvas class="lp-dyn-canvas" data-img-type="ai" data-img-title="AI Prompts Bundle"></canvas></div>
+            <div class="lp-preview__img"><img src="<?php echo esc_url(lp_find_image('AI Prompts Bundle', $lp_media_images)); ?>" alt="AI Prompts Bundle"></div>
             <div class="lp-preview__label">AI Prompts Bundle</div>
           </div>
           <div class="lp-preview__card">
-            <div class="lp-preview__img"><canvas class="lp-dyn-canvas" data-img-type="graphics" data-img-title="Graphics 3D Mockups"></canvas></div>
+            <div class="lp-preview__img"><img src="<?php echo esc_url(lp_find_image('Graphics 3D Mockups', $lp_media_images)); ?>" alt="Graphics & Mockups"></div>
             <div class="lp-preview__label">Graphics & Mockups</div>
           </div>
           <div class="lp-preview__card">
-            <div class="lp-preview__img"><canvas class="lp-dyn-canvas" data-img-type="videos" data-img-title="Video Resources"></canvas></div>
+            <div class="lp-preview__img"><img src="<?php echo esc_url(lp_find_image('Video Resources', $lp_media_images)); ?>" alt="Video Resources"></div>
             <div class="lp-preview__label">Video Resources</div>
           </div>
           <div class="lp-preview__card">
-            <div class="lp-preview__img"><canvas class="lp-dyn-canvas" data-img-type="ebooks" data-img-title="eBooks Action Guides"></canvas></div>
+            <div class="lp-preview__img"><img src="<?php echo esc_url(lp_find_image('eBooks Action Guides', $lp_media_images)); ?>" alt="eBooks & Guides"></div>
             <div class="lp-preview__label">eBooks & Guides</div>
           </div>
           <div class="lp-preview__card">
-            <div class="lp-preview__img"><canvas class="lp-dyn-canvas" data-img-type="business" data-img-title="Business Documents Templates"></canvas></div>
+            <div class="lp-preview__img"><img src="<?php echo esc_url(lp_find_image('Business Documents Templates', $lp_media_images)); ?>" alt="Business Documents"></div>
             <div class="lp-preview__label">Business Documents</div>
           </div>
         </div>
@@ -2302,164 +2308,6 @@ var lpMediaImages = <?php echo json_encode($lp_media_images); ?>;
       el.style.animation = 'none';
     });
   }
-
-  /* Dynamic Canvas Image Generator */
-  var LPImages = {
-    palette: {
-      templates: ['#d4a843','#f5d78e','#1a1207'],
-      ai:        ['#7c3aed','#a78bfa','#0f0a2e'],
-      graphics:  ['#ec4899','#f9a8d4','#1f0a15'],
-      videos:    ['#f97316','#fdba74','#1a0f07'],
-      ebooks:    ['#06b6d4','#67e8f9','#0a1a20'],
-      business:  ['#22c55e','#86efac','#0a1f0f'],
-      creative:  ['#eab308','#fde047','#1a1507'],
-      product:   ['#d4a843','#f5d78e','#0a0a0f']
-    },
-    drawTemplates: function(ctx,w,h){
-      var g=ctx.createLinearGradient(0,0,w,h);g.addColorStop(0,'#1a1207');g.addColorStop(1,'#2a1f0a');ctx.fillStyle=g;ctx.fillRect(0,0,w,h);
-      for(var i=0;i<3;i++)for(var j=0;j<3;j++){
-        var x=w*0.12+i*(w*0.25),y=h*0.15+j*(h*0.22),bw=w*0.2,bh=h*0.16;
-        ctx.fillStyle=(i===0&&j===0)?'rgba(212,168,67,0.5)':'rgba(255,255,255,0.08)';
-        ctx.beginPath();ctx.roundRect(x,y,bw,bh,4);ctx.fill();
-        ctx.strokeStyle='rgba(212,168,67,0.25)';ctx.lineWidth=1;ctx.beginPath();ctx.roundRect(x,y,bw,bh,4);ctx.stroke();
-      }
-      ctx.fillStyle='rgba(212,168,67,0.15)';ctx.fillRect(w*0.12,h*0.82,w*0.76,h*0.06);
-      ctx.fillStyle='rgba(245,215,142,0.3)';ctx.beginPath();ctx.arc(w*0.82,h*0.15,w*0.06,0,Math.PI*2);ctx.fill();
-    },
-    drawAI: function(ctx,w,h){
-      var g=ctx.createLinearGradient(0,0,w,h);g.addColorStop(0,'#0f0a2e');g.addColorStop(1,'#1a1050');ctx.fillStyle=g;ctx.fillRect(0,0,w,h);
-      var pts=[[w*0.2,h*0.3],[w*0.4,h*0.15],[w*0.6,h*0.2],[w*0.8,h*0.35],[w*0.15,h*0.6],[w*0.45,h*0.7],[w*0.75,h*0.65],[w*0.5,h*0.5]];
-      ctx.strokeStyle='rgba(167,139,250,0.4)';ctx.lineWidth=1;
-      for(var i=0;i<pts.length;i++)for(var j=i+1;j<pts.length;j++){
-        var d=Math.hypot(pts[i][0]-pts[j][0],pts[i][1]-pts[j][1]);
-        if(d<w*0.35){ctx.beginPath();ctx.moveTo(pts[i][0],pts[i][1]);ctx.lineTo(pts[j][0],pts[j][1]);ctx.stroke();}
-      }
-      pts.forEach(function(p,i){
-        var r=i===7?6:4;
-        ctx.fillStyle=i===7?'rgba(124,58,237,0.9)':'rgba(167,139,250,0.7)';
-        ctx.beginPath();ctx.arc(p[0],p[1],r,0,Math.PI*2);ctx.fill();
-        ctx.strokeStyle='rgba(255,255,255,0.3)';ctx.lineWidth=1;ctx.beginPath();ctx.arc(p[0],p[1],r+3,0,Math.PI*2);ctx.stroke();
-      });
-      ctx.fillStyle='rgba(124,58,237,0.15)';ctx.beginPath();ctx.arc(w*0.5,h*0.5,w*0.15,0,Math.PI*2);ctx.fill();
-    },
-    drawGraphics: function(ctx,w,h){
-      var g=ctx.createLinearGradient(0,0,w,h);g.addColorStop(0,'#1f0a15');g.addColorStop(1,'#2a0f20');ctx.fillStyle=g;ctx.fillRect(0,0,w,h);
-      ctx.fillStyle='rgba(236,72,153,0.7)';ctx.beginPath();ctx.arc(w*0.3,h*0.45,w*0.18,0,Math.PI*2);ctx.fill();
-      ctx.fillStyle='rgba(249,168,212,0.5)';ctx.beginPath();ctx.moveTo(w*0.55,h*0.2);ctx.lineTo(w*0.8,h*0.2);ctx.lineTo(w*0.67,h*0.42);ctx.closePath();ctx.fill();
-      ctx.fillStyle='rgba(255,255,255,0.12)';ctx.beginPath();ctx.roundRect(w*0.6,h*0.55,w*0.25,h*0.28,6);ctx.fill();
-      ctx.strokeStyle='rgba(255,255,255,0.7)';ctx.lineWidth=2;ctx.beginPath();ctx.arc(w*0.3,h*0.45,w*0.22,0,Math.PI*2);ctx.stroke();
-      var colors=['#ec4899','#f9a8d4','#7c3aed','#06b6d4','#22c55e'];
-      colors.forEach(function(c,i){ctx.fillStyle=c;ctx.beginPath();ctx.arc(w*0.15+i*(w*0.18),h*0.88,4,0,Math.PI*2);ctx.fill();});
-    },
-    drawVideos: function(ctx,w,h){
-      var g=ctx.createLinearGradient(0,0,w,h);g.addColorStop(0,'#0f0a07');g.addColorStop(1,'#1a1208');ctx.fillStyle=g;ctx.fillRect(0,0,w,h);
-      ctx.fillStyle='rgba(255,255,255,0.05)';ctx.beginPath();ctx.roundRect(w*0.08,h*0.15,w*0.84,h*0.7,8);ctx.fill();
-      ctx.strokeStyle='rgba(249,115,22,0.5)';ctx.lineWidth=1;
-      ctx.beginPath();ctx.roundRect(w*0.08,h*0.15,w*0.84,h*0.7,8);ctx.stroke();
-      for(var i=0;i<4;i++){ctx.strokeStyle='rgba(255,255,255,0.08)';ctx.beginPath();ctx.moveTo(w*0.12+i*(w*0.22),h*0.15);ctx.lineTo(w*0.12+i*(w*0.22),h*0.85);ctx.stroke();}
-      ctx.fillStyle='rgba(249,115,22,0.85)';ctx.beginPath();ctx.moveTo(w*0.38,h*0.32);ctx.lineTo(w*0.65,h*0.5);ctx.lineTo(w*0.38,h*0.68);ctx.closePath();ctx.fill();
-      ctx.fillStyle='rgba(255,255,255,0.2)';ctx.fillRect(w*0.12,h*0.88,w*0.12,h*0.05);
-      ctx.fillStyle='rgba(249,115,22,0.3)';ctx.fillRect(w*0.12,h*0.88,w*0.08,h*0.05);
-    },
-    drawEbooks: function(ctx,w,h){
-      var g=ctx.createLinearGradient(0,0,w,h);g.addColorStop(0,'#0a1a20');g.addColorStop(1,'#0f2530');ctx.fillStyle=g;ctx.fillRect(0,0,w,h);
-      ctx.fillStyle='rgba(6,182,212,0.8)';ctx.beginPath();ctx.moveTo(w*0.2,h*0.15);ctx.quadraticCurveTo(w*0.5,h*0.05,w*0.8,h*0.15);ctx.lineTo(w*0.8,h*0.85);ctx.quadraticCurveTo(w*0.5,h*0.75,w*0.2,h*0.85);ctx.closePath();ctx.fill();
-      ctx.strokeStyle='rgba(103,232,249,0.5)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(w*0.5,h*0.12);ctx.lineTo(w*0.5,h*0.88);ctx.stroke();
-      ctx.fillStyle='rgba(255,255,255,0.85)';
-      for(var i=0;i<5;i++){ctx.fillRect(w*0.58,h*0.22+i*(h*0.11),w*0.15,2);}
-      for(var i=0;i<3;i++){ctx.fillRect(w*0.28,h*0.22+i*(h*0.11),w*0.12,2);}
-      ctx.fillStyle='rgba(6,182,212,0.3)';ctx.beginPath();ctx.roundRect(w*0.58,h*0.65,w*0.18,h*0.12,3);ctx.fill();
-    },
-    drawBusiness: function(ctx,w,h){
-      var g=ctx.createLinearGradient(0,0,w,h);g.addColorStop(0,'#0a1f0f');g.addColorStop(1,'#0f2a15');ctx.fillStyle=g;ctx.fillRect(0,0,w,h);
-      ctx.strokeStyle='rgba(255,255,255,0.15)';ctx.lineWidth=1;
-      for(var i=0;i<5;i++){ctx.beginPath();ctx.moveTo(w*0.1,h*0.2+i*(h*0.15));ctx.lineTo(w*0.9,h*0.2+i*(h*0.15));ctx.stroke();}
-      var bars=[[w*0.15,0.45],[w*0.28,0.35],[w*0.41,0.2],[w*0.54,0.28],[w*0.67,0.15],[w*0.8,0.1]];
-      bars.forEach(function(b){
-        var bh=h*0.8-h*b[1];
-        ctx.fillStyle='rgba(34,197,94,0.6)';ctx.beginPath();ctx.roundRect(b[0],h*b[1],w*0.1,bh,3);ctx.fill();
-      });
-      ctx.strokeStyle='rgba(134,239,172,0.8)';ctx.lineWidth=2;ctx.beginPath();
-      ctx.moveTo(w*0.15+0.05*w,h*0.45);bars.forEach(function(b){ctx.lineTo(b[0]+0.05*w,h*b[1]);});ctx.stroke();
-      bars.forEach(function(b){ctx.fillStyle='rgba(134,239,172,0.8)';ctx.beginPath();ctx.arc(b[0]+0.05*w,h*b[1],3,0,Math.PI*2);ctx.fill();});
-    },
-    drawCreative: function(ctx,w,h){
-      var g=ctx.createLinearGradient(0,0,w,h);g.addColorStop(0,'#1a1507');g.addColorStop(1,'#2a2010');ctx.fillStyle=g;ctx.fillRect(0,0,w,h);
-      ctx.strokeStyle='rgba(255,255,255,0.7)';ctx.lineWidth=3;
-      ctx.beginPath();ctx.moveTo(w*0.25,h*0.7);ctx.bezierCurveTo(w*0.28,h*0.3,w*0.42,h*0.15,w*0.5,h*0.35);ctx.bezierCurveTo(w*0.58,h*0.55,w*0.52,h*0.75,w*0.55,h*0.7);ctx.stroke();
-      ctx.fillStyle='rgba(234,179,8,0.85)';ctx.beginPath();ctx.arc(w*0.65,h*0.38,w*0.1,0,Math.PI*2);ctx.fill();
-      ctx.strokeStyle='rgba(255,224,71,0.4)';ctx.lineWidth=1;
-      for(var i=0;i<6;i++){var a=i*Math.PI/3;ctx.beginPath();ctx.moveTo(w*0.65,h*0.38);ctx.lineTo(w*0.65+Math.cos(a)*w*0.15,h*0.38+Math.sin(a)*w*0.15);ctx.stroke();}
-      ctx.fillStyle='rgba(234,179,8,0.2)';ctx.beginPath();ctx.moveTo(w*0.7,h*0.55);ctx.lineTo(w*0.85,h*0.5);ctx.lineTo(w*0.8,h*0.75);ctx.closePath();ctx.fill();
-    },
-    drawProduct: function(ctx,w,h){
-      var g=ctx.createLinearGradient(0,0,w,h);g.addColorStop(0,'#0a0a0f');g.addColorStop(1,'#1a1207');ctx.fillStyle=g;ctx.fillRect(0,0,w,h);
-      ctx.fillStyle='rgba(212,168,67,0.85)';ctx.beginPath();ctx.roundRect(w*0.18,h*0.1,w*0.64,h*0.8,8);ctx.fill();
-      ctx.fillStyle='rgba(10,10,15,0.9)';ctx.fillRect(w*0.24,h*0.2,w*0.52,h*0.1);ctx.fillRect(w*0.24,h*0.35,w*0.52,h*0.07);ctx.fillRect(w*0.24,h*0.47,w*0.35,h*0.07);ctx.fillRect(w*0.24,h*0.7,w*0.28,h*0.1);
-      ctx.fillStyle='rgba(255,255,255,0.2)';ctx.fillRect(w*0.24,h*0.6,w*0.52,h*0.04);
-      ctx.fillStyle='rgba(245,215,142,0.4)';ctx.beginPath();ctx.arc(w*0.75,h*0.85,w*0.08,0,Math.PI*2);ctx.fill();
-      ctx.strokeStyle='rgba(212,168,67,0.5)';ctx.lineWidth=1;ctx.strokeRect(2,2,w-4,h-4);
-    },
-    render: function(el,type,featured){
-      var self=this;
-      var dpr=window.devicePixelRatio||1;
-      var rect=el.getBoundingClientRect();
-      var w=rect.width||400,h=rect.height||300;
-      el.width=w*dpr;el.height=h*dpr;
-      var ctx=el.getContext('2d');ctx.scale(dpr,dpr);
-
-      var imgSrc=el.getAttribute('data-img-src');
-      if(imgSrc){
-        var img=new Image();
-        img.onload=function(){
-          ctx.drawImage(img,0,0,w,h);
-          if(featured){ctx.strokeStyle='rgba(212,168,67,0.6)';ctx.lineWidth=2;ctx.strokeRect(2,2,w-4,h-4);}
-        };
-        img.onerror=function(){
-          var df='draw'+type.charAt(0).toUpperCase()+type.slice(1);
-          if(self[df]) self[df](ctx,w,h);
-          else self.drawTemplates(ctx,w,h);
-          if(featured){ctx.strokeStyle='rgba(212,168,67,0.6)';ctx.lineWidth=2;ctx.strokeRect(2,2,w-4,h-4);}
-        };
-        img.src=imgSrc;
-      } else {
-        var df='draw'+type.charAt(0).toUpperCase()+type.slice(1);
-        if(this[df]) this[df](ctx,w,h);
-        else this.drawTemplates(ctx,w,h);
-        if(featured){ctx.strokeStyle='rgba(212,168,67,0.6)';ctx.lineWidth=2;ctx.strokeRect(2,2,w-4,h-4);}
-      }
-    },
-    matchImage: function(canvas, type){
-      if(!window.lpMediaImages || !lpMediaImages.length) return null;
-      var elTitle=(canvas.getAttribute('data-img-title')||'').toLowerCase();
-      var elAlt=(canvas.getAttribute('data-img-alt')||'').toLowerCase();
-      var elFile=(canvas.getAttribute('data-img-file')||'').toLowerCase();
-      var keywords=(elTitle+' '+elAlt+' '+elFile).trim();
-      for(var i=0;i<lpMediaImages.length;i++){
-        var m=lpMediaImages[i];
-        var mk=((m.title||'')+' '+(m.alt||'')+' '+(m.file||'')).toLowerCase();
-        var words=keywords.split(/\s+/);
-        for(var j=0;j<words.length;j++){
-          var wd=words[j];
-          if(wd.length>2 && mk.indexOf(wd)!==-1) return m.url;
-        }
-      }
-      return null;
-    },
-    initAll: function(){
-      var self=this;
-      var media=(window.lpMediaImages)||[];
-      document.querySelectorAll('.lp-dyn-canvas').forEach(function(c){
-        var type=c.getAttribute('data-img-type');
-        var matched=self.matchImage(c,type);
-        if(matched) c.setAttribute('data-img-src',matched);
-        self.render(c,type,c.getAttribute('data-img-featured')==='1');
-      });
-    }
-  };
-  if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',LPImages.initAll);}else{LPImages.initAll();}
-  window.addEventListener('resize',function(){clearTimeout(window._lpImgR);window._lpImgR=setTimeout(LPImages.initAll,200);});
-
 })();
 </script>
 
