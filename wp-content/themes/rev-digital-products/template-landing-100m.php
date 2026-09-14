@@ -2411,7 +2411,6 @@ var lpMediaImages = <?php echo json_encode($lp_media_images); ?>;
       var imgSrc=el.getAttribute('data-img-src');
       if(imgSrc){
         var img=new Image();
-        img.crossOrigin='anonymous';
         img.onload=function(){
           ctx.drawImage(img,0,0,w,h);
           if(featured){ctx.strokeStyle='rgba(212,168,67,0.6)';ctx.lineWidth=2;ctx.strokeRect(2,2,w-4,h-4);}
@@ -2432,34 +2431,17 @@ var lpMediaImages = <?php echo json_encode($lp_media_images); ?>;
     },
     matchImage: function(canvas, type){
       if(!window.lpMediaImages || !lpMediaImages.length) return null;
-      var title=(canvas.getAttribute('data-img-title')||'').toLowerCase();
-      var alt=(canvas.getAttribute('data-img-alt')||'').toLowerCase();
-      for(var i=0;i<lpMediaImages.length;i++){
-        var m=lpMediaImages[i];
-        var mt=(m.title||'').toLowerCase();
-        var ma=(m.alt||'').toLowerCase();
-        var mf=(m.file||'').toLowerCase();
-        if(title && (mt.indexOf(title)!==-1 || ma.indexOf(title)!==-1 || mf.indexOf(title)!==-1)) return m.url;
-        if(alt && (mt.indexOf(alt)!==-1 || ma.indexOf(alt)!==-1 || mf.indexOf(alt)!==-1)) return m.url;
-      }
-      return null;
-    },
-    matchImage: function(canvas, type){
-      if(!window.lpMediaImages || !lpMediaImages.length) return null;
       var elTitle=(canvas.getAttribute('data-img-title')||'').toLowerCase();
       var elAlt=(canvas.getAttribute('data-img-alt')||'').toLowerCase();
       var elFile=(canvas.getAttribute('data-img-file')||'').toLowerCase();
-      var keywords=elTitle+' '+elAlt+' '+elFile;
+      var keywords=(elTitle+' '+elAlt+' '+elFile).trim();
       for(var i=0;i<lpMediaImages.length;i++){
         var m=lpMediaImages[i];
-        var mt=(m.title||'').toLowerCase();
-        var ma=(m.alt||'').toLowerCase();
-        var mf=(m.file||'').toLowerCase();
-        var mk=mt+' '+ma+' '+mf;
+        var mk=((m.title||'')+' '+(m.alt||'')+' '+(m.file||'')).toLowerCase();
         var words=keywords.split(/\s+/);
         for(var j=0;j<words.length;j++){
-          var w=words[j];
-          if(w.length>2 && mk.indexOf(w)!==-1) return m.url;
+          var wd=words[j];
+          if(wd.length>2 && mk.indexOf(wd)!==-1) return m.url;
         }
       }
       return null;
