@@ -39,15 +39,26 @@ if ($lp_media_query->have_posts()) {
 function lp_find_image($keywords, $lp_media_images) {
     $keywords = strtolower($keywords);
     $words = array_filter(explode(' ', $keywords), function($w) { return strlen($w) > 2; });
+    $best_url = '';
+    $best_score = -1;
     foreach ($lp_media_images as $img) {
-        $haystack = strtolower($img['title'] . ' ' . $img['alt'] . ' ' . $img['file']);
+        $title_lower = strtolower($img['title']);
+        $haystack = $title_lower . ' ' . strtolower($img['alt']) . ' ' . strtolower($img['file']);
+        $score = 0;
         foreach ($words as $word) {
             if (strpos($haystack, $word) !== false) {
-                return $img['url'];
+                $score++;
             }
         }
+        if ($title_lower === $keywords) {
+            $score += 100;
+        }
+        if ($score > $best_score) {
+            $best_score = $score;
+            $best_url = $img['url'];
+        }
     }
-    return '';
+    return $best_url;
 }
 ?>
 <style>
@@ -1481,7 +1492,7 @@ body.eproduct > .site > .ep-main > .ep-section:first-child {
           </div>
         </div>
         <div class="lp-hero__visual">
-          <img src="<?php echo esc_url(lp_find_image('Hero Section Digital Asset Vault', $lp_media_images)); ?>" alt="100+ Million Digital Resources Collection" style="width:100%;height:100%;border-radius:16px;object-fit:cover;">
+          <img src="<?php echo esc_url(lp_find_image('Hero Section: Digital Asset Vault (Right Column)', $lp_media_images)); ?>" alt="100+ Million Digital Resources Collection" style="width:100%;height:100%;border-radius:16px;object-fit:cover;">
           <div class="lp-hero__floating-card" style="top:10%;left:-5%;">
             <svg viewBox="0 0 24 24" fill="none" stroke="#d4a843" stroke-width="2" width="20" height="20"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
             <span>Design Templates</span>
@@ -1675,21 +1686,21 @@ body.eproduct > .site > .ep-main > .ep-section:first-child {
       </div>
       <div class="lp-library__grid lp-reveal">
         <div class="lp-lib-card" data-cat="templates">
-          <div class="lp-lib-card__img"><img src="<?php echo esc_url(lp_find_image('Social Media', $lp_media_images)); ?>" alt="Social Media Pack"></div>
+          <div class="lp-lib-card__img"><img src="<?php echo esc_url(lp_find_image('Social Media Pack', $lp_media_images)); ?>" alt="Social Media Pack"></div>
           <div class="lp-lib-card__body">
             <div class="lp-lib-card__cat">Templates</div>
             <div class="lp-lib-card__name">Social Media Pack</div>
           </div>
         </div>
         <div class="lp-lib-card" data-cat="ai">
-          <div class="lp-lib-card__img"><img src="<?php echo esc_url(lp_find_image('AI Prompts Bundle', $lp_media_images)); ?>" alt="ChatGPT Bundle"></div>
+          <div class="lp-lib-card__img"><img src="<?php echo esc_url(lp_find_image('ChatGPT Bundle', $lp_media_images)); ?>" alt="ChatGPT Bundle"></div>
           <div class="lp-lib-card__body">
             <div class="lp-lib-card__cat">AI Prompts</div>
             <div class="lp-lib-card__name">ChatGPT Bundle</div>
           </div>
         </div>
         <div class="lp-lib-card" data-cat="graphics">
-          <div class="lp-lib-card__img"><img src="<?php echo esc_url(lp_find_image('Graphics 3D Mockups', $lp_media_images)); ?>" alt="Icon Library"></div>
+          <div class="lp-lib-card__img"><img src="<?php echo esc_url(lp_find_image('Icon Library', $lp_media_images)); ?>" alt="Icon Library"></div>
           <div class="lp-lib-card__body">
             <div class="lp-lib-card__cat">Graphics</div>
             <div class="lp-lib-card__name">Icon Library</div>
@@ -1703,42 +1714,42 @@ body.eproduct > .site > .ep-main > .ep-section:first-child {
           </div>
         </div>
         <div class="lp-lib-card" data-cat="ebooks">
-          <div class="lp-lib-card__img"><img src="<?php echo esc_url(lp_find_image('eBooks Action Guides', $lp_media_images)); ?>" alt="Business Guide"></div>
+          <div class="lp-lib-card__img"><img src="<?php echo esc_url(lp_find_image('eBooks & Action Guides', $lp_media_images)); ?>" alt="Business Guide"></div>
           <div class="lp-lib-card__body">
             <div class="lp-lib-card__cat">eBooks</div>
             <div class="lp-lib-card__name">Business Guide</div>
           </div>
         </div>
         <div class="lp-lib-card" data-cat="templates">
-          <div class="lp-lib-card__img"><img src="<?php echo esc_url(lp_find_image('Pro Landing Page Template', $lp_media_images)); ?>" alt="Presentation Kit"></div>
+          <div class="lp-lib-card__img"><img src="<?php echo esc_url(lp_find_image('Presentation Kit', $lp_media_images)); ?>" alt="Presentation Kit"></div>
           <div class="lp-lib-card__body">
             <div class="lp-lib-card__cat">Templates</div>
             <div class="lp-lib-card__name">Presentation Kit</div>
           </div>
         </div>
         <div class="lp-lib-card" data-cat="business">
-          <div class="lp-lib-card__img"><img src="<?php echo esc_url(lp_find_image('Business Documents Templates', $lp_media_images)); ?>" alt="Finance Templates"></div>
+          <div class="lp-lib-card__img"><img src="<?php echo esc_url(lp_find_image('Finance Templates', $lp_media_images)); ?>" alt="Finance Templates"></div>
           <div class="lp-lib-card__body">
             <div class="lp-lib-card__cat">Business</div>
             <div class="lp-lib-card__name">Finance Templates</div>
           </div>
         </div>
         <div class="lp-lib-card" data-cat="creative">
-          <div class="lp-lib-card__img"><img src="<?php echo esc_url(lp_find_image('Brand Identity Pack', $lp_media_images)); ?>" alt="Font Collection"></div>
+          <div class="lp-lib-card__img"><img src="<?php echo esc_url(lp_find_image('Font Collection', $lp_media_images)); ?>" alt="Font Collection"></div>
           <div class="lp-lib-card__body">
             <div class="lp-lib-card__cat">Creative</div>
             <div class="lp-lib-card__name">Font Collection</div>
           </div>
         </div>
         <div class="lp-lib-card" data-cat="graphics">
-          <div class="lp-lib-card__img"><img src="<?php echo esc_url(lp_find_image('Ultimate UI Kit', $lp_media_images)); ?>" alt="Mockup Bundle"></div>
+          <div class="lp-lib-card__img"><img src="<?php echo esc_url(lp_find_image('Mockup Bundle', $lp_media_images)); ?>" alt="Mockup Bundle"></div>
           <div class="lp-lib-card__body">
             <div class="lp-lib-card__cat">Graphics</div>
             <div class="lp-lib-card__name">Mockup Bundle</div>
           </div>
         </div>
         <div class="lp-lib-card" data-cat="ai">
-          <div class="lp-lib-card__img"><img src="<?php echo esc_url(lp_find_image('Invoice Manager', $lp_media_images)); ?>" alt="Midjourney Pack"></div>
+          <div class="lp-lib-card__img"><img src="<?php echo esc_url(lp_find_image('Midjourney Pack', $lp_media_images)); ?>" alt="Midjourney Pack"></div>
           <div class="lp-lib-card__body">
             <div class="lp-lib-card__cat">AI Prompts</div>
             <div class="lp-lib-card__name">Midjourney Pack</div>
@@ -1931,7 +1942,7 @@ body.eproduct > .site > .ep-main > .ep-section:first-child {
       <div class="lp-preview lp-reveal">
         <div class="lp-preview__grid">
           <div class="lp-preview__card lp-preview__card--featured">
-            <div class="lp-preview__img"><img src="<?php echo esc_url(lp_find_image('Design Templates Collection Featured', $lp_media_images)); ?>" alt="Design Templates Collection"></div>
+            <div class="lp-preview__img"><img src="<?php echo esc_url(lp_find_image('Design Templates Collection (Featured Card)', $lp_media_images)); ?>" alt="Design Templates Collection"></div>
             <div class="lp-preview__label">Design Templates Collection</div>
           </div>
           <div class="lp-preview__card">
@@ -1939,7 +1950,7 @@ body.eproduct > .site > .ep-main > .ep-section:first-child {
             <div class="lp-preview__label">AI Prompts Bundle</div>
           </div>
           <div class="lp-preview__card">
-            <div class="lp-preview__img"><img src="<?php echo esc_url(lp_find_image('Graphics 3D Mockups', $lp_media_images)); ?>" alt="Graphics & Mockups"></div>
+            <div class="lp-preview__img"><img src="<?php echo esc_url(lp_find_image('Graphics & 3D Mockups', $lp_media_images)); ?>" alt="Graphics & Mockups"></div>
             <div class="lp-preview__label">Graphics & Mockups</div>
           </div>
           <div class="lp-preview__card">
@@ -1947,11 +1958,11 @@ body.eproduct > .site > .ep-main > .ep-section:first-child {
             <div class="lp-preview__label">Video Resources</div>
           </div>
           <div class="lp-preview__card">
-            <div class="lp-preview__img"><img src="<?php echo esc_url(lp_find_image('eBooks Action Guides', $lp_media_images)); ?>" alt="eBooks & Guides"></div>
+            <div class="lp-preview__img"><img src="<?php echo esc_url(lp_find_image('eBooks & Action Guides', $lp_media_images)); ?>" alt="eBooks & Guides"></div>
             <div class="lp-preview__label">eBooks & Guides</div>
           </div>
           <div class="lp-preview__card">
-            <div class="lp-preview__img"><img src="<?php echo esc_url(lp_find_image('Business Documents Templates', $lp_media_images)); ?>" alt="Business Documents"></div>
+            <div class="lp-preview__img"><img src="<?php echo esc_url(lp_find_image('Business Documents & Templates', $lp_media_images)); ?>" alt="Business Documents"></div>
             <div class="lp-preview__label">Business Documents</div>
           </div>
         </div>
