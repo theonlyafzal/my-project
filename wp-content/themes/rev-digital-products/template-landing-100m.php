@@ -959,6 +959,11 @@ body.eproduct > .site > .ep-main > .ep-section:first-child {
   color: var(--lp-gray-200);
 }
 
+.lp-preview__card--featured .lp-preview__label {
+  padding: 8px;
+  font-size: 1rem;
+}
+
 /* ===== VALUE / OFFER ===== */
 .lp-offer {
   text-align: center;

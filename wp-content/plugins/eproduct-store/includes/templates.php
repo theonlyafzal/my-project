@@ -342,10 +342,10 @@ function eproduct_product_item_html($post) {
             <div class="ep-card__foot">
                 <div class="ep-card__prices">
                     <?php if ($on_sale): ?>
-                        <span class="ep-price ep-price--sale">$<?php echo number_format($sale_price, 2); ?></span>
-                        <span class="ep-price ep-price--orig">$<?php echo number_format($price, 2); ?></span>
+                        <span class="ep-price ep-price--sale">₹<?php echo number_format($sale_price, 0); ?></span>
+                        <span class="ep-price ep-price--orig">₹<?php echo number_format($price, 0); ?></span>
                     <?php else: ?>
-                        <span class="ep-price"><?php echo $price > 0 ? '$' . number_format($price, 2) : 'Free'; ?></span>
+                        <span class="ep-price"><?php echo $price > 0 ? '₹' . number_format($price, 0) : 'Free'; ?></span>
                     <?php endif; ?>
                 </div>
                 <button class="ep-card__cart" data-add-to-cart="<?php echo $post->ID; ?>">Add to Cart</button>
@@ -513,7 +513,7 @@ function eproduct_products_shortcode() {
                 <div class="ep-drawer__empty">Your cart is empty.</div>
             </div>
             <div class="ep-drawer__foot" id="epCartFoot" style="display:none;">
-                <div class="ep-drawer__total">Total: <strong>$<span id="epCartTotal">0.00</span></strong></div>
+                <div class="ep-drawer__total">Total: <strong>₹<span id="epCartTotal">0</span></strong></div>
                 <a class="ep-btn ep-btn--lg ep-btn--full" href="<?php echo esc_url(home_url('/checkout/')); ?>">Proceed to Checkout</a>
                 <button class="ep-btn ep-btn--outline ep-btn--full" data-drawer-close style="margin-top:8px;">Continue Shopping</button>
             </div>
@@ -554,9 +554,9 @@ function eproduct_checkout_shortcode() {
     foreach ($cart as $id) {
         $price = floatval(get_post_meta($id, '_eproduct_price', true));
         $total += $price;
-        echo '<li>' . esc_html(get_the_title($id)) . ' — $' . number_format($price, 2) . '</li>';
+        echo '<li>' . esc_html(get_the_title($id)) . ' — ₹' . number_format($price, 0) . '</li>';
     }
-    echo '</ul><p class="ep-total">Total: $' . number_format($total, 2) . '</p>';
+    echo '</ul><p class="ep-total">Total: ₹' . number_format($total, 0) . '</p>';
     ?>
     <form method="post" action="<?php echo esc_url(EPRODUCT_URL . 'includes/payments/payment-server.php?action=create'); ?>">
         <input type="hidden" name="products" value="<?php echo esc_attr(implode(',', $cart)); ?>">
@@ -568,7 +568,7 @@ function eproduct_checkout_shortcode() {
                 <option value="razorpay">Razorpay</option>
             </select>
         </p>
-        <p><button class="ep-btn" type="submit">Pay $<?php echo number_format($total, 2); ?></button></p>
+        <p><button class="ep-btn" type="submit">Pay ₹<?php echo number_format($total, 0); ?></button></p>
     </form></div>
     <?php
     return ob_get_clean();
@@ -665,10 +665,10 @@ function eproduct_ajax_quick_view() {
             <h2 class="ep-qv__title"><?php echo esc_html(get_the_title($id)); ?></h2>
             <div class="ep-qv__pricing">
                 <?php if ($on_sale): ?>
-                    <span class="ep-price ep-price--sale">$<?php echo number_format($sale_price, 2); ?></span>
-                    <span class="ep-price ep-price--orig">$<?php echo number_format($price, 2); ?></span>
+                    <span class="ep-price ep-price--sale">₹<?php echo number_format($sale_price, 0); ?></span>
+                    <span class="ep-price ep-price--orig">₹<?php echo number_format($price, 0); ?></span>
                 <?php else: ?>
-                    <span class="ep-price"><?php echo $price > 0 ? '$' . number_format($price, 2) : 'Free'; ?></span>
+                    <span class="ep-price"><?php echo $price > 0 ? '₹' . number_format($price, 0) : 'Free'; ?></span>
                 <?php endif; ?>
             </div>
             <p class="ep-qv__excerpt"><?php echo esc_html($excerpt); ?></p>
