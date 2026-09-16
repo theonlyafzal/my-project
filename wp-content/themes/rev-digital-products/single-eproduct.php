@@ -20,6 +20,11 @@ if (have_posts()) :
     $related_args = array(
         'post_type' => 'eproduct', 'posts_per_page' => 4, 'post_status' => 'publish',
         'post__not_in' => array(get_the_ID()), 'orderby' => 'rand',
+        'meta_query' => array(
+            'relation' => 'OR',
+            array('key' => '_eproduct_visibility', 'value' => 'active', 'compare' => '='),
+            array('key' => '_eproduct_visibility', 'compare' => 'NOT EXISTS'),
+        ),
     );
     if (!empty($ep_cats)) {
         $related_args['tax_query'] = array(array(

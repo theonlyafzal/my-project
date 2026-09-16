@@ -380,6 +380,11 @@ function eproduct_products_shortcode() {
         <?php
         $you_may_like = new WP_Query(array(
             'post_type' => 'eproduct', 'posts_per_page' => 8, 'post_status' => 'publish', 'orderby' => 'rand',
+            'meta_query' => array(
+                'relation' => 'OR',
+                array('key' => '_eproduct_visibility', 'value' => 'active', 'compare' => '='),
+                array('key' => '_eproduct_visibility', 'compare' => 'NOT EXISTS'),
+            ),
         ));
         if ($you_may_like->have_posts()):
         ?>
@@ -453,7 +458,13 @@ function eproduct_products_shortcode() {
             </div>
             <div id="ep-grid" class="ep-grid">
                 <?php
-                $q = new WP_Query(array('post_type' => 'eproduct', 'posts_per_page' => -1, 'post_status' => 'publish'));
+                $q = new WP_Query(array('post_type' => 'eproduct', 'posts_per_page' => -1, 'post_status' => 'publish',
+                    'meta_query' => array(
+                        'relation' => 'OR',
+                        array('key' => '_eproduct_visibility', 'value' => 'active', 'compare' => '='),
+                        array('key' => '_eproduct_visibility', 'compare' => 'NOT EXISTS'),
+                    ),
+                ));
                 while ($q->have_posts()) { $q->the_post(); echo eproduct_product_item_html($q->post); }
                 wp_reset_postdata();
                 ?>

@@ -37,3 +37,4 @@ require_once EPRODUCT_PATH . 'includes/settings.php';
 require_once EPRODUCT_PATH . 'includes/privacy.php';
 require_once EPRODUCT_PATH . 'includes/templates.php';
 require_once EPRODUCT_PATH . 'includes/ajax.php';
+require_once EPRODUCT_PATH . 'includes/product-manager.php';
