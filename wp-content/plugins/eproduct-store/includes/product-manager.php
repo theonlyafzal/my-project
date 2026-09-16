@@ -88,10 +88,21 @@ function eproduct_invalidate_cache($post_id = 0) {
 
 function eproduct_enhanced_meta_box() {
     remove_meta_box('eproduct_categorydiv', 'eproduct', 'side');
+    remove_meta_box('eproduct_meta', 'eproduct', 'normal');
     add_meta_box('eproduct_meta', 'Product Details', 'eproduct_enhanced_meta_cb', 'eproduct', 'normal', 'high');
 }
-remove_action('add_meta_boxes', 'eproduct_product_meta_box');
-add_action('add_meta_boxes', 'eproduct_enhanced_meta_box');
+
+function eproduct_setup_meta_box() {
+    remove_action('add_meta_boxes', 'eproduct_product_meta_box');
+    add_action('add_meta_boxes', 'eproduct_enhanced_meta_box');
+}
+add_action('plugins_loaded', 'eproduct_setup_meta_box');
+
+function eproduct_setup_save() {
+    remove_action('save_post_eproduct', 'eproduct_product_meta_save');
+    add_action('save_post_eproduct', 'eproduct_enhanced_meta_save');
+}
+add_action('plugins_loaded', 'eproduct_setup_save');
 
 function eproduct_enhanced_meta_cb($post) {
     wp_nonce_field('eproduct_meta_save', 'eproduct_meta_nonce');
@@ -295,8 +306,7 @@ function eproduct_enhanced_meta_save($post_id) {
         });
     }
 }
-remove_action('save_post_eproduct', 'eproduct_product_meta_save');
-add_action('save_post_eproduct', 'eproduct_enhanced_meta_save');
+// Save handler is swapped via plugins_loaded above — see eproduct_setup_save()
 
 /* ============================================================
    6. ENHANCED MEDIA UPLOADER JS
@@ -373,7 +383,10 @@ function eproduct_manage_products_page() {
     }
 
     // Handle single product actions
-    if (isset($_GET['ep_toggle']) && check_admin_referer('ep_toggle_' . $_GET['ep_toggle'])) {
+    if (isset($_GET['ep_toggle'])) {
+        if (!wp_verify_nonce($_GET['_wpnonce'] ?? '', 'ep_toggle_' . $_GET['ep_toggle'])) {
+            wp_die('Security check failed. Please go back and try again.');
+        }
         $toggle_id = intval($_GET['ep_toggle']);
         if (current_user_can('edit_post', $toggle_id)) {
             $current = eproduct_get_visibility($toggle_id);
@@ -386,7 +399,10 @@ function eproduct_manage_products_page() {
     }
 
     // Handle permanent delete
-    if (isset($_GET['ep_delete']) && check_admin_referer('ep_delete_' . $_GET['ep_delete'])) {
+    if (isset($_GET['ep_delete'])) {
+        if (!wp_verify_nonce($_GET['_wpnonce'] ?? '', 'ep_delete_' . $_GET['ep_delete'])) {
+            wp_die('Security check failed. Please go back and try again.');
+        }
         $del_id = intval($_GET['ep_delete']);
         if (current_user_can('delete_post', $del_id)) {
             wp_delete_post($del_id, true);
