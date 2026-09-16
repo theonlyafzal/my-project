@@ -13,6 +13,8 @@ if (have_posts()) :
     $ep_sale = ($ep_sale !== '' && floatval($ep_sale) > 0) ? floatval($ep_sale) : '';
     $ep_on_sale = ($ep_sale !== '' && $ep_sale < $ep_price);
     $ep_file = get_post_meta(get_the_ID(), '_eproduct_file', true);
+    $ep_short_desc = get_post_meta(get_the_ID(), '_eproduct_short_desc', true);
+    $ep_landing_url = get_post_meta(get_the_ID(), '_eproduct_landing_url', true);
     $ep_cats = wp_get_post_terms(get_the_ID(), 'eproduct_category', array('fields' => 'names'));
     $ep_initial = preg_match('/./u', get_the_title(), $m) ? $m[0] : '&#9733;';
     $ep_pct = $ep_on_sale ? round((1 - $ep_sale / $ep_price) * 100) : 0;
@@ -20,6 +22,7 @@ if (have_posts()) :
     $related_args = array(
         'post_type' => 'eproduct', 'posts_per_page' => 4, 'post_status' => 'publish',
         'post__not_in' => array(get_the_ID()), 'orderby' => 'rand',
+        'meta_query' => eproduct_active_meta_query(),
     );
     if (!empty($ep_cats)) {
         $related_args['tax_query'] = array(array(
@@ -56,14 +59,16 @@ if (have_posts()) :
 
           <div class="ep-single__pricing">
             <?php if ($ep_on_sale): ?>
-              <span class="ep-single__price ep-single__price--sale">$<?php echo number_format($ep_sale, 2); ?></span>
-              <span class="ep-single__price ep-single__price--orig">$<?php echo number_format($ep_price, 2); ?></span>
+              <span class="ep-single__price ep-single__price--sale">₹<?php echo number_format($ep_sale, 0); ?></span>
+              <span class="ep-single__price ep-single__price--orig">₹<?php echo number_format($ep_price, 0); ?></span>
             <?php else: ?>
-              <span class="ep-single__price"><?php echo $ep_price > 0 ? '$' . number_format($ep_price, 2) : 'Free'; ?></span>
+              <span class="ep-single__price"><?php echo $ep_price > 0 ? '₹' . number_format($ep_price, 0) : 'Free'; ?></span>
             <?php endif; ?>
           </div>
 
-          <?php if (has_excerpt()): ?>
+          <?php if (!empty($ep_short_desc)): ?>
+            <div class="ep-single__excerpt"><?php echo wpautop(esc_html($ep_short_desc)); ?></div>
+          <?php elseif (has_excerpt()): ?>
             <div class="ep-single__excerpt"><?php echo wpautop(get_the_excerpt()); ?></div>
           <?php endif; ?>
 

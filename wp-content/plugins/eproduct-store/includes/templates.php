@@ -299,10 +299,12 @@ function eproduct_product_item_html($post) {
     $img = get_the_post_thumbnail_url($post->ID, 'medium');
     $cats = wp_get_post_terms($post->ID, 'eproduct_category', array('fields' => 'names'));
     $cat_slugs = wp_get_post_terms($post->ID, 'eproduct_category', array('fields' => 'slugs'));
-    $excerpt = $post->post_excerpt ? $post->post_excerpt : wp_trim_words(strip_shortcodes(wp_strip_all_tags($post->post_content)), 16);
+    $short_desc = get_post_meta($post->ID, '_eproduct_short_desc', true);
+    $excerpt = $short_desc ? $short_desc : ($post->post_excerpt ? $post->post_excerpt : wp_trim_words(strip_shortcodes(wp_strip_all_tags($post->post_content)), 16));
     $initial = preg_match('/./u', $post->post_title, $m) ? $m[0] : '★';
     $pct = $on_sale ? round((1 - $sale_price / $price) * 100) : 0;
-    $custom_link = get_post_meta($post->ID, '_eproduct_link', true);
+    $custom_link = get_post_meta($post->ID, '_eproduct_landing_url', true);
+    if (empty($custom_link)) $custom_link = get_post_meta($post->ID, '_eproduct_link', true);
     $permalink = !empty($custom_link) ? $custom_link : get_permalink($post->ID);
     $cart_url = add_query_arg('add_to_cart', $post->ID, $permalink);
     $full_img = get_the_post_thumbnail_url($post->ID, 'large');
@@ -380,6 +382,7 @@ function eproduct_products_shortcode() {
         <?php
         $you_may_like = new WP_Query(array(
             'post_type' => 'eproduct', 'posts_per_page' => 8, 'post_status' => 'publish', 'orderby' => 'rand',
+            'meta_query' => eproduct_active_meta_query(),
         ));
         if ($you_may_like->have_posts()):
         ?>
@@ -453,7 +456,9 @@ function eproduct_products_shortcode() {
             </div>
             <div id="ep-grid" class="ep-grid">
                 <?php
-                $q = new WP_Query(array('post_type' => 'eproduct', 'posts_per_page' => -1, 'post_status' => 'publish'));
+                $q = new WP_Query(array('post_type' => 'eproduct', 'posts_per_page' => -1, 'post_status' => 'publish',
+                    'meta_query' => eproduct_active_meta_query(),
+                ));
                 while ($q->have_posts()) { $q->the_post(); echo eproduct_product_item_html($q->post); }
                 wp_reset_postdata();
                 ?>
@@ -583,7 +588,7 @@ function eproduct_account_shortcode() {
     ob_start();
     echo '<div class="ep-checkout"><h1>My Account</h1><h2>My Orders</h2><table class="ep-orders"><tr><th>Order</th><th>Product</th><th>Amount</th><th>Status</th></tr>';
     foreach ($orders as $o) {
-        echo '<tr><td>#' . $o->id . '</td><td>' . esc_html(get_the_title($o->product_id)) . '</td><td>$' . number_format($o->amount, 2) . '</td><td>' . esc_html($o->status) . '</td></tr>';
+        echo '<tr><td>#' . $o->id . '</td><td>' . esc_html(get_the_title($o->product_id)) . '</td><td>₹' . number_format($o->amount, 0) . '</td><td>' . esc_html($o->status) . '</td></tr>';
     }
     echo '</table><p><a href="' . esc_url(wp_logout_url(home_url())) . '">Log out</a></p></div>';
     return ob_get_clean();
@@ -646,7 +651,11 @@ function eproduct_ajax_quick_view() {
     $img = get_the_post_thumbnail_url($id, 'large');
     $cats = wp_get_post_terms($id, 'eproduct_category', array('fields' => 'names'));
     $excerpt = get_post_field('post_excerpt', $id) ?: wp_trim_words(strip_shortcodes(wp_strip_all_tags(get_post_field('post_content', $id))), 20);
+    $short_desc = get_post_meta($id, '_eproduct_short_desc', true);
+    if ($short_desc) $excerpt = $short_desc;
     $permalink = get_permalink($id);
+    $landing_url = get_post_meta($id, '_eproduct_landing_url', true);
+    if (!empty($landing_url)) $permalink = $landing_url;
     $cart_url = add_query_arg('add_to_cart', $id, $permalink);
     ?>
     <div class="ep-qv">

@@ -10,6 +10,7 @@ function eproduct_ajax_filter() {
         'posts_per_page' => -1,
         'post_status' => 'publish',
         's' => $search,
+        'meta_query' => eproduct_active_meta_query(),
     );
     if ($cat) {
         $args['tax_query'] = array(array('taxonomy' => 'eproduct_category', 'field' => 'slug', 'terms' => $cat));

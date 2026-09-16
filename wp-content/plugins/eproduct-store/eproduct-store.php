@@ -32,6 +32,7 @@ function eproduct_deactivate() {
 }
 
 require_once EPRODUCT_PATH . 'includes/cpt-products.php';
+require_once EPRODUCT_PATH . 'includes/product-manager.php';
 require_once EPRODUCT_PATH . 'includes/orders.php';
 require_once EPRODUCT_PATH . 'includes/settings.php';
 require_once EPRODUCT_PATH . 'includes/privacy.php';
