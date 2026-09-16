@@ -307,24 +307,34 @@ function eproduct_manage_products_page() {
             <!-- Sort Headers -->
             <?php
             $base_url = admin_url('admin.php?page=eproduct-manage&ep_status=' . $status_filter . ($search ? '&s=' . urlencode($search) : ''));
-            function eproduct_sort_link($label, $key, $current_orderby, $current_order, $base_url) {
-                $new_order = ($current_orderby === $key && $current_order === 'DESC') ? 'ASC' : 'DESC';
-                $url = add_query_arg(array('orderby' => $key, 'order' => $new_order), $base_url);
-                $arrow = ($current_orderby === $key) ? ($current_order === 'DESC' ? ' &#9660;' : ' &#9650;') : '';
-                return '<a href="' . esc_url($url) . '">' . $label . $arrow . '</a>';
-            }
             ?>
 
             <table class="wp-list-table widefat fixed striped" style="table-layout:fixed;">
                 <thead>
                     <tr>
                         <td style="width:30px;" class="manage-column column-cb check-column"><input type="checkbox" id="cb-select-all-1"></td>
-                        <th style="width:60px;"><?php echo eproduct_sort_link('Image', 'date', $orderby, $order, $base_url); ?></th>
-                        <th><?php echo eproduct_sort_link('Product', 'title', $orderby, $order, $base_url); ?></th>
-                        <th style="width:100px;"><?php echo eproduct_sort_link('Price', 'price', $orderby, $order, $base_url); ?></th>
+                        <th style="width:60px;"><?php
+                            $new_o = ($orderby === 'date' && $order === 'DESC') ? 'ASC' : 'DESC';
+                            $arr = ($orderby === 'date') ? ($order === 'DESC' ? ' &#9660;' : ' &#9650;') : '';
+                            echo '<a href="' . esc_url(add_query_arg(array('orderby' => 'date', 'order' => $new_o), $base_url)) . '">Image' . $arr . '</a>';
+                        ?></th>
+                        <th><?php
+                            $new_o = ($orderby === 'title' && $order === 'DESC') ? 'ASC' : 'DESC';
+                            $arr = ($orderby === 'title') ? ($order === 'DESC' ? ' &#9660;' : ' &#9650;') : '';
+                            echo '<a href="' . esc_url(add_query_arg(array('orderby' => 'title', 'order' => $new_o), $base_url)) . '">Product' . $arr . '</a>';
+                        ?></th>
+                        <th style="width:100px;"><?php
+                            $new_o = ($orderby === 'price' && $order === 'DESC') ? 'ASC' : 'DESC';
+                            $arr = ($orderby === 'price') ? ($order === 'DESC' ? ' &#9660;' : ' &#9650;') : '';
+                            echo '<a href="' . esc_url(add_query_arg(array('orderby' => 'price', 'order' => $new_o), $base_url)) . '">Price' . $arr . '</a>';
+                        ?></th>
                         <th style="width:100px;">Status</th>
                         <th style="width:150px;">Landing Page</th>
-                        <th style="width:120px;"><?php echo eproduct_sort_link('Updated', 'modified', $orderby, $order, $base_url); ?></th>
+                        <th style="width:120px;"><?php
+                            $new_o = ($orderby === 'modified' && $order === 'DESC') ? 'ASC' : 'DESC';
+                            $arr = ($orderby === 'modified') ? ($order === 'DESC' ? ' &#9660;' : ' &#9650;') : '';
+                            echo '<a href="' . esc_url(add_query_arg(array('orderby' => 'modified', 'order' => $new_o), $base_url)) . '">Updated' . $arr . '</a>';
+                        ?></th>
                         <th style="width:200px;">Actions</th>
                     </tr>
                 </thead>
